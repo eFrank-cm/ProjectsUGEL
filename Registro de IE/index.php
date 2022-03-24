@@ -1,5 +1,5 @@
 <?php 
-include('conexion.php');
+include('db/conexion.php');
 include('template/head.php'); 
 ?>
 
@@ -34,7 +34,7 @@ include('template/head.php');
   <?php 
   foreach($ies as $nombre_ie => $nivel) {
     echo "<div class='border m-0 p-3'>";
-    echo "<h4 class='mb-0'>$nombre_ie</h4><hr class='mt-1'>";
+    echo "<h4 class='mb-0 text-center'>$nombre_ie</h4><hr class='mt-1'>";
     echo "<div class='row m-0'>";
     foreach($nivel as $nombre_nivel => $personal){
       echo "<div class='col-12 mb-4'>";
@@ -50,8 +50,18 @@ include('template/head.php');
       // echo "  <th>TIPO IE</th>";
       // echo "</tr></thead>";
       // echo "<tbody>";
+
+      echo "<div class='container mt-1'>";
       foreach($personal as $docente){
-        echo "<p class='m-0'><strong>{$docente['cargo']}</strong> | {$docente['nombre']} | {$docente['dni']} | {$docente['correo']} | {$docente['telefono']}</p>";
+        // echo "<p class='m-0'><strong>{$docente['cargo']}</strong> | {$docente['nombre']} | {$docente['dni']} | {$docente['correo']} | {$docente['telefono']}</p>";
+        echo "<div class='row p-0'>";
+        echo "  <div class='col-2 p-1 border-bottom'><strong>{$docente['cargo']}</strong></div>";
+        echo "  <div class='col-4 p-0 border-bottom'>{$docente['nombre']}</div>";
+        echo "  <div class='col-1 p-0 border-bottom'>{$docente['dni']}</div>";
+        echo "  <div class='col-3 p-0 border-bottom'>{$docente['correo']}</div>";
+        echo "  <div class='col-1 p-0 border-bottom'>{$docente['telefono']}</div>";
+        echo "  <div class='col-1 p-0 border-bottom'>{$docente['tipo_ie']}</div>";
+        echo "</div>";
         // echo "<tr class=''>";
         // echo "  <th>{$docente['cargo']}</th>";
         // echo "  <th>{$docente['nombre']}</th>";
@@ -60,6 +70,8 @@ include('template/head.php');
         // echo "  <th>{$docente['tipo_ie']}</th>";
         // echo "</tr>";
       }
+      echo "</div>";
+
       // echo "</tbody>";
       // echo "</div>";
 
