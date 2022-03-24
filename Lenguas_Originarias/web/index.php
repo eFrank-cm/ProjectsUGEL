@@ -23,7 +23,7 @@ DNI:
 
 	
 	<!-- MOSTRAR DATOS -->
-	<table border="1" >
+	<table >
 		<tr>
 			<td>Tipo Documento</td>
 			<td>DNI</td>
