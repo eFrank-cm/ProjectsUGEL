@@ -49,7 +49,7 @@ include('template/head.php');
       // echo "  <th>TELEFONO</th>";
       // echo "  <th>TIPO IE</th>";
       // echo "</tr></thead>";
-      // echo "<tbody>";
+      // echo "<tbody>" hola
 
       echo "<div class='container mt-1'>";
       foreach($personal as $docente){
