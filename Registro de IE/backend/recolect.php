@@ -40,6 +40,8 @@ if (isset($_POST) and !empty($_POST)){
     }
 }
 else{
-    echo 'no hay nada';
+    echo "";
 }
+
 ?>
+

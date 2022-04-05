@@ -19,11 +19,11 @@ include('template/head.php');
 <?php  include('backend/recolect.php'); ?>
 
 <div class="container p-0 mt-2">
-  <?php if(count($ies)==0) {?>
+  <?php if((count($ies)==0) and !empty($_POST)){?>
     <div class="alert alert-danger">
       Se encontraron 0 coincidencias para: <strong><?php echo $kw;?></strong>
     </div>
-  <?php }else{?>
+  <?php }else if(count($ies)!=0){?>
     <div class="alert alert-success">
       Se encontraron <?php echo count($ies);?> coincidencias para: <strong><?php echo $kw;?></strong>
     </div>
@@ -39,42 +39,18 @@ include('template/head.php');
     foreach($nivel as $nombre_nivel => $personal){
       echo "<div class='col-12 mb-4'>";
       echo "<h5 class='mb-0'>$nombre_nivel</h5>";
-
-      // echo "<div>";
-      // echo "<table class='table table-hover p-2'>";
-      // echo "<thead class='bg-secondary'><tr>";
-      // echo "  <th>CARGO</th>";
-      // echo "  <th>NOMBRE</th>";
-      // echo "  <th>CORREO</th>";
-      // echo "  <th>TELEFONO</th>";
-      // echo "  <th>TIPO IE</th>";
-      // echo "</tr></thead>";
-      // echo "<tbody>" hola
-
-      echo "<div class='container mt-1'>";
+      echo "<div class='container-fluid mt-1'>";
       foreach($personal as $docente){
-        // echo "<p class='m-0'><strong>{$docente['cargo']}</strong> | {$docente['nombre']} | {$docente['dni']} | {$docente['correo']} | {$docente['telefono']}</p>";
-        echo "<div class='row p-0'>";
-        echo "  <div class='col-2 p-1 border-bottom'><strong>{$docente['cargo']}</strong></div>";
-        echo "  <div class='col-4 p-0 border-bottom'>{$docente['nombre']}</div>";
-        echo "  <div class='col-1 p-0 border-bottom'>{$docente['dni']}</div>";
-        echo "  <div class='col-3 p-0 border-bottom'>{$docente['correo']}</div>";
-        echo "  <div class='col-1 p-0 border-bottom'>{$docente['telefono']}</div>";
-        echo "  <div class='col-1 p-0 border-bottom'>{$docente['tipo_ie']}</div>";
+        echo "<div class='row p-0 small'>";
+        echo "  <div class='col-2 p-1'><strong>{$docente['cargo']}</strong></div>";
+        echo "  <div class='col-4 p-0'>{$docente['nombre']}</div>";
+        echo "  <div class='col-1 p-0'>{$docente['dni']}</div>";
+        echo "  <div class='col-3 p-0'>{$docente['correo']}</div>";
+        echo "  <div class='col-1 p-0z'>{$docente['telefono']}</div>";
+        echo "  <div class='col-1 p-0'>{$docente['tipo_ie']}</div>";
         echo "</div>";
-        // echo "<tr class=''>";
-        // echo "  <th>{$docente['cargo']}</th>";
-        // echo "  <th>{$docente['nombre']}</th>";
-        // echo "  <th>{$docente['correo']}</th>";
-        // echo "  <th>{$docente['telefono']}</th>";
-        // echo "  <th>{$docente['tipo_ie']}</th>";
-        // echo "</tr>";
       }
       echo "</div>";
-
-      // echo "</tbody>";
-      // echo "</div>";
-
       echo "</div>";
     }
     echo "</div>";
@@ -82,12 +58,5 @@ include('template/head.php');
     echo "<br>";
   }?>
 </div>
-
-
-
-
-
-
-
 
 <?php include('template/footer.php') ?>
