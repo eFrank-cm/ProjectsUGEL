@@ -2,7 +2,7 @@
 $servidor= "localhost";
 $usuario= "root";
 $password = "";
-$nombreBD= "dbie";
+$nombreBD= "nexus";
 $db = new mysqli($servidor, $usuario, $password, $nombreBD);
 
 if ($db->connect_error) {
