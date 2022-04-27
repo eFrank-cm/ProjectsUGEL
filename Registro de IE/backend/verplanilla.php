@@ -1,62 +1,87 @@
-<?php 
+<?php
 
 $planilla = array(
     'DIRECTOR' => array(),
     'COORDINADOR' => array(),
     'ESPECIALISTA' => array(),
     'FORMADOR' => array(),
-    'PROF_JEFE' => array(),
+    'PROF' => array(),
+    'JEFE' => array(),
     'AUXILIAR' => array(),
     'PER_ADM' => array(),
     'VACANTES' => array()
 );
 
+$personal = array();
+
+$ie = array();
 if (isset($_POST) and array_key_exists('codModIE', $_POST)){
-    $codModIE = $_POST['codModIE'];
-    $query = "SELECT * FROM planilla2 WHERE codModIE='$codModIE'";
+    $ie['codModIE'] = $_POST['codModIE'];
+    $ie['tipoIE'] = $_POST['tipoIE'];
+    $ie['ubicacion'] = $_POST['ubicacion'];
+    $ie['nivel'] = $_POST['nivel'];
+    $ie['nombreIE'] = $_POST['nombreIE'];
+    $query = "SELECT * FROM planilla2 WHERE codModIE='{$ie['codModIE']}'";
     $result = $db->query($query);
 
     $c = 0;
     while($row = $result->fetch_array()){
+        $email = $row['email']=='0'? '':$row['email'];
+        $nroCel = $row['nroCelular']=='0'? '':$row['nroCelular'];
         $plaza = array(
             'codPlaza' => $row['codPlaza'],
-            'tipo' => $row['tipoTrabajador']."-".$row['subTipoTrabajador'],
+            'tipo' => $row['tipoTrabajador'],
+            'subtipo' => $row['subTipoTrabajador'],
             'cargo' => $row['cargo'],
             'estado' => $row['situacionLaboral'],
             'docIdentidad' => $row['docIdentidad'],
             'nombre' => "{$row['apPaterno']} {$row['apMaterno']} {$row['nombres']}",
-            'nroCel' => $row['nroCelular'],
-            'email' => $row['email']
+            'nroCel' => $nroCel,
+            'email' => $email
         );
 
-        if (str_contains($plaza['cargo'], 'DIRECTOR')){
-            array_push($planilla['DIRECTOR'], $plaza);
+        if($plaza['estado']=='VACANTE'){
+            $plaza['tag']='VACANTES';
+            //array_push($planilla['VACANTES'], $plaza);
+        }
+        else if (str_contains($plaza['cargo'], 'DIRECTOR')){
+            $plaza['tag']='DIRECTOR';
+            //array_push($planilla['DIRECTOR'], $plaza);
         }
         else if(str_contains($plaza['cargo'], 'COORDINADOR')){
-            array_push($planilla['COORDINADOR'], $plaza);
+            $plaza['tag']='COORDINADOR';
+            //array_push($planilla['COORDINADOR'], $plaza);
         }
         else if(str_contains($plaza['cargo'], 'ESPECIALISTA')){
-            array_push($planilla['ESPECIALISTA'], $plaza);
+            $plaza['tag']='ESPECIALISTA';
+            //array_push($planilla['ESPECIALISTA'], $plaza);
         }
         else if(str_contains($plaza['cargo'], 'FORMADOR')){
-            array_push($planilla['FORMADOR'], $plaza);
+            $plaza['tag']='FORMADOR';
+            //array_push($planilla['FORMADOR'], $plaza);
         }
-        else if(str_contains($plaza['cargo'], 'PROFESOR') or str_contains($plaza['cargo'], 'JEFE')){
-            array_push($planilla['PROF_JEFE'], $plaza);
+        else if(str_contains($plaza['cargo'], 'PROFESOR')){
+            $plaza['tag']='PROFESOR';
+            //array_push($planilla['PROF'], $plaza);
+        }
+        else if(str_contains($plaza['cargo'], 'JEFE')){
+            $plaza['tag']='JEFE';
+            //array_push($planilla['JEFE'], $plaza);
         }
         else if(str_contains($plaza['cargo'], 'AUXILIAR')){
-            array_push($planilla['AUXILIAR'], $plaza);
+            $plaza['tag']='AUXILIAR';
+            //array_push($planilla['AUXILIAR'], $plaza);
         }
-        // else if($plaza['docIdentidad'] == ''){
-        //     array_push($planilla['VACANTE'], $plaza);
-        // }
         else{
-            array_push($planilla['PER_ADM'], $plaza);
+            $plaza['tag']='PER_ADM';
+            //array_push($planilla['PER_ADM'], $plaza);
         }
+        array_push($personal, $plaza);
     }
 }
 else{
     echo "";
 }
-var_dump($planilla)
+//krsort($planilla['DIRECTOR']);
+//var_dump($personal);
 ?>
