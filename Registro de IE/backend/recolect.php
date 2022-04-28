@@ -11,7 +11,9 @@ if (isset($_POST) and array_key_exists('keyword', $_POST)){
         $ie = array(
             'codModIE' => $row['codModIE'],
             'tipoIE' => $row['tipoIE'],
-            'ubicacion' => $row['provincia']."-".$row['distrito']."-".$row['zona'],
+            'provincia' => $row['provincia'],
+            'distrito' => $row['distrito'],
+            'zona' => $row['zona'],
             'nivel' => $row['nivel'],
             'nombreIE' => $row['nombreIE']
         );

@@ -37,7 +37,7 @@ $(document).ready(function() {
         initComplete: function () {
             this.api().columns([0]).every( function () {
                 var column = this;
-                var select = $("<select class='form-select d-inline' id='combo' style='padding: 3px;'><option class='small p-1' value=''>(Todo)</option></select>")
+                var select = $("<select class='form-select d-inline' id='combo' style='padding: 3px;'><option class='small p-1' value=''>(TODO)</option></select>")
                     .appendTo( $('#box') )
                     .on( 'change', function () {
                         var val = $.fn.dataTable.util.escapeRegex(
@@ -73,7 +73,7 @@ $(document).ready(function() {
                             tag = 'Plazas Vacantes'; break;
                     }
 
-                    select.append( '<option class="small p-1" value="'+d+'">'+tag+'</option>' )
+                    select.append( '<option class="small p-1" value="'+d+'">'+tag.toUpperCase()+'</option>' )
                 } );
             } );
         }
@@ -86,12 +86,21 @@ $(document).ready(function() {
 <br>
 <div class="container content">
     <?php
-    echo "<div class='border m-0 p-3'>";
-    echo "<h4 class='mb-0 text-center'>{$ie['nombreIE']}</h4><hr class='mt-1'>";
-    echo "<h6 class='d-inline'>Nivel Educativo: </h6><label>{$ie['nivel']}</label><br>";
-    echo "<h6 class='d-inline'>Tipo de Institucion: </h6><label>{$ie['tipoIE']}</label><br>";
-    echo "<h6 class='d-inline'>Ubicacion: </h6><label>{$ie['ubicacion']}</label><br>";
-    echo "<h6 class='d-inline'>Codigo Modular: </h6><label>{$ie['codModIE']}</label><br>";
+    echo "<div class='container w-75'>";
+    echo    "<div class='border m-0 p-3'>";
+    echo        "<h4 class='mb-0 text-center'>{$ie['nombreIE']}</h4><hr class='mt-1'>";
+    echo        "<div class='container row'>";
+    echo            "<div class='col-6 d-inline text-center'>";
+    echo                "<img class='img-fluid' src='img\lgIE.png' style='width: 100px;'>";
+    echo            "</div>";
+    echo            "<div class='col-6'>";
+    echo                "<h6 class='d-inline'>Nivel Educativo: </h6><label>{$ie['nivel']}</label><br>";
+    echo                "<h6 class='d-inline'>Tipo de Institucion: </h6><label>{$ie['tipoIE']}</label><br>";
+    echo                "<h6 class='d-inline'>Ubicacion: </h6><label>{$ie['ubicacion']}</label><br>";
+    echo                "<h6 class='d-inline'>Codigo Modular: </h6><label>{$ie['codModIE']}</label><br>";
+    echo            "</div>";
+    echo        "</div>";
+    echo    "</div>";
     echo "</div>";
     echo "<br>";
     ?>
@@ -99,7 +108,7 @@ $(document).ready(function() {
     <div class='container border p-3 content'>
     
     <h4 class='mb-0 text-left'>Personal de la Institucion Educativa</h4><hr class='mt-1'>
-    <table class='table small display table-striped w-100 border' id='tabla'>
+    <table class='table small display table-striped w-100 border table-hover' id='tabla'>
     <div class='' id='box'><p class='d-inline'>Filtrar por: </p></div>
         <thead>
             <tr>
@@ -173,6 +182,10 @@ $(document).ready(function() {
 #tabla_paginate {
     display: inline-block;
     width: 20%;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: rgba(0, 0, 0, 0.075);
 }
 
 </style>

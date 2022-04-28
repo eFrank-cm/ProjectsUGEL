@@ -31,24 +31,35 @@ include('template/head.php');
   <?php
   foreach($ies as $c => $ie) {
     $nameForm = 'form'.$c;
-    echo "<div class='border m-0 p-3'>";
-    echo "<h4 class='mb-0 text-left d-inline'>{$ie['nombreIE']} </h4><label>{$ie['nivel']}</label><hr class='mt-1'>";
-    //echo "<h6 class='d-inline'>Nivel Educativo: </h6> <label>{$ie['nivel']}</label> <br>";
-    echo  "<h6>Tipo de Institucion: </h6><label>{$ie['tipoIE']}</label>";
-    echo  "<h6>Ubicacion: </h6> <label>{$ie['ubicacion']}</label>";
-    echo  "<h6>Codigo Modular: </h6> <label>{$ie['codModIE']}</label>";
-    
+    echo "<div class='border border-2 m-0 p-3'>";
+    echo "<div class='position-relative'>";
+    echo    "<h4 class='mb-0 text-left d-inline'>{$ie['nombreIE']} </h4><label>( {$ie['nivel']} )</label>";
+    echo    "<form id='$nameForm' method='post' class='d-inline position-absolute end-0'>";
+    echo      "<input hidden name='codModIE' type='text' value='{$ie['codModIE']}'>";
+    echo      "<input hidden name='nivel' type='text' value='{$ie['nivel']}'>";
+    echo      "<input hidden name='tipoIE' type='text' value='{$ie['tipoIE']}'>";
+    echo      "<input hidden name='ubicacion' type='text' value='{$ie['provincia']}'>";
+    echo      "<input hidden name='nombreIE' type='text' value='{$ie['nombreIE']}'>";
+    ?>        <button class='badge bg-secondary py-2' style='border: none;' type='submit' onclick="enviar('datosIE.php', '<?php echo $nameForm; ?>')">Ver mas</button><?php
+    echo    "</form>";
+    echo "</div>";
+    echo "<hr class='border border-1z border-dark mt-1'>";
 
-    echo "<form id='$nameForm' method='post'>";
-    echo "<input hidden name='codModIE' type='text' value='{$ie['codModIE']}'>";
-    echo "<input hidden name='nivel' type='text' value='{$ie['nivel']}'>";
-    echo "<input hidden name='tipoIE' type='text' value='{$ie['tipoIE']}'>";
-    echo "<input hidden name='ubicacion' type='text' value='{$ie['ubicacion']}'>";
-    echo "<input hidden name='nombreIE' type='text' value='{$ie['nombreIE']}'>";
-    ?>  
-    <button class='btn btn-secondary' type='submit' onclick="enviar('datosIE.php', '<?php echo $nameForm; ?>')">Ver mas</button>
-    <?php
-    echo "</form>";
+    echo "<table class='table table-borderless small w-75 '>";
+    echo    "<tbody>";
+    echo      "<tr>";
+    echo        "<td><p class='fw-bold d-inline'>Tipo de Intitucion Educativa:</p></td>";
+    echo        "<td class='text-center'><p class='fw-bold d-inline'>Provincia:</p></td>";
+    echo        "<td class='text-center'><p class='fw-bold d-inline'>Distrito:</p></td>";
+    echo        "<td class='text-center'><p class='fw-bold d-inline'>Zona:</p></td>";
+    echo        "<td class='text-center'><p class='fw-bold d-inline'>Codigo Modular:</p></td>";
+    echo        "<tr>";
+    echo      "<tr><td>{$ie['tipoIE']}</td><td class='text-center'>{$ie['provincia']}</td><td class='text-center'>{$ie['distrito']}</td><td class='text-center'>{$ie['zona']}</td><td class='text-center'>{$ie['codModIE']}</td>";
+    echo      "</tr>";
+    echo    "</tbody>"; 
+    echo "</table>";
+
+    
     echo "</div>";
     echo "<br>";
   }?>
