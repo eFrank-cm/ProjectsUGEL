@@ -40,35 +40,38 @@ if (isset($_POST) and array_key_exists('codModIE', $_POST)){
             'email' => $email
         );
 
+        
+
+
         if($plaza['estado']=='VACANTE'){
             $plaza['tag']='VACANTES';
             //array_push($planilla['VACANTES'], $plaza);
         }
-        else if (str_contains($plaza['cargo'], 'DIRECTOR')){
+        else if (!strpos($plaza['cargo'], 'DIRECTOR')){
             $plaza['tag']='DIRECTOR';
             //array_push($planilla['DIRECTOR'], $plaza);
         }
-        else if(str_contains($plaza['cargo'], 'COORDINADOR')){
+        else if (!strpos($plaza['cargo'], 'COORDINADOR')){
             $plaza['tag']='COORDINADOR';
             //array_push($planilla['COORDINADOR'], $plaza);
         }
-        else if(str_contains($plaza['cargo'], 'ESPECIALISTA')){
+        else if (!strpos($plaza['cargo'], 'ESPECIALISTA')){
             $plaza['tag']='ESPECIALISTA';
             //array_push($planilla['ESPECIALISTA'], $plaza);
         }
-        else if(str_contains($plaza['cargo'], 'FORMADOR')){
+        else if (!strpos($plaza['cargo'], 'FORMADOR')){
             $plaza['tag']='FORMADOR';
             //array_push($planilla['FORMADOR'], $plaza);
         }
-        else if(str_contains($plaza['cargo'], 'PROFESOR')){
+        else if (!strpos($plaza['cargo'], 'PROFESOR')){
             $plaza['tag']='PROFESOR';
             //array_push($planilla['PROF'], $plaza);
         }
-        else if(str_contains($plaza['cargo'], 'JEFE')){
+        else if (!strpos($plaza['cargo'], 'JEFE')){
             $plaza['tag']='JEFE';
             //array_push($planilla['JEFE'], $plaza);
         }
-        else if(str_contains($plaza['cargo'], 'AUXILIAR')){
+        else if (!strpos($plaza['cargo'], 'AUXILIAR')){
             $plaza['tag']='AUXILIAR';
             //array_push($planilla['AUXILIAR'], $plaza);
         }
