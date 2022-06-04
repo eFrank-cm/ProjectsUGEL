@@ -40,38 +40,35 @@ if (isset($_POST) and array_key_exists('codModIE', $_POST)){
             'email' => $email
         );
 
-        
-
-
         if($plaza['estado']=='VACANTE'){
             $plaza['tag']='VACANTES';
             //array_push($planilla['VACANTES'], $plaza);
         }
-        else if (!strpos($plaza['cargo'], 'DIRECTOR')){
+        else if (strpos($plaza['cargo'], 'DIRECTOR')!==FALSE){
             $plaza['tag']='DIRECTOR';
             //array_push($planilla['DIRECTOR'], $plaza);
         }
-        else if (!strpos($plaza['cargo'], 'COORDINADOR')){
+        else if (strpos($plaza['cargo'], 'COORDINADOR')!==FALSE){
             $plaza['tag']='COORDINADOR';
             //array_push($planilla['COORDINADOR'], $plaza);
         }
-        else if (!strpos($plaza['cargo'], 'ESPECIALISTA')){
+        else if (strpos($plaza['cargo'], 'ESPECIALISTA')!==FALSE){
             $plaza['tag']='ESPECIALISTA';
             //array_push($planilla['ESPECIALISTA'], $plaza);
         }
-        else if (!strpos($plaza['cargo'], 'FORMADOR')){
+        else if (strpos($plaza['cargo'], 'FORMADOR')!==FALSE){
             $plaza['tag']='FORMADOR';
             //array_push($planilla['FORMADOR'], $plaza);
         }
-        else if (!strpos($plaza['cargo'], 'PROFESOR')){
+        else if (strpos($plaza['cargo'], 'PROFESOR')!==FALSE){
             $plaza['tag']='PROFESOR';
             //array_push($planilla['PROF'], $plaza);
         }
-        else if (!strpos($plaza['cargo'], 'JEFE')){
+        else if (strpos($plaza['cargo'], 'JEFE')!==FALSE){
             $plaza['tag']='JEFE';
             //array_push($planilla['JEFE'], $plaza);
         }
-        else if (!strpos($plaza['cargo'], 'AUXILIAR')){
+        else if (strpos($plaza['cargo'], 'AUXILIAR')!==FALSE){
             $plaza['tag']='AUXILIAR';
             //array_push($planilla['AUXILIAR'], $plaza);
         }
@@ -81,10 +78,17 @@ if (isset($_POST) and array_key_exists('codModIE', $_POST)){
         }
         array_push($personal, $plaza);
     }
+
+
 }
 else{
     echo "";
 }
+
+// foreach($personal as $per){
+//     print_r($per);
+//     echo '<br>';
+// }
 //krsort($planilla['DIRECTOR']);
 //var_dump($personal);
 ?>

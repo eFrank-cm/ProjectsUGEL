@@ -37,7 +37,7 @@ $(document).ready(function() {
         initComplete: function () {
             this.api().columns([0]).every( function () {
                 var column = this;
-                var select = $("<select class='form-select d-inline' id='combo' style='padding: 3px;'><option class='small p-1' value=''>(TODO)</option></select>")
+                var select = $("<select class='form-select d-inline' id='combo' style='padding: 3px; width: 300px;'><option class='small p-1' value=''>(TODO)</option></select>")
                     .appendTo( $('#box') )
                     .on( 'change', function () {
                         var val = $.fn.dataTable.util.escapeRegex(
