@@ -28,8 +28,7 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="index.php">Inicio
-              </a>
+              <a class="nav-link" href="index.php">Inicio</a>
             </li>
         </div>
       </div>
