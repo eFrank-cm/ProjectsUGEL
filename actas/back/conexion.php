@@ -2,7 +2,7 @@
 $servidor = 'localhost';
 $usuario = 'root';
 $password = '';
-$nombreBD = 'conta';
+$nombreBD = 'bd_conta';
 $db = new mysqli($servidor, $usuario, $password, $nombreBD);
 
 // Verificar la bd
