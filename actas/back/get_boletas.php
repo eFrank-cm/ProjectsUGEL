@@ -1,33 +1,33 @@
-<?php
-include('conexion.php');
+<!-- <?php
+// include('conexion.php');
 
-$persona = explode_keys('; ', $_POST['arreglo']);
+// $persona = explode_keys('; ', $_POST['arreglo']);
 
-echo "<pre>";
-print_r($persona);
-echo "</pre>";
+// echo "<pre>";
+// print_r($persona);
+// echo "</pre>";
 
-$boletas = array();
+// $boletas = array();
 
-if(!empty($persona)){
-    $id = $persona['id'];
-    $query = "SELECT * FROM boleta WHERE id_p=$id";
-    echo $query.'<br>';
-    $result = $db -> query($query);
+// if(!empty($persona)){
+//     $id = $persona['id'];
+//     $query = "SELECT * FROM boleta WHERE id_p=$id";
+//     echo $query.'<br>';
+//     $result = $db -> query($query);
     
-    while($row = $result->fetch_array()){
-        $bol = array(
-            'n' => $row['n'],
-            'fecha' => $row['fecha'],
-            'codPlanilla' => $row['codPlanilla'],
-            'anulado' => $row['anulado'],
-            'doc' => $row['doc'],
-            'id_p' => $row['id_p']
-        );
+//     while($row = $result->fetch_array()){
+//         $bol = array(
+//             'n' => $row['n'],
+//             'fecha' => $row['fecha'],
+//             'codPlanilla' => $row['codPlanilla'],
+//             'anulado' => $row['anulado'],
+//             'doc' => $row['doc'],
+//             'id_p' => $row['id_p']
+//         );
 
-        array_push($boletas, $bol);
-    }
-}
+//         array_push($boletas, $bol);
+//     }
+// }
 ?>
 
 <!DOCTYPE html>
@@ -41,17 +41,17 @@ if(!empty($persona)){
 <body>
 
 <hr>
-    <?php foreach($boletas as $bol): ?>
+    <?php //foreach($boletas as $bol): ?>
         <div>
             <pre>
-                <?php $per_bol = array_merge($persona, $bol); print_r($bol); ?>
+                <?php //$per_bol = array_merge($persona, $bol); print_r($bol); ?>
             </pre>
             <form action='index4.php' method='post'>
                 <input hidden type="text" value = '<?= implode_keys('; ', $per_bol) ?>' name='ar'>
                 <button type='submit'>enviar</button>
             </form>
         </div>
-    <?php endforeach; ?>
+    <?php //endforeach; ?>
     
 </body>
-</html>
+</html> -->

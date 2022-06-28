@@ -1,7 +1,7 @@
 <?php
 include('conexion.php');
 
-$boleta_per = explode_keys('; ', $_POST['ar']);
+$boleta_per = explode_keys('; ', $_POST['array']);
 
 $montos = array();
 $rem_total = 0;
@@ -79,6 +79,7 @@ for($i = 0; $i < 36; $i++){
         array_push($montos_2[2], $element);        
     }
 }
+
 
 
 ?>
