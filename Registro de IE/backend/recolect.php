@@ -17,15 +17,11 @@ if (isset($_POST) and array_key_exists('keyword', $_POST)){
             'nivel' => $row['nivel'],
             'nombreIE' => $row['nombreIE']
         );
-
         array_push($ies, $ie);        
     }
 }
 else{
     echo "";
 }
-
-//  var_dump($ies);
-
 ?>
 
