@@ -1,6 +1,6 @@
 
 <?php
-include('get_montos.php');
+include('back/get_montos.php');
 
 ?>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -137,53 +137,7 @@ body {
 
     <?php
     $result = $montos_2;
-
-    // $result = array
-    //     (
-    //     array(
-    //         array("001","Basica"," 50.00"),
-    //         array("002","Personal","0.02"),
-    //         array("003","ae125671","60.00"),
-    //         array("004","aeds081","70.00"),
-    //         array("006","tph","28.85"),
-    //         array("008","Familiar","3.00"),
-    //         array("009","du080","131.00"),
-    //         array("010","refmov.","5.00"),
-    //         array("011","du90","86.32"),
-    //         array("012","ds19","86.32"),
-    //         array("013","ds.021","86.32"),
-    //         array("014","ds19","86.32"),
-    //         array("015","ds.021","86.32"),
-    //         ),
-    //     array(
-    //         array("014","Doccontr","86.32"),
-    //         array("015","costvid","86.32"),
-    //         array("016","R.T.no Pensionab","86.32"),
-    //         array("017","Doccontr","86.32"),
-    //         array("018","costvid","86.32"),
-    //         array("019","R.T.no Pensionab","86.32"),
-    //         array("020","Doccontr","86.32"),
-    //         array("021","costvid","86.32"),
-    //         array("022","R.T.no Pensionab","86.32"),
-    //         array("023","Doccontr","86.32"),
-    //         array("024","costvid","86.32"),
-    //         array("025","R.T.no Pensionab","86.32"),
-    //         array("026","R.T.no Pensionab","86.32"),
-    //         ),
-    //     array(
-    //         array("027","Doccontr","86.32"),
-    //         array("028","costvid","86.32"),
-    //         array("029","R.T.no Pensionab","86.32"),
-    //         array("030","Doccontr","86.32"),
-    //         array("-120","costvid","86.32"),
-    //         array("032","R.T.no Pensionab","86.32"),
-    //         array("033","Doccontr","86.32"),
-    //         array("034","costvid","86.32"),
-    //         array("035","R.T.no Pensionab","86.32"),
-    //         array("036","Doccontr","86.32"),
-    //         ),
-    //     );
-
+    
     foreach($result as $datas)
     {
         echo "<div class='small' style='display:flex; flex-direction: column; margin-left: -30px;'>";

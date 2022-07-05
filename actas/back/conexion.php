@@ -22,6 +22,8 @@ else{
     echo "<script>console.log('Caracteres utf8 correctamente cargados.');</script>";
 }
 
+
+// FUNCIONES
 function explode_keys($sep, $str){
     $per = array();
     foreach(explode($sep, $str) as $i){

@@ -54,7 +54,6 @@ if(!empty($boleta_per)){
             }else{
                 $nombre = '-';
             }
-            // return array('cod'=> $cod, 'nombre'=>$nombre, 'monto' => $monto);
             return array($cod, $nombre, $monto);
         },
         $montos
@@ -64,7 +63,7 @@ if(!empty($boleta_per)){
 // completa a un arreglo de 12
 $montos_2 = array(array(), array(), array());
 for($i = 0; $i < 36; $i++){
-    $element = array($i, '-', '-');
+    $element = array('00', '-', '-');
     if($i < count($montos)){
         $element = $montos[$i];
     }

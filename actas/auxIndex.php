@@ -1,6 +1,3 @@
-<?php
-include('back/conexion.php');
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,8 +45,13 @@ include('back/conexion.php');
             </div> 
         </form>
     </div>
+    <div>
+        <form action="back/get_per-bol.php" method='POST'>
+            <input type="submit" value='agregar' name='add'>
+        </form>
+    </div>
 
-    <?php include('back/get_persona.php'); ?>
+    <?php include('back/get_per-bol.php'); ?>
 
     <br>
 
@@ -66,7 +68,7 @@ include('back/conexion.php');
             </tr>
         </thead>
         <tbody> 
-            <?php foreach($personas as $per): ?>
+            <?php foreach($personas_boletas as $per): ?>
                 <tr>
                     <td class ='text-center'><?= $per['n'] ?></td>
                     <td class ='text-center'><?= $per['codMod'] ?></td>
@@ -75,11 +77,10 @@ include('back/conexion.php');
                     <td class ='text-center'><?= $per['codPlanilla'] ?></td>
                     <td class ='text-center'><?= $per['condicion'] ?></td>
                     <td class ='text-center'style ='width: 50;'>
-                        <form action='back/index4.php' method='post'>
+                        <form action='ver_boleta.php' method='post'>
                             <input hidden type="text" value = '<?= implode_keys('; ', $per) ?>' name='array'>
                             <button style='border:none;' type='submit'><a class="btn btn-outline-success bi bi-eye btn-sm"></a></button>
                         </form>                        
-                        <!-- <a target="_blank" class="btn btn-outline-primary bi bi-box-arrow-down btn-sm" href="#" download></a> -->
                     </td>
                 </tr>
             <?php endforeach; ?>
