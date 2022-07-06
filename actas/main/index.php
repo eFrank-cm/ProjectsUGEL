@@ -11,7 +11,7 @@
 
 <?php
 
-@include './conexion/config.php';
+@include './back/conexion.php';
 
 session_start();
 

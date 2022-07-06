@@ -1,5 +1,5 @@
 <?php
-@include '../../conexion/config.php';
+@include '../../back/conexion.php';
 session_start();
 session_unset();
 session_destroy();

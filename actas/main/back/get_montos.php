@@ -54,7 +54,6 @@ if(!empty($boleta_per)){
             }else{
                 $nombre = '-';
             }
-            // return array('cod'=> $cod, 'nombre'=>$nombre, 'monto' => $monto);
             return array($cod, $nombre, $monto);
         },
         $montos

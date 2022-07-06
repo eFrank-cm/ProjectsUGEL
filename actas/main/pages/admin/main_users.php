@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <?php
-      @include '../../conexion/config.php'; 
+      @include '../../back/conexion.php'; 
       session_start();
 
       if(!isset($_SESSION['name'])){

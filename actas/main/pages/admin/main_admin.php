@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ES">
     <?php
-      @include '../../conexion/config.php'; 
+      @include '../../back/conexion.php'; 
       session_start();
 
       if(!isset($_SESSION['name'])){
@@ -240,7 +240,7 @@
     <main>              
     <!-- YA NO DEBE TENER BORDER EL DIV CONTAINER -->
     <div class="container">
-        <h3 style="text-align: center;">REGISTRO DE PERSONAS</h3>
+        <h3 style="text-align: center;">REGISTRO DE PERSONAS <a href="../../add.php">agregar</a></h3>
         <form class='row m-0' method='POST'>
             <input required name="keyword" type="text" class="col-4 form-control h-10" style="width: 350px;" placeholder="Ingrese Apellidos, Nombres o Cod Modular">
             <div class='col-4 pr-1'>
@@ -248,7 +248,7 @@
             </div>
         </form>
 
-        <?php include('../../back/get_persona.php'); ?>
+        <?php include('../../back/get_personaBoleta.php'); ?>
             <?php
                             if(isset($error))
                             {
