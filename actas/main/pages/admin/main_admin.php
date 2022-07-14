@@ -248,6 +248,204 @@
             </div>
         </form>
 
+       <!-- ==================BOTON AGREGAR BOLETA - MODAL================= -->
+        <!-- ==================INICIO================= -->
+        <div class='col-3'> 
+            <button type="" class="btn btn-secondary btn-sm addboletabtn" data-bs-toggle="modal" data-bs-target="#addmodal"><i class="bi bi-file-earmark-plus"></i> Agregar</button>
+        </div>
+        
+        <!-- ==================INICIO================= -->
+                    <!--MODAL AÑADIR-->
+                    <!-- <div class="modal-dialog modal-xl" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-person-plus-fill"></i> Añadir nuevo usuario </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        </button>
+                                    </div>
+                                    <form action="" method="POST">
+
+                                        <div class="modal-body">
+                                            <div class="form-group pb-1">
+                                                <label> DNI: </label>
+                                                <input required type="number" name="dni" class="form-control" onKeyPress="if(this.value.length==8) return false;" >
+                                            </div>
+                                            <div class="form-group pb-1">
+                                                <label> Nombres: </label>
+                                                <input required type="text" name="fname" class="form-control" onkeyup="this.value = this.value.toUpperCase();" onKeyPress="return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32 ) || (event.charCode == 241))" style="text-transform:uppercase" >
+                                            </div>
+                                            <div class="form-group pb-1">
+                                                <label> Apellidos: </label>
+                                                <input required type="text" name="lname" class="form-control" onkeyup="this.value = this.value.toUpperCase();" onKeyPress="return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32 ) || (event.charCode == 241))" style="text-transform:uppercase" >
+                                            </div>
+                                            <div class="form-group pb-1">
+                                                <label> Email: </label>
+                                                <input required type="email" name="email" class="form-control" >
+                                            </div>
+                                            <div class="form-group mb-2">
+                                            <label for="privilegio">Privilegios:</label>
+                                            <select name ="user_type" class="form-select" aria-label="Default select example">
+                                                <option selected required value="user">Usuario</option>
+                                                <option required value="admin">Administrador</option>
+                                            </select> 
+                                            </div>
+                                            <div class="form-group pmb-2">
+                                            <label for="privilegio">Estado:</label>
+                                            <select readonly name ="state" class="form-select" aria-label="Default select example">
+                                                <option selected required value="habilitado">Activo</option>
+                                            </select> 
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <p class="fw-lighter">*La contraseña será el nro de DNI.</p>
+                                            <div></div>
+                                            <div></div>
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"> Cancelar</button>
+                                            <button type="submit" name="insertdata" class="btn btn-success"> Guardar</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div> -->
+        <!-- ==================SCRIPT ABRIR MODAL AGREGAR BOLETA================= -->
+                <!-- <script>
+                    $(document).ready(function () 
+                    {
+                        $('.addboletabtn').on('click', function () 
+                        {
+                            console.log("OK");
+                            $('#addmodal').modal('show');
+                            $tr = $(this).closest('tr');
+                            var data = $tr.children("td").map(function () 
+                            {
+                                return $(this).text().replace(/\s+/g, " ").trim();
+                            }).get();
+                            console.log(data);
+                            // $('#update_id').val(data[0]);
+                            // $('#dni').val(data[1]);
+                            // $('#fname').val(data[2]);
+                            // $('#lname').val(data[3]);
+                            // $('#email').val(data[4]);
+                            // // val(5) for password and not editable for admin --- u can only reset the password
+                            // $('#user_type_edit').val(data[6])
+                            // $('#state_edit').val(data[7])
+                        });
+                    });
+                </script> -->
+        <!-- ==================INICIO================= -->
+
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+    Open modal
+  </button>
+
+
+<!-- The Modal -->
+<div class="modal m-1" id="myModal">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content p-1">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Agregar Boleta</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+
+      <form class="col container border rounded p-1">
+
+        <div class="card">
+                    <h5 class="card-header">Persona</h5>
+
+        <div class="card-body">
+            <div class="row align-items-start">
+                <div class="col-auto">
+                    <label for="inputPassword2" class="">Ingrese DNI/Cod Modular</label>
+                    <input type="text" class="form-control form-control-sm" id="inputPassword2" placeholder="">
+
+                    <div class="form-check form-switch" style="position:relative; top:20px; right:-50px;    ">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Agregar Nueva Persona</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary mb-3 btn-sm" style ="position: relative; top: 23px;">Buscar</button>
+
+                </div>
+
+                <div class="col">
+                    <div class="row align-items-start">
+                        <div class="col-auto">
+                            <hr width="1" size="90">
+                        </div>
+                        <div class="col-3">
+                            <label for="inputPassword2" class="">DNI</label>
+                            <input type="text" class="form-control form-control-sm" id="inputPassword2" placeholder="">
+                            <label for="inputPassword2" class="">Codigo Modular</label>
+                            <input type="text" class="form-control form-control-sm" id="inputPassword2" placeholder="">
+                        </div>
+                        <div class="col-6">
+                            <label for="inputPassword2" class="">Apellidos</label>
+                            <input type="text" class="form-control form-control-sm" id="inputPassword2" placeholder="">
+                            <label for="inputPassword2" class="">Nombres</label>
+                            <input type="text" class="form-control form-control-sm" id="inputPassword2" placeholder="">
+                        </div>
+                        <div class="col">
+                            <label for="inputPassword2" class="">Condición</label>
+                            <input type="text" class="form-control form-control-sm" id="inputPassword2" placeholder="">
+                            <!-- GUARDAR NUEVA PERSONA -->
+                            <button type="submit" class="btn btn-primary mb-3 btn-sm" style ="position: relative; top: 23px;">Agregar Persona</button>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <!-- <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            Estado
+                        </div>
+                        <div class="card-body">
+                        <label for="inputPassword2" class="">Nombres</label>
+                            <input type="text" class="form-control form-control-sm" id="inputPassword2" placeholder="">
+                        </div>
+                    </div>
+                </div> -->
+
+            </div>
+            <hr>
+
+
+
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+        </div>
+
+
+    </form>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Modal body..
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
         <?php include('../../back/get_personaBoleta.php'); ?>
             <?php
                             if(isset($error))
