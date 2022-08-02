@@ -9,17 +9,11 @@ $db = new mysqli($servidor, $usuario, $password, $nombreBD);
 if ($db->connect_error) {
     die("la conexion ha fallado: " . $db->connect_error);
 }
-else{
-    echo "<script>console.log('Conexion Exitosa');</script>";
-}
 
 // Verificar los caracteres utf8
 if (!$db->set_charset("utf8")) {
     printf("Error al cargar el conjunto de caracteres utf8: %s\n", $db->error);
     exit();
-}
-else{
-    echo "<script>console.log('Caracteres utf8 correctamente cargados.');</script>";
 }
 
 
