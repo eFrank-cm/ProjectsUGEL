@@ -12,7 +12,7 @@
       {
         header('location:../../index.php');
       }
-
+      
     ?>
     
     <head>
