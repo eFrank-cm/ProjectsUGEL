@@ -32,12 +32,15 @@ $result = $db->query($query);
         <label>Apellidos y Nombres: </label><input id='bol-nombres-shw' type="text" readonly>
         <label>Condicion: </label><input id='bol-condicion-shw' type="text" readonly>
     </div>
-    <div class="data-bol">
-        <label>Nro: </label><input name='n' type="text" readonly>
-        <label>Fecha: </label><input name='fecha' type="text">
-        <label>Planilla: </label><input name='codPlanilla' type="text">
-        <label>Anulado: </label><input name="anulado" type="checkbox">
-        <button>guardar</button>
+    <div class="div-bol">
+        <form id='frm-data-bol' method='POST'>
+            <label>Nro: </label><input name='n' id='n-data-bol' type="text" readonly>
+            <label>Fecha: </label><input name='fecha' id='fecha-data-bol' type="text">
+            <label>Planilla: </label><input name='codPlanilla' id='codPlanilla-data-bol' type="text">
+            <input name='idp' id='idp-data-bol' type="text" readonly hidden>
+            <!-- <label>Anulado: </label><input name="anulado" id='anulado-data-bol' type="checkbox"> -->
+            <button id='save-bol'>guardar</button>
+        </form>
     </div>
     <br>
     <table id='tb-montos'>
@@ -57,13 +60,14 @@ $result = $db->query($query);
                 </tr>
             <?php } ?>
             <tr>
-                <td id='cod-add' contenteditable></td>
-                <td id='monto-add' contenteditable></td>
-                <td><button>agregar</button></td>
+                <td class='cod-add' contenteditable></td>
+                <td class='monto-add' contenteditable></td>
+                <td><button class='add-monto' disabled>agregar</button></td>
             </tr>
         </tbody>
     </table>
 <?php else:?>
+    <br>
     <table>
         <thead>
             <tr>
