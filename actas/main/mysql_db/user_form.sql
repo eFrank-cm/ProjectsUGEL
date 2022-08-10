@@ -44,7 +44,7 @@ CREATE TABLE `user_form` (
 
 INSERT INTO `user_form` (`id`, `dni`, `name`, `lname`, `email`, `password`, `user_type`, `state`) VALUES
 (1, '12345678', 'ADMINISTRADOR', 'UGEL CANCHIS', 'admin@ucanchis.com', 'c4ca4238a0b923820dcc509a6f75849b', 'admin', 'habilitado'),
-(2, '12345678', 'FRANK ELIZON', 'CARCAUSTO MAMANI', 'felizon@gmail.com', 'c4ca4238a0b923820dcc509a6f75849b', 'user', 'habilitado');
+(2, '12345678', 'FRANK ELIZON', 'CARCAUSTO MAMANI', 'felizon@gmail.com', 'c4ca4238a0b923820dcc509a6f75849b', 'admin', 'habilitado');
 
 --
 -- Índices para tablas volcadas
