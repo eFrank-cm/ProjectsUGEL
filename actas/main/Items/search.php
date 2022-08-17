@@ -10,7 +10,7 @@ if(array_key_exists('kw', $_POST)){
 if(array_key_exists('idp', $_POST)){
     $id_p = $_POST['idp'];
     $query = "SELECT * FROM boleta WHERE id_p LIKE '$id_p'";
-    array_push($cols_name, 'n', 'fecha', 'codPlanilla', 'anulado', 'idp');
+    array_push($cols_name, 'n', 'fecha', 'codPlanilla', 'anulado', 'idp', 'accion');
 }
 
 if(array_key_exists('n', $_POST)){
@@ -34,18 +34,20 @@ $result = $db->query($query);
     </div>
     <div class="div-bol">
         <form id='frm-data-bol' method='POST'>
-            <label>Nro: </label><input name='n' id='n-data-bol' type="text" readonly>
-            <label>Fecha: </label><input name='fecha' id='fecha-data-bol' type="text">
-            <label>Planilla: </label><input name='codPlanilla' id='codPlanilla-data-bol' type="text">
+            <label>Nro: </label><input name='n' id='n-data-bol' type="text" value='<?= $_POST['n']?>' readonly>
+            <label>Fecha: </label><input name='fecha' id='fecha-data-bol' value='<?= $_POST['fecha']?>' type="text">
+            <label>Planilla: </label><input name='codPlanilla' id='codPlanilla-data-bol' value='<?= $_POST['codPlanilla']?>' type="text">
             <input name='idp' id='idp-data-bol' type="text" readonly hidden>
             <!-- <label>Anulado: </label><input name="anulado" id='anulado-data-bol' type="checkbox"> -->
             <button id='save-bol'>guardar</button>
+            <button id='delbtn-bol' disabled>Eliminar</button>
         </form>
     </div>
     <br>
     <table id='tb-montos'>
         <thead>
             <tr>
+                <th>idm</th>
                 <th>Codigo</th>
                 <th>Monto</th>
                 <th>Accion</th>
@@ -54,15 +56,20 @@ $result = $db->query($query);
         <tbody>
             <?php while($row = $result->fetch_array()){ ?>
                 <tr>
-                    <td><?= $row['cod'] ?></td>
-                    <td><?= $row['monto'] ?></td>
-                    <td><button id='delbtn'>Eliminar</button></td>
+                    <td contenteditable ><?= $row['id_m'] ?></td>
+                    <td contenteditable><?= $row['cod'] ?></td>
+                    <td contenteditable><?= $row['monto'] ?></td>
+                    <td>
+                        <button class='del-monto' type='button'>Eliminar</button>
+                        <button class='update-monto'>editar</button>
+                    </td>
                 </tr>
             <?php } ?>
             <tr>
-                <td class='cod-add' contenteditable></td>
-                <td class='monto-add' contenteditable></td>
-                <td><button class='add-monto' disabled>agregar</button></td>
+                <td>-</td>
+                <td class='td-monto' id='add-cod-monto' contenteditable></td>
+                <td class='td-monto' contenteditable></td>
+                <td><button class='add-monto' disabled>Agregar</button></td>
             </tr>
         </tbody>
     </table>
@@ -93,6 +100,7 @@ $result = $db->query($query);
                         <td><?= $row['codPlanilla']?></td>
                         <td><?= $row['anulado']?></td>
                         <td><?= $row['id_p']?></td>
+                        <td><button class="editbtn" name='editbtn-bol' type='button'>Elegir</button></td>
                     </tr>
                 <?php endif; ?>
             <?php } ?>

@@ -4,6 +4,7 @@
 $isDt_per = (!empty($_POST['codMod']) and !empty($_POST['nombres']) and !empty($_POST['condicion']));
 $isDt_bol = (!empty($_POST['fecha']) and !empty($_POST['codPlanilla']) and !empty($_POST['idp']));
 $isDt_mnt = (!empty($_POST['cod']) and !empty($_POST['monto']) and !empty($_POST['n']));
+$isDel_mnt = (!empty($_POST['cod']) and !empty($_POST['monto']));
 
 if($isDt_per){
     $codMod = $_POST['codMod'];
@@ -37,42 +38,79 @@ else if($isDt_bol){
     if(empty($_POST['n'])){
         $query_insert = "INSERT INTO boleta (fecha, codPlanilla, anulado, doc, id_p) VALUE ('$fecha', '$codPlanilla', 'FALSE', '-', '$idp')";
         $db->query($query_insert);
-    }// update boleta
-    // else{
-    //     $query_update = "INSERT INTO "
-    // }
 
-    $query_select = "SELECT * FROM boleta WHERE fecha='$fecha' AND codPlanilla='$codPlanilla' AND id_p='$idp';";
-    $result = $db->query($query_select);
+        $query_select = "SELECT * FROM boleta WHERE fecha='$fecha' AND codPlanilla='$codPlanilla' AND id_p='$idp';";
+        $result = $db->query($query_select);
 
-    $bol = array();
-    while($row = $result->fetch_array()){
-        $bol = array(
-            'n' => $row['n']
-        );
+        $bol = array();
+        while($row = $result->fetch_array()){
+            $bol = array(
+                'n' => $row['n']
+            );
+        }
+        echo json_encode($bol);
     }
-
-    echo json_encode($bol);
+    else{
+        if($_POST['accion'] == 'del'){
+            $n = $_POST['n'];
+            $fecha = $_POST['fecha'];
+            $codPlanilla = $_POST['codPlanilla'];
+            $query_delete = "DELETE FROM boleta WHERE n='$n' AND fecha='$fecha' AND codPlanilla='$codPlanilla'";
+            $db->query($query_delete);
+            echo json_encode(array('n'=>'Eliminado'));
+        }
+        else if($_POST['accion'] == 'update'){
+            $n = $_POST['n'];
+            $fecha = $_POST['fecha'];
+            $codPlanilla = $_POST['codPlanilla'];
+            $query_update = "UPDATE boleta SET fecha='$fecha', codPlanilla='$codPlanilla' WHERE n='$n'";
+            $db->query($query_update);
+            echo json_encode(array('n'=>$n));
+        }
+    }
 }
 else if($isDt_mnt){
-    $cod = $_POST['cod'];
-    $monto = $_POST['monto'];
-    $n = $_POST['n'];
+    if($_POST['accion']=='add'){
+        $cod = $_POST['cod'];
+        $monto = $_POST['monto'];
+        $n = $_POST['n'];
 
-    $query_insert = "INSERT INTO monto (cod, monto, n) VALUE ('$cod', '$monto', '$n')";
-    $db->query($query_insert);
+        $query_insert = "INSERT INTO monto (cod, monto, n) VALUE ('$cod', '$monto', '$n')";
+        $db->query($query_insert);
 
-    $query_select = "SELECT * FROM monto WHERE cod='$cod' AND monto='$monto' AND n='$n'";
-    $result = $db->query($query_select);
+        $query_select = "SELECT * FROM monto WHERE cod='$cod' AND monto='$monto' AND n='$n'";
+        $result = $db->query($query_select);
 
-    $monto = array('mensaje'=>'hay monto');
-    while($row = $result->fetch_array()){
-        $monto['cod'] = $row['cod'];
-        $monto['monto'] = $row['monto'];
+        $monto = array('mensaje'=>'hay monto');
+        while($row = $result->fetch_array()){
+            $monto['idm'] = $row['id_m'];
+            $monto['cod'] = $row['cod'];
+            $monto['monto'] = $row['monto'];
+        }
+
+        echo json_encode($monto);
     }
+    else if($_POST['accion']=='del'){
+        $idm = $_POST['idm'];
+        $cod = $_POST['cod'];
+        $monto = $_POST['monto'];
 
-    echo json_encode($monto);
+        $query_del = "DELETE FROM monto WHERE cod='$cod' AND monto='$monto' AND id_m='$idm'";
+        $db->query($query_del);
+
+        echo "Se eliminaro {$_POST['cod']} y {$_POST['monto']}";
+    }
+    else if($_POST['accion'] == 'update'){
+        $idm = $_POST['idm'];
+        $cod = $_POST['cod'];
+        $monto = $_POST['monto'];
+
+        $query_update = "UPDATE monto SET cod='$cod', monto='$monto' WHERE id_m='$idm'";
+        $db->query($query_update);
+        echo $query_update;
+    }    
 }
+
 else{
     echo "campos vacios";
 }
