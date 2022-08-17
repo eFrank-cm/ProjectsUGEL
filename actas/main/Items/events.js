@@ -22,7 +22,6 @@ $(document).ready(function(){
     $('#btn-srch-per').click(function(e){
         if($('#kw-srch').val().length != 0){
             datos = getDataFormJSON('#frm-srch-per');
-            console.log(datos);
             e.preventdefault;
             $.ajax({
                 type: "POST",
@@ -33,11 +32,7 @@ $(document).ready(function(){
 
                     // BUTTON - SELECT PERSONA
                     $('.select').on('click', function(){
-                        $tr = $(this).closest('tr');
-                        var data = $tr.children("td").map(function(){
-                            return $(this).text().replace(/\s+/g, " ").trim();
-                        }).get();
-                        console.log(data)
+                        data = getDataRow(this)
                         $('#idp-shw').val(data[0])
                         $('#codMod-shw').val(data[1])
                         $('#nombres-shw').val(data[2])
@@ -50,6 +45,7 @@ $(document).ready(function(){
                             success: function(res){
                                 $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
                                 $('#div-bol').html(res);
+                                $('#data-bol').html('');
                             }
                         });
                     });
@@ -78,28 +74,35 @@ $(document).ready(function(){
                 $('#codMod-shw').val(persona['codMod']);
                 $('#nombres-shw').val(persona['nombres']);
                 $('#condicion-shw').val(persona['condicion']);
-                
-                $('#div-btn-add-bol').append(
-                    $(document.createElement('input')).prop({
-                        type: 'button',
-                        id: 'submit',
-                        value: 'Agregar Boleta 2',
-                        className: 'btn'
-                    })
-                );
+
+                $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
+                $('#div-bol').html('');
+                $('#data-bol').html('');
             }
         })
         return false;
     });
 
-    // BUTTON - SHOW NEW BOLETA
+    // BUTTON - NEW BOLETA
     $('#div-btn-add-bol').on('click', '#btn-add-bol', function(){
-        dataBoleta('--');
+        datosBol = {'n':'', 'fecha':'', 'codPlanilla':'', 'anulado':''}
+        dataBoleta(datosBol);
     });
+
+    // BUTTON - SELECT BOLETA
+    $('#div-btn-add-bol').on('click', '.editbtn', function(){
+        dataTmp = getDataRow(this);
+        dataBol = {'n':dataTmp[0], 'fecha':dataTmp[1], 'codPlanilla':dataTmp[2], 'anulado':dataTmp[3]}
+        dataBoleta(dataBol);
+    })
 
     // BUTTON - ADD BOLETA
     $('#data-bol').on('click', '#save-bol', function(){
         dataBol = getDataFormJSON('#frm-data-bol');
+        if(dataBol['n']!=''){
+            dataBol['accion'] = 'update';
+            console.log('update');
+        }
         console.log(dataBol);
         $.ajax({
             type: 'POST',
@@ -110,19 +113,64 @@ $(document).ready(function(){
                 console.log(bol);
                 $('#n-data-bol').val(bol['n']);
                 $('.add-monto').prop('disabled', false)
+                $('#delbtn-bol').prop('disabled', false);
+
+                da = {'idp':$('#bol-idp-shw').val()};
+                $.ajax({
+                    type: 'post',
+                    url: 'search.php',
+                    data: da,
+                    success: function(res){
+                        $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
+                        $('#div-bol').html(res);
+                    }
+                }); 
             }
         })
+
+        
         return false;
     });
 
+    // BUTTON - DEL BOLETA
+    $('#data-bol').on('click', '#delbtn-bol', function(){
+        n = $('#n-data-bol').val();
+        fecha = $('#fecha-data-bol').val();
+        codPlanilla = $('#codPlanilla-data-bol').val();
+        DatosBoleta = { 'n':n, 'fecha': fecha, 'codPlanilla': codPlanilla,  idp: '--', 'accion': 'del'};
+        respuesta = confirm('se eliminara la boleta Nro ' + DatosBoleta['n']);
+        if (respuesta){
+            $.ajax({
+                type: 'post',
+                url: 'add.php',
+                data: DatosBoleta,
+                success: function(res){
+                    console.log(res);
+
+                    da = {'idp':$('#bol-idp-shw').val()};
+                    $.ajax({
+                        type: 'post',
+                        url: 'search.php',
+                        data: da,
+                        success: function(res){
+                            $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
+                            $('#div-bol').html(res);
+                            $('#data-bol').html('');
+                        }
+                    });
+                }
+            });
+
+
+            
+        }
+        return false;
+    })
+
     // BUTTON - ADD MONTO
     $('#data-bol').on('click', '.add-monto', function(){
-        $tr = $(this).closest('tr');
-        dataTmp = $tr.children("td").map(function(){
-            return $(this).text().replace(/\s+/g, " ").trim();
-        }).get();
-
-        dataMonto = {'cod':dataTmp[0], 'monto': dataTmp[1], 'n':$('#n-data-bol').val()};
+        dataTmp = getDataRow(this);
+        dataMonto = {'cod': dataTmp[1], 'monto': dataTmp[2], 'n': $('#n-data-bol').val(), 'accion': 'add'};
         console.log(dataMonto);
 
         $.ajax({
@@ -131,16 +179,60 @@ $(document).ready(function(){
             data: dataMonto,
             success: function(res){
                 datos = JSON.parse(res);
-                tabla = document.getElementById('tb-montos').insertRow(1);
+                rowCount = document.getElementById('tb-montos').rows.length;
+                n = 1;
+                if(rowCount > 2){
+                    n = rowCount - 1;
+                }
+                tabla = document.getElementById('tb-montos').insertRow(n);
+            
                 col1 = tabla.insertCell(0);
                 col2 = tabla.insertCell(1);
                 col3 = tabla.insertCell(2);
-                col1.innerHTML = datos['cod'];
-                col2.innerHTML = datos['monto'];
-                col3.innerHTML = "<button class='del-monto'>eliminar</button>"
+                col4 = tabla.insertCell(3);
+                col1.innerHTML = datos['idm'];
+                col2.innerHTML = datos['cod'];
+                col3.innerHTML = datos['monto'];
+                col4.innerHTML = "<button class='del-monto'>Eliminar</button>  <button class='update-monto'>editar</button>"
+
+                $('#tb-montos .td-monto').empty();
+                $('#tb-montos #add-cod-monto').focus();
             }
         });
-        $('')
+    });
+
+    // BUTTON - DELETE MONTO
+    $('#data-bol').on('click', '.del-monto', function(){
+        dataRow = getDataRow(this);
+        console.log(dataRow);
+        dataDel = {'idm': dataRow[0], 'cod':dataRow[1], 'monto': dataRow[2], 'n':$('#n-data-bol').val(), 'accion': 'del'};
+        $.ajax({
+            type:'post',
+            url: 'add.php',
+            data: dataDel,
+            success: function(res){
+                alert(res);
+            }
+        });
+
+        $(this).closest('tr').remove();
+    });
+
+    // BUTTON - EDIT MONTO
+    $('#data-bol').on('click', '.update-monto', function(){
+        dataRow = getDataRow(this);
+        dataMonto = {'idm': dataRow[0], 'cod': dataRow[1], 'monto': dataRow[2], 'n':$('#n-data-bol').val(), 'accion': 'update'};
+
+        $.ajax({
+            type: 'post',
+            url: 'add.php',
+            data: dataMonto,
+            success: function(res){
+                console.log(res);
+            }
+        });
+
+        console.log(dataMonto);
     });
 });
 
@@ -152,11 +244,11 @@ function getDataFormJSON(idForm){
     return dataObj
 }
 
-function dataBoleta(n){
+function dataBoleta(datosBoleta){
     $.ajax({
         type: "POST", 
         url: "search.php",
-        data: {'n': n},
+        data: datosBoleta,
         success: function(data){
             $('#data-bol').html(data);
             $('#bol-idp-shw').val($('#idp-shw').val());
@@ -165,30 +257,22 @@ function dataBoleta(n){
             $('#bol-nombres-shw').val($('#nombres-shw').val());
             $('#bol-condicion-shw').val($('#condicion-shw').val());
 
-            // $('$add-bol').click(function(){
-            //     dataBol = getDataFormJSON('#data-bol');
-            //     console.log(dataBol);
-            // });
-            
+            console.log(datosBoleta);
+            if(datosBoleta['fecha']!=''){
+                $('.add-monto').prop('disabled', false);
+                $('#delbtn-bol').prop('disabled', false);
+            }
         } 
     });
 }
 
-// function cancelar(){
-//     $('#datos-boleta').html('')
-// }
-
-// function insertRow(data){
-//     tabla = document.getElementById('tb-montos').insertRow(1);
-
-//     col1 = tabla.insertCell(0);
-//     col2 = tabla.insertCell(1);
-//     col3 = tabla.insertCell(2);
-
-//     col1.innerHTML = $('#cod-add').val('uno');
-//     col2.innerHTML = $('#monto-add').val(data[1])
-//     col3.innerHTML = "<button>eliminar</button>"
-// }
+function getDataRow(obj){
+    $tr = $(obj).closest('tr');
+    data = $tr.children("td").map(function(){
+        return $(this).text().replace(/\s+/g, " ").trim();
+    }).get();
+    return data
+}
 
 
 

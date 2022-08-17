@@ -48,15 +48,12 @@
         </div>
         <br>
         <div id="div-btn-add-bol">
-        <div id='div-btn'></div>
-        </div>
+            <div id='div-btn'></div>
 
-        <div id='div-bol'>
-        </div>
+            <div id='div-bol'></div>
 
-        <hr>
-        <div id='data-bol'>
-            
+            <hr>
+            <div id='data-bol'></div>
         </div>
     </div>
 </body>

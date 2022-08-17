@@ -5,6 +5,7 @@ include '../../back/conexion.php';
 // $db = new mysqli('localhost', 'root', '', 'bd_conta');
 // echo 'Recibi '.$_POST['dni'];
 $dni = $_POST['dni'];
+$query = "SELECT * FROM persona WHERE codMod LIKE '%$dni%'";
 $query = "SELECT * FROM persona WHERE (codMod LIKE '%$dni%' or DNI LIKE '%$dni%')";
 $result = $db->query($query);
 
