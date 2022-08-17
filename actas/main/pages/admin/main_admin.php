@@ -492,6 +492,8 @@
                                         <hr width="1" size="90">
                                     </div>
                                     <div class="col-3">
+                                        <label for="inputPassword2" class="">Id</label>
+                                        <input type="number" class="form-control form-control-sm" id="inputid" value='' placeholder="" disabled>
                                         <label for="inputPassword2" class="">DNI</label>
                                         <input type="number" class="form-control form-control-sm" id="inputDNI" value='' placeholder="">
                                         <label for="inputPassword2" class="">Codigo Modular</label>
@@ -570,19 +572,21 @@
             $('#savepersona').click(function(e)
             {
                 e.preventDefault();
+                //Si el check no está activado se va a modificar datos de persona
                 if (document.getElementById("AddCheck").checked == false)
                 {   
                     alert("Se va a modificar los datos");
                     var formData = {
-                        dni: $("#inputDNI").val(),
-                        codmodular: $("#inputCodModular").val(),
-                        apellidoP: $("#inputAPaterno").val(),
-                        apellidoM: $("#inputAMaterno").val(),
-                        nombres: $("#inputNombres").val(),
-                        condicion: $("#inputCondicion").val(),
+                        input_id_persona: $("#id_persona").val(),
+                        input_dni: $("#inputDNI").val(),
+                        input_codmodular: $("#inputCodModular").val(),
+                        input_apellidoP: $("#inputAPaterno").val(),
+                        input_apellidoM: $("#inputAMaterno").val(),
+                        input_nombres: $("#inputNombres").val(),
+                        input_condicion: $("#inputCondicion").val(),
                     };
                     $.ajax({
-                    url: 'AddModificarPersona.php',
+                    url: 'ModificarPersona.php',
                     type: 'post',
                     data: formData,
                     success: function(data){ 
@@ -592,11 +596,31 @@
                         // $('#modal2').modal('show'); 
                     }
                     });
-
                 }
+                //Si el check está activado se va a agregar una nueva persona
                 else
                 {
                     alert("Se va a agregar nuevos datos");
+                    var formData2 = {
+                        input_id_persona: $("#id_persona").val(),
+                        input_dni: $("#inputDNI").val(),
+                        input_codmodular: $("#inputCodModular").val(),
+                        input_apellidoP: $("#inputAPaterno").val(),
+                        input_apellidoM: $("#inputAMaterno").val(),
+                        input_nombres: $("#inputNombres").val(),
+                        input_condicion: $("#inputCondicion").val(),
+                    };
+                    $.ajax({
+                    url: 'AgregarPersona.php',
+                    type: 'post',
+                    data: formData2,
+                    success: function(data){ 
+                        // Add response in Modal body
+                        $('.modal-body').html(data);
+                        // Display Modal
+                        // $('#modal2').modal('show'); 
+                    }
+                    });
                 }
             });
 

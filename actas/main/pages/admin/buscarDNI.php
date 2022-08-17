@@ -35,7 +35,7 @@ $result = $db->query($query);
 
             <?php while($row = $result->fetch_array()){ ?>
                 <tr>
-                    <td><?php echo $row['id_p']?></td>
+                    <td style='display: none;'><?php echo $row['id_p']?></td>
                     <td><?php echo $row['DNI']?></td>
                     <td><?php echo $row['codMod']?></td>
                     <td><?php echo $row['APaterno']?></td>
@@ -64,6 +64,7 @@ $result = $db->query($query);
                 }).get();
                 console.log(data);
                 $('#id_persona').val(data[0]);
+                $('#inputid').val(data[0]);
                 $('#inputDNI').val(data[1]);
                 $('#inputCodModular').val(data[2]);
                 $('#inputAPaterno').val(data[3]);

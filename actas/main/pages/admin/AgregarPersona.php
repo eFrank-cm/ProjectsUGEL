@@ -4,12 +4,14 @@
 include '../../back/conexion.php';
 // $db = new mysqli('localhost', 'root', '', 'bd_conta');
 // echo 'Recibi '.$_POST['dni'];
-$dni = $_POST['dni'];
+$dni = $_POST[''];
 $query = "SELECT * FROM persona WHERE DNI = '$dni'";
+
+$query = "INSERT INTO `persona`(`id_p`, `codMod`, `nombres`, `condicion`, `DNI`, `APaterno`, `AMaterno`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]')"
+
 $result = $db->query($query);
 
 ?>
-
 
 <?php if(mysqli_num_rows($result)>0): ?>
 
