@@ -12,7 +12,7 @@
       {
         header('location:../../index.php');
       }
-
+      
     ?>
     
     <head>
@@ -253,7 +253,7 @@
     <main>              
     <!-- YA NO DEBE TENER BORDER EL DIV CONTAINER -->
     <div class="container">
-        <h3 style="text-align: center;">REGISTRO DE PERSONAS <a href="../../newItems/new-items.php">agregar</a></h3>
+        <h3 style="text-align: center;">REGISTRO DE PERSONAS <a href="../../Items/items.php">agregar</a></h3>
         <form class='row m-0' method='POST'>
             <input required name="keyword" type="text" class="col-4 form-control h-10" style="width: 350px;" placeholder="Ingrese Apellidos, Nombres o Cod Modular">
             <div class='col-4 pr-1'>
