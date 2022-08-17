@@ -6,10 +6,11 @@ include '../../back/conexion.php';
 // echo 'Recibi '.$_POST['dni'];
 $dni = $_POST['dni'];
 $query = "SELECT * FROM persona WHERE (codMod LIKE '%$dni%' or DNI LIKE '%$dni%')";
+
+
+"UPDATE `persona` SET `codMod`='[value-2]',`nombres`='[value-3]',`condicion`='[value-4]',`DNI`='[value-5]',`APaterno`='[value-6]',`AMaterno`='[value-7]' WHERE id_p=''"
 $result = $db->query($query);
-
 ?>
-
 
 <?php if(mysqli_num_rows($result)>0): ?>
     <hr>
@@ -21,7 +22,6 @@ $result = $db->query($query);
     <table class="table table-sm table-hover" style='margin-bottom: -5px;'>
         <thead>
             <tr>
-                <th scope="col" style="display: none;">Id</th>
                 <th scope="col">DNI</th>
                 <th scope="col">CodModular</th>
                 <th scope="col">A. Paterno </th>
@@ -34,8 +34,8 @@ $result = $db->query($query);
         <tbody>
 
             <?php while($row = $result->fetch_array()){ ?>
+
                 <tr>
-                    <td><?php echo $row['id_p']?></td>
                     <td><?php echo $row['DNI']?></td>
                     <td><?php echo $row['codMod']?></td>
                     <td><?php echo $row['APaterno']?></td>
@@ -63,13 +63,12 @@ $result = $db->query($query);
                     return $(this).text().replace(/\s+/g, " ").trim();
                 }).get();
                 console.log(data);
-                $('#id_persona').val(data[0]);
-                $('#inputDNI').val(data[1]);
-                $('#inputCodModular').val(data[2]);
-                $('#inputAPaterno').val(data[3]);
-                $('#inputAMaterno').val(data[4]);
-                $('#inputNombres').val(data[5]);
-                $('#inputCondicion').val(data[6]);
+                $('#inputDNI').val(data[0]);
+                $('#inputCodModular').val(data[1]);
+                $('#inputAPaterno').val(data[2]);
+                $('#inputAMaterno').val(data[3]);
+                $('#inputNombres').val(data[4]);
+                $('#inputCondicion').val(data[5]);
                 // // val(5) for password and not editable for admin --- u can only reset the password
                 // $('#user_type_edit').val(data[6])
                 // $('#state_edit').val(data[7])

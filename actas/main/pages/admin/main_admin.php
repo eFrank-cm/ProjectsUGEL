@@ -99,6 +99,12 @@
             color: black;
         }
 
+        /* Input numerico sin flechas */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
         </style>
     </head>
 
@@ -440,6 +446,9 @@
 
     </script>
 
+    <!-- <input type="text" id='id_persona' style='display:none;'> -->
+    <input type="text" id='id_persona' style='display:none;'>
+
     <!-- ==================INICIO MODAL================= -->
     <button type="button" class="btn btn-secondary" id='ModalAgregarPersona'>
     <i class="bi bi-person-plus"></i> Agregar Persona
@@ -458,7 +467,7 @@
                 </div>
 
 
-                <form class="col container border rounded p-1">
+                <form class="col container p-1">
 
                     <div class="card">
                     <h5 class="card-header">Persona</h5>
@@ -466,7 +475,7 @@
                         <div class="row align-items-start">
                             <div class="col-auto">
                                 <label for="inputPassword2" class="">Ingrese DNI/Cod Modular</label>
-                                <input type="text" name='textDNI' id='textDNI' class="form-control form-control-sm" id="inputPassword2" placeholder="">
+                                <input type="text" name='textDNI' id='textDNI' class="form-control form-control-sm" id="inputPassword2" placeholder="" required>
 
                                 <div class="form-check form-switch" style="position:relative; top:20px; right:-50px;    ">
                                     <input class="form-check-input" type="checkbox" role="switch" id="AddCheck">
@@ -484,13 +493,15 @@
                                     </div>
                                     <div class="col-3">
                                         <label for="inputPassword2" class="">DNI</label>
-                                        <input type="text" class="form-control form-control-sm" id="inputDNI" value='' placeholder="">
+                                        <input type="number" class="form-control form-control-sm" id="inputDNI" value='' placeholder="">
                                         <label for="inputPassword2" class="">Codigo Modular</label>
                                         <input type="text" class="form-control form-control-sm" id="inputCodModular" value='' placeholder="">
                                     </div>
                                     <div class="col-6">
-                                        <label for="inputPassword2" class="">Apellidos</label>
-                                        <input type="text" class="form-control form-control-sm" id="inputApellido" value='' placeholder="">
+                                        <label for="inputPassword2" class="">Apellido Paterno</label>
+                                        <input type="text" class="form-control form-control-sm" id="inputAPaterno" value=''>
+                                        <label for="inputPassword2" class="">Apellido Materno</label>
+                                        <input type="text" class="form-control form-control-sm" id="inputAMaterno" value='' placeholder="">
                                         <label for="inputPassword2" class="">Nombres</label>
                                         <input type="text" class="form-control form-control-sm" id="inputNombres" value='' placeholder="">
                                     </div>
@@ -498,11 +509,11 @@
                                         <label for="inputPassword2" class="">Condición</label>
                                         <select class="form-select form-select-sm" id='inputCondicion' aria-label="Default select example">
                                             <option value="0" selected>Seleccionar...</option>
-                                            <option value="1">ACTIVO</option>
-                                            <option value="2">CESANTE</option>
+                                            <option value="ACTIVO">ACTIVO</option>
+                                            <option value="CESANTE">CESANTE</option>
                                         </select>
                                         <!-- GUARDAR NUEVA PERSONA -->
-                                        <button type="submit" class="btn btn-primary mb-3 btn-sm" style ="position: relative; top: 23px;">Agregar Persona</button>
+                                        <button type="submit" class="btn btn-success mb-3 btn-sm" id='savepersona' style ="position: relative; top: 23px;"><i class="bi bi-person-check"></i>/<i class="bi bi-person-plus"></i> Guardar</button>
                                     </div>
                                 </div>
                             </div>
@@ -511,7 +522,7 @@
                     </div>
                     
                     <!-- Modal body -->
-                    <div class="modal-body">
+                    <div class="modal-body" style='padding:0px; padding-top:10px;'>
                         
 
                     </div>
@@ -539,6 +550,56 @@
 
     <script>
         $(document).ready(function(){
+
+            var switchStatus = false;
+            $("#AddCheck").on('change', function() {
+                if ($(this).is(':checked')) {
+                    switchStatus = $(this).is(':checked');
+                    $("#textDNI").attr("disabled", "disabled");
+                    $("#BuscarDNI").attr("disabled", "disabled");  
+                    // alert(switchStatus);// To verify
+                }
+                else {
+                switchStatus = $(this).is(':checked');
+                $("#textDNI").removeAttr("disabled"); 
+                $("#BuscarDNI").removeAttr("disabled"); 
+                // alert(switchStatus);// To verify
+                }
+            });
+
+            $('#savepersona').click(function(e)
+            {
+                e.preventDefault();
+                if (document.getElementById("AddCheck").checked == false)
+                {   
+                    alert("Se va a modificar los datos");
+                    var formData = {
+                        dni: $("#inputDNI").val(),
+                        codmodular: $("#inputCodModular").val(),
+                        apellidoP: $("#inputAPaterno").val(),
+                        apellidoM: $("#inputAMaterno").val(),
+                        nombres: $("#inputNombres").val(),
+                        condicion: $("#inputCondicion").val(),
+                    };
+                    $.ajax({
+                    url: 'AddModificarPersona.php',
+                    type: 'post',
+                    data: formData,
+                    success: function(data){ 
+                        // Add response in Modal body
+                        $('.modal-body').html(data);
+                        // Display Modal
+                        // $('#modal2').modal('show'); 
+                    }
+                    });
+
+                }
+                else
+                {
+                    alert("Se va a agregar nuevos datos");
+                }
+            });
+
 
             $('#main-searcher').click(function(){
                 datos = $('#frmajax').serialize();
@@ -604,6 +665,7 @@
                         $('.modal-body').html(data);
                         // Display Modal
                         // $('#modal2').modal('show'); 
+
                     }
                     });
 
