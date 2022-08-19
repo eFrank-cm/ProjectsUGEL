@@ -186,13 +186,18 @@ $(document).ready(function(){
                 }
                 tabla = document.getElementById('tb-montos').insertRow(n);
             
-                col1 = tabla.insertCell(0);
+                col1 = tabla.insertCell(0)
                 col2 = tabla.insertCell(1);
                 col3 = tabla.insertCell(2);
                 col4 = tabla.insertCell(3);
                 col1.innerHTML = datos['idm'];
+
                 col2.innerHTML = datos['cod'];
+                col2.setAttribute('contenteditable', 'true')
+
                 col3.innerHTML = datos['monto'];
+                col3.setAttribute('contenteditable', 'true')
+
                 col4.innerHTML = "<button class='del-monto'>Eliminar</button>  <button class='update-monto'>editar</button>"
 
                 $('#tb-montos .td-monto').empty();

@@ -7,7 +7,7 @@ include '../../back/conexion.php';
 $dni = $_POST[''];
 $query = "SELECT * FROM persona WHERE DNI = '$dni'";
 
-$query = "INSERT INTO `persona`(`id_p`, `codMod`, `nombres`, `condicion`, `DNI`, `APaterno`, `AMaterno`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]')"
+$query = "INSERT INTO `persona`(`id_p`, `codMod`, `nombres`, `condicion`, `DNI`, `APaterno`, `AMaterno`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]')";
 
 $result = $db->query($query);
 

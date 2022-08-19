@@ -5,7 +5,7 @@ include '../../back/conexion.php';
 // $db = new mysqli('localhost', 'root', '', 'bd_conta');
 // echo 'Recibi '.$_POST['dni'];
 $dni = $_POST['dni'];
-$query = "SELECT * FROM persona WHERE codMod LIKE '%$dni%'";
+// $query = "SELECT * FROM persona WHERE codMod LIKE '%$dni%'";
 $query = "SELECT * FROM persona WHERE (codMod LIKE '%$dni%' or DNI LIKE '%$dni%')";
 $result = $db->query($query);
 
@@ -37,10 +37,10 @@ $result = $db->query($query);
             <?php while($row = $result->fetch_array()){ ?>
                 <tr>
                     <td style='display: none;'><?php echo $row['id_p']?></td>
-                    <td><?php echo $row['DNI']?></td>
+                    <td><?php echo $row['dni']?></td>
                     <td><?php echo $row['codMod']?></td>
-                    <td><?php echo $row['APaterno']?></td>
-                    <td><?php echo $row['AMaterno']?></td>
+                    <td><?php echo $row['apPaterno']?></td>
+                    <td><?php echo $row['apMaterno']?></td>
                     <td><?php echo $row['nombres']?></td>
                     <td><?php echo $row['condicion']?></td>
                     <td>
