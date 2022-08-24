@@ -16,13 +16,43 @@ $query = "UPDATE `persona` SET `codMod`='$input_codmodular',`nombres`='$input_no
 
 $result = $db->query($query);
 ?>
+<style>
+   /* .swal-button{
+    background-color: #198754;
+   }
+   .swal-button:not([disabled]):hover {
+    background-color: #157347;
+    } */
+</style>
 
-<?php if(mysqli_result($result)): ?>
+<?php if($result === true):?>
     <hr>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Exito!</strong> Se Modificaron los datos de la persona!
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+
+    <script>
+        $(document).ready(function()
+        {
+            // swal('Exito!','Se modificaron los datos de la persona!','success');
+            swal(
+            {
+                icon: "success",
+                Title: "Exito!",
+                text: "Se modificaron los datos de la persona!",
+                buttons: {
+                    cancel: true,
+                    confirm: true,
+                },
+            });
+            document.getElementById("textDNI").value = "";
+            document.getElementById("inputid").value = "";
+            document.getElementById("inputDNI").value = "";
+            document.getElementById("inputCodModular").value = "";
+            document.getElementById("inputAPaterno").value = "";
+            document.getElementById("inputAMaterno").value = "";
+            document.getElementById("inputNombres").value = "";
+            document.getElementById("inputCondicion").value = "0";
+            document.getElementById("AddCheck").checked = false;
+        })
+    </script>
 
 
     <!-- <hr>
