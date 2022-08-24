@@ -3,12 +3,9 @@ $db = new mysqli('localhost', 'root', '', 'bd_conta');
 
 $codMod = $_POST['search_bar'];
 
-
 $str = $_POST['search_bar'];
 $delimiter = ' ';
 $words = explode($delimiter, $str);
-//echo $words[0];
-
 
 $query = "SELECT * FROM persona WHERE codMod='$words[0]'";
 $result = $db->query($query);
@@ -27,7 +24,7 @@ $result = $db->query($query);
   </symbol>
 </svg>
 
-<?php if(mysqli_num_rows($result)>0): $row = $result->fetch_array()?>
+<?php if(mysqli_num_rows($result)>0): $row = $result->fetch_array(); $idp = $row['id_p']; ?>
 
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
@@ -67,30 +64,41 @@ $result = $db->query($query);
     <div class="card">
         <h5 class="card-header">Boletas</h5>
             <div class="card-body">
+
+            <?php
+            $idp = $row['id_p'];
+            $query_boleta = "SELECT * FROM boleta WHERE id_p LIKE '$idp'";
+            $cols_name = array('n', 'fecha', 'codPlanilla', 'anulado', 'idp', 'accion');
+            $result_boletas = $db->query($query_boleta);
+            
+            ?>
             
             <!-- LISTA DE BOLETAS -->
             <table>
                 <thead>
                     <tr>
-                        <th scope="col">codmod</th>
-                        <th scope="col">nombres </th>
-                        <th scope="col">condicion</th>
-                        <th scope="col">accion</th>
+                        <?php foreach($cols_name as $col): ?>
+                            <th scope="col"><?= $col ?></th>
+                        <?php endforeach; ?>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while($row = $result->fetch_array()){ ?>
+                    <?php while($row = $result_boletas->fetch_array()){ ?>
                         <tr>
-                            <td><?php echo $row['codMod']?></td>
-                            <td><?php echo $row['nombres']?></td>
-                            <td><?php echo $row['condicion']?></td>
+                            <td><?= $row['n'] ?></td>
+                            <td><?= $row['fecha'] ?></td>
+                            <td><?= $row['codPlanilla']?></td>
+                            <td><?= $row['anulado']?></td>
+                            <td><?= $row['id_p']?></td>
                             <td>
-                                <button class="select" name='selectbtn' type='button' >Elegir</button>    
+                                <button class="editbtn" name='editbtn-bol' type='button'>Elegir</button>
+                                <button class="" name='' type='button'>Ver</button>
                             </td>
                         </tr>
                     <?php } ?>
                 </tbody>
             </table>
+
             <!-- FIN LISTA DE BOLETAS -->
 
             </div>
@@ -116,3 +124,4 @@ $result = $db->query($query);
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 <?php endif; ?>
+<script src='../../js/events.js'></script>

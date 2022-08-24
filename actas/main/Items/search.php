@@ -13,13 +13,17 @@ if(array_key_exists('idp', $_POST)){
     array_push($cols_name, 'n', 'fecha', 'codPlanilla', 'anulado', 'idp', 'accion');
 }
 
+$codigos = array();
 if(array_key_exists('n', $_POST)){
     $n = $_POST['n'];
     $query = "SELECT * FROM monto WHERE n LIKE '$n'";
     array_push($cols_name, 'cod', 'monto', 'accion');
+
+    $codigos = $db->query("SELECT cod, nombre FROM codigo");
 }
 
 $result = $db->query($query);
+
 ?>
 
 <?php if(mysqli_num_rows($result)==0 and !array_key_exists('n', $_POST)): ?>
@@ -56,8 +60,11 @@ $result = $db->query($query);
         <tbody>
             <?php while($row = $result->fetch_array()){ ?>
                 <tr>
-                    <td contenteditable ><?= $row['id_m'] ?></td>
-                    <td contenteditable><?= $row['cod'] ?></td>
+                    <td><?= $row['id_m'] ?></td>
+                    <td contenteditable>
+                        <?= $row['cod'] ?>
+
+                    </td>
                     <td contenteditable><?= $row['monto'] ?></td>
                     <td>
                         <button class='del-monto' type='button'>Eliminar</button>
@@ -66,8 +73,15 @@ $result = $db->query($query);
                 </tr>
             <?php } ?>
             <tr>
-                <td>-</td>
-                <td class='td-monto' id='add-cod-monto' contenteditable></td>
+                <td></td>
+                <td class='td-monto' id='add-cod-monto' contenteditable>
+                    <select name="cod" id="cod-add-monto">
+                        <option value=""></option>
+                        <?php while($cod = $codigos->fetch_array()) {?>
+                            <option value='<?= $cod['cod'] ?>'><?= $cod['cod']?></option>
+                        <?php } ?>
+                    </select>
+                </td>
                 <td class='td-monto' contenteditable></td>
                 <td><button class='add-monto' disabled>Agregar</button></td>
             </tr>
