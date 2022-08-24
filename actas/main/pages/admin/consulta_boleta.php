@@ -91,7 +91,7 @@ $result = $db->query($query);
                             <td><?= $row['anulado']?></td>
                             <td><?= $row['id_p']?></td>
                             <td>
-                                <button class="editbtn" name='editbtn-bol' type='button'>Elegir</button>
+                                <button class="editBbtn" name='editbtn-bol' id='' type='button'>Elegir</button>
                                 <button class="" name='' type='button'>Ver</button>
                             </td>
                         </tr>
@@ -104,7 +104,31 @@ $result = $db->query($query);
             </div>
     </div>
 
-    
+    <script>
+        $(document).ready(function () 
+        {
+            $('.editBbtn').on('click', function () 
+            {
+                console.log("OK");
+                $('#editBmodal').modal('show');
+                $tr = $(this).closest('tr');
+                var data = $tr.children("td").map(function () 
+                {
+                    return $(this).text().replace(/\s+/g, " ").trim();
+                }).get();
+                console.log(data);
+                // $('#update_id').val(data[0]);
+                // $('#dni').val(data[1]);
+                // $('#fname').val(data[2]);
+                // $('#lname').val(data[3]);
+                // $('#email').val(data[4]);
+                // // val(5) for password and not editable for admin --- u can only reset the password
+                // $('#user_type_edit').val(data[6])
+                // $('#state_edit').val(data[7])
+            });
+        });
+    </script>
+
     <!-- <hr>
     <div class='boleta'>
         <label for="codMod">Codigo Modular: </label>

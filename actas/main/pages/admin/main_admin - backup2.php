@@ -692,7 +692,7 @@
                 e.preventDefault();
                 $("#BuscarDNI").click(function(e)
                 {
-                    alert('Ingresó a buscar DNI');
+                    // alert('Ingresó a buscar DNI');
                     e.preventDefault();
                     var formData = {
                         dni: $("#textDNI").val(),

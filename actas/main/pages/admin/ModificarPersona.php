@@ -12,7 +12,7 @@ $input_amaterno = $_POST['input_apellidoM'];
 $input_nombres = $_POST['input_nombres'];
 $input_condicion = $_POST['input_condicion'];
 
-$query = "UPDATE `persona` SET `codMod`='$input_codmodular',`nombres`='$input_nombres',`condicion`='$input_condicion',`DNI`='$input_dni',`APaterno`='$input_apaterno',`AMaterno`='$input_amaterno' WHERE id_p='$input_id_persona'";
+$query = "UPDATE `persona` SET `codMod`='$input_codmodular',`nombres`='$input_nombres',`condicion`='$input_condicion',`dni`='$input_dni',`apPaterno`='$input_apaterno',`apMaterno`='$input_amaterno' WHERE id_p='$input_id_persona'";
 
 $result = $db->query($query);
 ?>

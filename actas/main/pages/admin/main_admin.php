@@ -258,29 +258,7 @@
     <main>              
     <!-- YA NO DEBE TENER BORDER EL DIV CONTAINER -->
     <div class="container">
-        <h3 style="text-align: center;">REGISTRO DE PERSONAS <a href="../../Items/items.php">agregar</a></h3>
-        <form class='row m-0' method='POST'>
-            <input required name="keyword" type="text" class="col-4 form-control h-10" style="width: 350px;" placeholder="Ingrese Apellidos, Nombres o Cod Modular">
-            <div class='col-4 pr-1'>
-                <button type="submit" class="col-3 btn btn-secondary text-center btn-sm pr-1 pl-1 pb-1" style = "position:relative; left:-5px; top:4px;" ><i class="bi bi-search"></i> Buscar</button>
-            </div>
-        </form>
-
-       <!-- ==================BOTON AGREGAR BOLETA - MODAL================= -->
-        <!-- ==================INICIO================= -->
-        <div class='col-3'> 
-            <button type="" class="btn btn-secondary btn-sm addboletabtn" data-bs-toggle="modal" data-bs-target="#addmodal"><i class="bi bi-file-earmark-plus"></i> Agregar</button>
-        </div>
-                
-        <!-- ==================INICIO================= -->
-        <!-- ==================INICIO================= -->
-        <!-- ==================INICIO================= -->
-        <!-- <form class='row m-0' method='POST'>
-            <div class="autoComplete_wrapper">
-                <input id="autoComplete" type="search" style='border-radius:4px; border-color: rgba(206,212,218,255); color: rgba(108,117,125,255);' dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off">            <div class='col-4 pr-1'>
-                <button type="submit" class="col-3 btn btn-secondary text-center btn-sm pr-1 pl-1 pb-1" style = "position:relative; left:-5px; top:4px;" ><i class="bi bi-search"></i> Buscar</button>
-            </div>
-        </form> -->
+        <h3 style="text-align: center;">REGISTRO DE PERSONAS </h3>
 
 
         <form id="frmajax" method="POST">
@@ -687,12 +665,11 @@
             
             $("#ModalAgregarPersona").click(function(e)
             {
-                
                 $("#myModal").modal('show');
                 e.preventDefault();
                 $("#BuscarDNI").click(function(e)
                 {
-                    alert('Ingresó a buscar DNI');
+                    // alert('Ingresó a buscar DNI');
                     e.preventDefault();
                     var formData = {
                         dni: $("#textDNI").val(),
@@ -705,8 +682,7 @@
                         // Add response in Modal body
                         $('.modal-body').html(data);
                         // Display Modal
-                        // $('#modal2').modal('show'); 
-
+                        // $('#modal2').modal('show');
                     }
                     });
 
@@ -718,6 +694,31 @@
 
     </script>
 
+    <!-- ==================INICIO MODAL EDITAR BOLETAS================= -->
+    
+    <div class="modal fade" id="editBmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> <i class="bi bi-file-earmark-check"></i> Editar Boleta </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"> Cancelar</button>
+                    <button type="button" name="updatedata" class="btn btn-success"> Guardar cambios</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================FIN MODAL EDITAR BOLETAS================= -->
 
 
     <!-- ==================INICIO MODAL2================= -->
