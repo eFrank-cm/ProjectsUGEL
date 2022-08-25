@@ -1,8 +1,6 @@
 <?php
 $db = new mysqli('localhost', 'root', '', 'bd_conta');
-
-$codMod = $_POST['search_bar'];
-
+$codMod = $_POST['search_bar']; 
 $str = $_POST['search_bar'];
 $delimiter = ' ';
 $words = explode($delimiter, $str);
@@ -39,22 +37,22 @@ $result = $db->query($query);
                 <div class="row align-items-start">
                     <div class="col-2">
                         <label for="exampleInputEmail1" class="form-label fw-bolder">Cod Modular</label>
-                        <input for="exampleInputEmail1" class="text form-control form-control-sm" value="<?php echo $row['codMod']?>" disabled="disabled" style='background: white;'></input>
+                        <input for="exampleInputEmail1" id='codMod-shw' class="text form-control form-control-sm" value="<?php echo $row['codMod']?>" disabled="disabled" style='background: white;'></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
                     <div class="col-3">
                         <label for="exampleInputEmail1" class="form-label fw-bolder">Apellido Paterno</label>
-                        <input for="exampleInputEmail1" class="text form-control form-control-sm" value="<?php echo $row['nombres']?>" disabled="disabled" style='background: white;'></input>
+                        <input for="exampleInputEmail1" id='apPaterno-shw' class="text form-control form-control-sm" value="<?php echo $row['apPaterno']?>" disabled="disabled" style='background: white;'></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
                     <div class="col-3">
                         <label for="exampleInputEmail1" class="form-label fw-bolder">Apellido Materno</label>
-                        <input for="exampleInputEmail1" class="text form-control form-control-sm" value="<?php echo $row['nombres']?>" disabled="disabled" style='background: white;'></input>
+                        <input for="exampleInputEmail1" id='apMaterno-shw' class="text form-control form-control-sm" value="<?php echo $row['apMaterno']?>" disabled="disabled" style='background: white;'></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
                     <div class="col-4">
                         <label for="exampleInputEmail1" class="form-label fw-bolder">Nombres</label>
-                        <input for="exampleInputEmail1" class="text form-control form-control-sm" value="<?php echo $row['nombres']?>" disabled="disabled" style='background: white;'></input>
+                        <input for="exampleInputEmail1" id='nombres-shw' class="text form-control form-control-sm" value="<?php echo $row['nombres']?>" disabled="disabled" style='background: white;'></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
                 </div>
@@ -117,16 +115,182 @@ $result = $db->query($query);
                     return $(this).text().replace(/\s+/g, " ").trim();
                 }).get();
                 console.log(data);
-                // $('#update_id').val(data[0]);
-                // $('#dni').val(data[1]);
-                // $('#fname').val(data[2]);
-                // $('#lname').val(data[3]);
-                // $('#email').val(data[4]);
-                // // val(5) for password and not editable for admin --- u can only reset the password
-                // $('#user_type_edit').val(data[6])
-                // $('#state_edit').val(data[7])
+
+                dataTmp = data
+                dataBol = {'n':dataTmp[0], 'fecha':dataTmp[1], 'codPlanilla':dataTmp[2], 'anulado':dataTmp[3]}
+                dataBoleta(dataBol);
+
+
+
             });
         });
+
+        // BUTTON - ADD BOLETA
+        $('.modal-body-2').on('click', '#save-bol', function(){
+            dataBol = getDataFormJSON('#frm-data-bol');
+            if(dataBol['n']!=''){
+                dataBol['accion'] = 'update';
+                console.log('update');
+            }
+            console.log(dataBol);
+            $.ajax({
+                type: 'POST',
+                url: '../../Items/add.php',
+                data: dataBol,
+                success: function(res){
+                    bol = JSON.parse(res);
+                    console.log(bol);
+                    $('#n-data-bol').val(bol['n']);
+                    $('.add-monto').prop('disabled', false)
+                    $('#delbtn-bol').prop('disabled', false);
+
+                    da = {'idp':$('#bol-idp-shw').val()};
+                    $.ajax({
+                        type: 'post',
+                        url: '../../Items/search.php',
+                        data: da,
+                        success: function(res){
+                            $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
+                            $('#div-bol').html(res);
+                        }
+                    }); 
+                }
+            })
+
+            
+            return false;
+        });
+
+        // BUTTON - DEL BOLETA
+        $('.modal-body-2').on('click', '#delbtn-bol', function(){
+            n = $('#n-data-bol').val();
+            fecha = $('#fecha-data-bol').val();
+            codPlanilla = $('#codPlanilla-data-bol').val();
+            DatosBoleta = { 'n':n, 'fecha': fecha, 'codPlanilla': codPlanilla,  idp: '--', 'accion': 'del'};
+            respuesta = confirm('se eliminara la boleta Nro ' + DatosBoleta['n']);
+            if (respuesta){
+                $.ajax({
+                    type: 'post',
+                    url: '../../Items/add.php',
+                    data: DatosBoleta,
+                    success: function(res){
+                        console.log(res);
+
+                        da = {'idp':$('#bol-idp-shw').val()};
+                        $.ajax({
+                            type: 'post',
+                            url: '../../Items/search.php',
+                            data: da,
+                            success: function(res){
+                                $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
+                                $('#div-bol').html(res);
+                                $('#data-bol').html('');
+                            }
+                        });
+                    }
+                });
+
+
+                
+            }
+            return false;
+        })
+
+        // BUTTON - ADD MONTO
+        $('.modal-body-2').on('click', '.add-monto', function(){
+            dataTmp = getDataRow(this);
+            dataMonto = {'cod': dataTmp[1], 'monto': dataTmp[2], 'n': $('#n-data-bol').val(), 'accion': 'add'};
+            console.log(dataMonto);
+
+            $.ajax({
+                type: 'post',
+                url: '../../Items/add.php',
+                data: dataMonto,
+                success: function(res){
+                    datos = JSON.parse(res);
+                    rowCount = document.getElementById('tb-montos').rows.length;
+                    n = 1;
+                    if(rowCount > 2){
+                        n = rowCount - 1;
+                    }
+                    tabla = document.getElementById('tb-montos').insertRow(n);
+                
+                    col1 = tabla.insertCell(0)
+                    col2 = tabla.insertCell(1);
+                    col3 = tabla.insertCell(2);
+                    col4 = tabla.insertCell(3);
+                    col1.innerHTML = datos['idm'];
+
+                    col2.innerHTML = datos['cod'];
+                    col2.setAttribute('contenteditable', 'true')
+
+                    col3.innerHTML = datos['monto'];
+                    col3.setAttribute('contenteditable', 'true')
+
+                    col4.innerHTML = "<button class='del-monto'>Eliminar</button>  <button class='update-monto'>editar</button>"
+
+                    $('#tb-montos .td-monto').empty();
+                    $('#tb-montos #add-cod-monto').focus();
+                }
+            });
+        });
+
+        // BUTTON - DELETE MONTO
+        $('.modal-body-2').on('click', '.del-monto', function(){
+            dataRow = getDataRow(this);
+            console.log(dataRow);
+            dataDel = {'idm': dataRow[0], 'cod':dataRow[1], 'monto': dataRow[2], 'n':$('#n-data-bol').val(), 'accion': 'del'};
+            $.ajax({
+                type:'post',
+                url: '../../Items/add.php',
+                data: dataDel,
+                success: function(res){
+                    alert(res);
+                }
+            });
+
+            $(this).closest('tr').remove();
+        });
+
+        function getDataFormJSON(idForm){
+            dataObj = {};
+            $($(idForm).serializeArray()).each(function(_, field){
+                dataObj[field.name] = field.value;
+            });
+            return dataObj
+        }
+
+        function dataBoleta(datosBoleta){
+            $.ajax({
+                type: "POST", 
+                url: "../../items/search.php",
+                data: datosBoleta,
+                success: function(data){
+                    $('.modal-body-2').html(data);
+                    $('#bol-idp-shw').val($('#idp-shw').val());
+                    $('#idp-data-bol').val($('#idp-shw').val());
+                    $('#bol-codMod-shw').val($('#codMod-shw').val());
+                    $('#bol-nombres-shw').val($('#apPaterno-shw').val() + ' ' +  $('#apMaterno-shw').val() + ', ' + $('#nombres-shw').val());
+                    $('#bol-condicion-shw').val($('#condicion-shw').val());
+
+                    console.log(datosBoleta);
+                    if(datosBoleta['fecha']!=''){
+                        $('.add-monto').prop('disabled', false);
+                        $('#delbtn-bol').prop('disabled', false);
+                    }
+                } 
+            });
+        }
+
+        function getDataRow(obj){
+            $tr = $(obj).closest('tr');
+            data = $tr.children("td").map(function(){
+                return $(this).text().replace(/\s+/g, " ").trim();
+            }).get();
+            return data
+        }
+
+
     </script>
 
     <!-- <hr>
