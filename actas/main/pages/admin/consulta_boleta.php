@@ -35,24 +35,30 @@ $result = $db->query($query);
         <h5 class="card-header">Persona</h5>
             <div class="card-body">
                 <div class="row align-items-start">
+                    <input id='idp-shw' type="text" value='<?= $row['id_p'] ?>' hidden>
                     <div class="col-2">
                         <label for="exampleInputEmail1" class="form-label fw-bolder">Cod Modular</label>
                         <input for="exampleInputEmail1" id='codMod-shw' class="text form-control form-control-sm" value="<?php echo $row['codMod']?>" disabled="disabled" style='background: white;'></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <label for="exampleInputEmail1" class="form-label fw-bolder">Apellido Paterno</label>
                         <input for="exampleInputEmail1" id='apPaterno-shw' class="text form-control form-control-sm" value="<?php echo $row['apPaterno']?>" disabled="disabled" style='background: white;'></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <label for="exampleInputEmail1" class="form-label fw-bolder">Apellido Materno</label>
                         <input for="exampleInputEmail1" id='apMaterno-shw' class="text form-control form-control-sm" value="<?php echo $row['apMaterno']?>" disabled="disabled" style='background: white;'></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <label for="exampleInputEmail1" class="form-label fw-bolder">Nombres</label>
                         <input for="exampleInputEmail1" id='nombres-shw' class="text form-control form-control-sm" value="<?php echo $row['nombres']?>" disabled="disabled" style='background: white;'></input>
+                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                    </div>
+                    <div class="col-2">
+                        <label for="exampleInputEmail1" class="form-label fw-bolder">Condicion</label>
+                        <input for="exampleInputEmail1" id='condicion-shw' class="text form-control form-control-sm" value="<?php echo $row['condicion']?>" disabled="disabled" style='background: white;'></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
                 </div>
@@ -61,12 +67,12 @@ $result = $db->query($query);
     
     <div class="card">
         <h5 class="card-header">Boletas</h5>
-            <div class="card-body">
+            <div class="card-body card" id='div-bol'>
 
             <?php
             $idp = $row['id_p'];
             $query_boleta = "SELECT * FROM boleta WHERE id_p LIKE '$idp'";
-            $cols_name = array('n', 'fecha', 'codPlanilla', 'anulado', 'idp', 'accion');
+            $cols_name = array('N', 'FECHA', 'COD PLANILLA', 'ANULADO', 'IDP', 'ACCION');
             $result_boletas = $db->query($query_boleta);
             
             ?>
@@ -89,7 +95,7 @@ $result = $db->query($query);
                             <td><?= $row['anulado']?></td>
                             <td><?= $row['id_p']?></td>
                             <td>
-                                <button class="editBbtn" name='editbtn-bol' id='' type='button'>Elegir</button>
+                                <button class="editbtn" name='editbtn-bol' id='' type='button'>Elegir</button>
                                 <button class="" name='' type='button'>Ver</button>
                             </td>
                         </tr>
@@ -105,12 +111,12 @@ $result = $db->query($query);
     <script>
         $(document).ready(function () 
         {
-            $('.editBbtn').on('click', function () 
+            $('#div-bol').on('click', '.editbtn', function () 
             {
                 console.log("OK");
                 $('#editBmodal').modal('show');
                 $tr = $(this).closest('tr');
-                var data = $tr.children("td").map(function () 
+                var data = $tr.children("td").map(function() 
                 {
                     return $(this).text().replace(/\s+/g, " ").trim();
                 }).get();
@@ -119,8 +125,6 @@ $result = $db->query($query);
                 dataTmp = data
                 dataBol = {'n':dataTmp[0], 'fecha':dataTmp[1], 'codPlanilla':dataTmp[2], 'anulado':dataTmp[3]}
                 dataBoleta(dataBol);
-
-
 
             });
         });
@@ -184,14 +188,11 @@ $result = $db->query($query);
                             success: function(res){
                                 $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
                                 $('#div-bol').html(res);
-                                $('#data-bol').html('');
+                                $('#editBmodal').modal('hide');
                             }
                         });
                     }
                 });
-
-
-                
             }
             return false;
         })
@@ -240,16 +241,37 @@ $result = $db->query($query);
             dataRow = getDataRow(this);
             console.log(dataRow);
             dataDel = {'idm': dataRow[0], 'cod':dataRow[1], 'monto': dataRow[2], 'n':$('#n-data-bol').val(), 'accion': 'del'};
+            
+            respuesta = confirm('Eliminar monto: ' + dataDel['cod']  + ' y ' + dataDel['monto']);
+            if (respuesta){
+                $.ajax({
+                    type:'post',
+                    url: '../../Items/add.php',
+                    data: dataDel,
+                    success: function(res){
+                        console.log(res);
+                    }
+                });
+                $(this).closest('tr').remove();
+            }
+            
+        });
+
+        // BUTTON - EDIT MONTO
+        $('.modal-body-2').on('click', '.update-monto', function(){
+            dataRow = getDataRow(this);
+            dataMonto = {'idm': dataRow[0], 'cod': dataRow[1], 'monto': dataRow[2], 'n':$('#n-data-bol').val(), 'accion': 'update'};
+
             $.ajax({
-                type:'post',
+                type: 'post',
                 url: '../../Items/add.php',
-                data: dataDel,
+                data: dataMonto,
                 success: function(res){
-                    alert(res);
+                    console.log(res);
                 }
             });
 
-            $(this).closest('tr').remove();
+            console.log(dataMonto);
         });
 
         function getDataFormJSON(idForm){
@@ -270,7 +292,7 @@ $result = $db->query($query);
                     $('#bol-idp-shw').val($('#idp-shw').val());
                     $('#idp-data-bol').val($('#idp-shw').val());
                     $('#bol-codMod-shw').val($('#codMod-shw').val());
-                    $('#bol-nombres-shw').val($('#apPaterno-shw').val() + ' ' +  $('#apMaterno-shw').val() + ', ' + $('#nombres-shw').val());
+                    $('#bol-nombres-shw').val($('#apPaterno-shw').val() + ' ' +  $('#apMaterno-shw').val() + ' ' + $('#nombres-shw').val());
                     $('#bol-condicion-shw').val($('#condicion-shw').val());
 
                     console.log(datosBoleta);
@@ -312,4 +334,3 @@ $result = $db->query($query);
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 <?php endif; ?>
-<script src='../../js/events.js'></script>
