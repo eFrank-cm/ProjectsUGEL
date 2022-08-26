@@ -41,19 +41,16 @@ $result = $db->query($query);
                         <input for="exampleInputEmail1" id='codMod-shw' class="text form-control form-control-sm" value="<?php echo $row['codMod']?>" disabled="disabled" style='background: white;'></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
-                    <div class="col-3">
                     <div class="col-2">
                         <label for="exampleInputEmail1" class="form-label fw-bolder">Apellido Paterno</label>
                         <input for="exampleInputEmail1" id='apPaterno-shw' class="text form-control form-control-sm" value="<?php echo $row['apPaterno']?>" disabled="disabled" style='background: white;'></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
-                    <div class="col-3">
                     <div class="col-2">
                         <label for="exampleInputEmail1" class="form-label fw-bolder">Apellido Materno</label>
                         <input for="exampleInputEmail1" id='apMaterno-shw' class="text form-control form-control-sm" value="<?php echo $row['apMaterno']?>" disabled="disabled" style='background: white;'></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
-                    <div class="col-4">
                     <div class="col-3">
                         <label for="exampleInputEmail1" class="form-label fw-bolder">Nombres</label>
                         <input for="exampleInputEmail1" id='nombres-shw' class="text form-control form-control-sm" value="<?php echo $row['nombres']?>" disabled="disabled" style='background: white;'></input>
@@ -69,8 +66,8 @@ $result = $db->query($query);
     </div>
     
     <div class="card">
-<<<<<<< HEAD
-        
+            <!-- <h5 class="card-header">Boletas</h5>
+            <div class="card-body card" id='div-bol'> -->
         <h5 class="card-header mt-1">Boletas
         <!-- BOTON PARA ABRIR MODAL DE AGREGAR BOLETA -->
         <button type="button" class="btn btn-secondary btn-sm float-end" id='buttonmodal2'>
@@ -82,11 +79,6 @@ $result = $db->query($query);
             {
                 e.preventDefault();
                 $("#myModal2").modal('show');
-=======
-        <h5 class="card-header">Boletas</h5>
-            <div class="card-body card" id='div-bol'>
->>>>>>> 32e78f4168a8b8cd3374e3d670a7035ea4f797ef
-
                 // AJAX request
                 $.ajax({
                 url: 'buscar.php',
@@ -161,11 +153,7 @@ $result = $db->query($query);
             <?php
             $idp = $row['id_p'];
             $query_boleta = "SELECT * FROM boleta WHERE id_p LIKE '$idp'";
-<<<<<<< HEAD
-            $cols_name = array('N', 'Fecha', 'CodPlanilla', 'Anulado', 'IdP', 'Acción');
-=======
             $cols_name = array('N', 'FECHA', 'COD PLANILLA', 'ANULADO', 'IDP', 'ACCION');
->>>>>>> 32e78f4168a8b8cd3374e3d670a7035ea4f797ef
             $result_boletas = $db->query($query_boleta);
             
             ?>
@@ -188,13 +176,9 @@ $result = $db->query($query);
                             <td><?= $row['anulado']?></td>
                             <td><?= $row['id_p']?></td>
                             <td>
-<<<<<<< HEAD
-                                <button class="btn btn-outline-success btn-sm editBbtn" name='editbtn-bol' id='' type='button'> <i class="bi bi-pencil"></i></button>
+                                <button class="btn btn-outline-success btn-sm editbtn" name='editbtn-bol' id='' type='button'> <i class="bi bi-pencil"></i></button>
                                 <button class="btn btn-outline-primary btn-sm" name='' type='button'><i class="bi bi-eye"></i></button>
-=======
-                                <button class="editbtn" name='editbtn-bol' id='' type='button'>Elegir</button>
-                                <button class="" name='' type='button'>Ver</button>
->>>>>>> 32e78f4168a8b8cd3374e3d670a7035ea4f797ef
+
                             </td>
                         </tr>
                     <?php } ?>
@@ -209,13 +193,11 @@ $result = $db->query($query);
     <script>
         $(document).ready(function () 
         {
-            $('.editBbtn').on('click', function () 
             $('#div-bol').on('click', '.editbtn', function () 
             {
                 console.log("OK");
                 $('#editBmodal').modal('show');
                 $tr = $(this).closest('tr');
-                var data = $tr.children("td").map(function () 
                 var data = $tr.children("td").map(function() 
                 {
                     return $(this).text().replace(/\s+/g, " ").trim();
@@ -225,8 +207,6 @@ $result = $db->query($query);
                 dataTmp = data
                 dataBol = {'n':dataTmp[0], 'fecha':dataTmp[1], 'codPlanilla':dataTmp[2], 'anulado':dataTmp[3]}
                 dataBoleta(dataBol);
-
-
 
             });
         });
@@ -290,15 +270,11 @@ $result = $db->query($query);
                             success: function(res){
                                 $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
                                 $('#div-bol').html(res);
-                                $('#data-bol').html('');
                                 $('#editBmodal').modal('hide');
                             }
                         });
                     }
                 });
-
-
-                
             }
             return false;
         })
@@ -369,18 +345,14 @@ $result = $db->query($query);
             dataMonto = {'idm': dataRow[0], 'cod': dataRow[1], 'monto': dataRow[2], 'n':$('#n-data-bol').val(), 'accion': 'update'};
 
             $.ajax({
-                type:'post',
                 type: 'post',
                 url: '../../Items/add.php',
-                data: dataDel,
                 data: dataMonto,
                 success: function(res){
-                    alert(res);
                     console.log(res);
                 }
             });
 
-            $(this).closest('tr').remove();
             console.log(dataMonto);
         });
 
@@ -402,7 +374,6 @@ $result = $db->query($query);
                     $('#bol-idp-shw').val($('#idp-shw').val());
                     $('#idp-data-bol').val($('#idp-shw').val());
                     $('#bol-codMod-shw').val($('#codMod-shw').val());
-                    $('#bol-nombres-shw').val($('#apPaterno-shw').val() + ' ' +  $('#apMaterno-shw').val() + ', ' + $('#nombres-shw').val());
                     $('#bol-nombres-shw').val($('#apPaterno-shw').val() + ' ' +  $('#apMaterno-shw').val() + ' ' + $('#nombres-shw').val());
                     $('#bol-condicion-shw').val($('#condicion-shw').val());
 
@@ -445,4 +416,3 @@ $result = $db->query($query);
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 <?php endif; ?>
-<script src='../../js/events.js'></script><?php endif; ?>
