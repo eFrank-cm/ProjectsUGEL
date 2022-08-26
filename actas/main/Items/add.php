@@ -56,8 +56,10 @@ else if($isDt_bol){
             $fecha = $_POST['fecha'];
             $codPlanilla = $_POST['codPlanilla'];
             $query_delete = "DELETE FROM boleta WHERE n='$n' AND fecha='$fecha' AND codPlanilla='$codPlanilla'";
+            $query_delete = "DELETE FROM boleta WHERE n='$n'";
             $db->query($query_delete);
             echo json_encode(array('n'=>'Eliminado'));
+            echo json_encode(array('n'=>$query_delete));
         }
         else if($_POST['accion'] == 'update'){
             $n = $_POST['n'];
@@ -99,6 +101,7 @@ else if($isDt_mnt){
         $db->query($query_del);
 
         echo "Se eliminaro {$_POST['cod']} y {$_POST['monto']}";
+        echo "Se eliminara {$_POST['cod']} y {$_POST['monto']}";
     }
     else if($_POST['accion'] == 'update'){
         $idm = $_POST['idm'];

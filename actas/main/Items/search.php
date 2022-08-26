@@ -11,6 +11,7 @@ if(array_key_exists('idp', $_POST)){
     $id_p = $_POST['idp'];
     $query = "SELECT * FROM boleta WHERE id_p LIKE '$id_p'";
     array_push($cols_name, 'n', 'fecha', 'codPlanilla', 'anulado', 'idp', 'accion');
+    array_push($cols_name, 'N', 'FECHA', 'COD PLANILLA', 'ANULADO', 'IDP', 'ACCION');
 }
 
 $codigos = array();
@@ -115,6 +116,10 @@ $result = $db->query($query);
                         <td><?= $row['anulado']?></td>
                         <td><?= $row['id_p']?></td>
                         <td><button class="editbtn" name='editbtn-bol' type='button'>Elegir</button></td>
+                        <td>
+                            <button class="editbtn" name='editbtn-bol' type='button'>Elegir</button>
+                            <button class="" name='' type='button'>Ver</button>
+                        </td>
                     </tr>
                 <?php endif; ?>
             <?php } ?>
