@@ -12,7 +12,7 @@ $(document).ready(function(){
 
         dataTmp = data
         dataBol = {'n':dataTmp[0], 'fecha':dataTmp[1], 'codPlanilla':dataTmp[2], 'anulado':dataTmp[3]}
-        dataBoleta(dataBol, 'edit');
+        dataBoleta(dataBol, '#editBoleta');
 
     });
 
@@ -20,8 +20,7 @@ $(document).ready(function(){
     $('#btn-add-bol').on('click', function(){
         $('#newBmodal').modal('show');
         datosBoleta = {'n':'', 'fecha':'', 'codPlanilla':'', 'anulado':''};
-        console.log(datosBoleta);
-        dataBoleta(datosBoleta, 'new');
+        dataBoleta(datosBoleta, '#newBoleta');
 
     });
 
@@ -186,18 +185,14 @@ $(document).ready(function(){
         return dataObj
     }
     
-    function dataBoleta(datosBoleta, tipo){
-        tipo = '#editBoleta';
-        if(tipo == 'new'){
-            tipo = '#newBoleta'
-        }
-        console.log(tipo)
+    function dataBoleta(datosBoleta, conte){
+        console.log(conte);
         $.ajax({
             type: "POST", 
             url: "../../items/search.php",
             data: datosBoleta,
             success: function(data){
-                $(tipo).html(data);
+                $(conte).html(data);
                 $('#bol-idp-shw').val($('#idp-shw').val());
                 $('#idp-data-bol').val($('#idp-shw').val());
                 $('#bol-codMod-shw').val($('#codMod-shw').val());

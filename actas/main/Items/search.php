@@ -85,19 +85,19 @@ $result = $db->query($query);
     </div>
 
     <script>
-        $(document).ready(function () {
-            $('#tb-montos').DataTable({
-                "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-                },
-                "iDisplayLength": 10,
-                "ordering": false,
-                lengthMenu: [
-                    [10, 25, 36],
-                    [10, 25, 36],
-                ]
-            });
-        });
+        // $(document).ready(function () {
+        //     $('#tb-montos').DataTable({
+        //         "language": {
+        //         "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+        //         },
+        //         "iDisplayLength": 10,
+        //         "ordering": false,
+        //         lengthMenu: [
+        //             [10, 25, 36],
+        //             [10, 25, 36],
+        //         ]
+        //     });
+        // });
     </script>
     <form class='col container p-1'>
         <div class='card'>
