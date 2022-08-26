@@ -10,6 +10,8 @@ $result = $db->query($query);
 
 ?>
 
+
+
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
@@ -143,8 +145,24 @@ $result = $db->query($query);
                 
                 ?>
                 
+                <script>
+                    $(document).ready(function () {
+                        $('#tabla2Boletas').DataTable({
+                            "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                            },
+                            "iDisplayLength": 10,
+                            "ordering": false,
+                            lengthMenu: [
+                                [10, 25, 35, -1],
+                                [10, 25, 35, 'Todos'],
+                            ]
+                        });
+                    });
+                </script>
+                
                 <!-- LISTA DE BOLETAS -->
-                <table class='table table-sm'>
+                <table class='table table-sm' id='tabla2Boletas'>
                     <thead>
                         <tr>
                             <?php foreach($cols_name as $col): ?>
@@ -174,6 +192,8 @@ $result = $db->query($query);
 
             </div>
     </div>
+
+
 
     <script src='consulta_boleta.js'></script>
 
