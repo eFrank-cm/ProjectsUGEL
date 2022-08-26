@@ -60,19 +60,100 @@ $result = $db->query($query);
     </div>
     
     <div class="card">
-        <h5 class="card-header">Boletas</h5>
-            <div class="card-body">
+        
+        <h5 class="card-header mt-1">Boletas
+        <!-- BOTON PARA ABRIR MODAL DE AGREGAR BOLETA -->
+        <button type="button" class="btn btn-secondary btn-sm float-end" id='buttonmodal2'>
+        <i class="bi bi-card-list"></i> Agregar Boleta
+        </button>
+        <!-- FIN BOTON PARA ABRIR MODAL DE AGREGAR BOLETA -->
+        <script>
+            $("#buttonmodal2").click(function(e)
+            {
+                e.preventDefault();
+                $("#myModal2").modal('show');
 
+                // AJAX request
+                $.ajax({
+                url: 'buscar.php',
+                type: 'post',
+                data: {orderid: orderid},
+                success: function(data){ 
+                    // Add response in Modal body
+                    $('.modal-body-2').html(data);
+                    // Display Modal
+                    $('#modal2').modal('show'); 
+                }
+                });
+            });
+        </script>
+        <!-- MODAL DE AGREGAR BOLETA -->
+        <div class="modal m-1 fade" id="myModal2">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content p-1">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Agregar Boleta</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <form class="col container border rounded p-1">
+
+                        <div class="card">
+                            <h5 class="card-header">Persona</h5>
+
+                        <div class="card-body">
+                            <div class="row align-items-start">
+                                <div class="col-auto">
+                                    <label for="inputPassword2" class="">Ingrese DNI/Cod Modular</label>
+                                    <input type="text" class="form-control form-control-sm" id="tb-buscador" placeholder="">
+
+                                    <div class="form-check form-switch" style="position:relative; top:20px; right:-50px;    ">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                        <label class="form-check-label" for="flexSwitchCheckDefault">Agregar Nueva Persona</label>
+                                    </div>
+                                    <button class="btn btn-primary mb-3 btn-sm" style ="position: relative; top: 23px;">Buscar</button>
+                                </div>
+                        </div>
+                        <hr>
+
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                        </div>
+
+                    </form>
+
+                <!-- Modal body -->
+                <div class="modal-body-2">
+                    
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- FIN MODAL DE AGREGAR BOLETA -->
+
+
+        </h5>
+            <div class="card-body">
             <?php
             $idp = $row['id_p'];
             $query_boleta = "SELECT * FROM boleta WHERE id_p LIKE '$idp'";
-            $cols_name = array('n', 'fecha', 'codPlanilla', 'anulado', 'idp', 'accion');
+            $cols_name = array('N', 'Fecha', 'CodPlanilla', 'Anulado', 'IdP', 'Acción');
             $result_boletas = $db->query($query_boleta);
             
             ?>
             
             <!-- LISTA DE BOLETAS -->
-            <table>
+            <table class='table table-sm'>
                 <thead>
                     <tr>
                         <?php foreach($cols_name as $col): ?>
@@ -89,8 +170,8 @@ $result = $db->query($query);
                             <td><?= $row['anulado']?></td>
                             <td><?= $row['id_p']?></td>
                             <td>
-                                <button class="editBbtn" name='editbtn-bol' id='' type='button'>Elegir</button>
-                                <button class="" name='' type='button'>Ver</button>
+                                <button class="btn btn-outline-success btn-sm editBbtn" name='editbtn-bol' id='' type='button'> <i class="bi bi-pencil"></i></button>
+                                <button class="btn btn-outline-primary btn-sm" name='' type='button'><i class="bi bi-eye"></i></button>
                             </td>
                         </tr>
                     <?php } ?>
