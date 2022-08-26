@@ -149,43 +149,43 @@ $result = $db->query($query);
 
 
         </h5>
-            <div class="card-body">
-            <?php
-            $idp = $row['id_p'];
-            $query_boleta = "SELECT * FROM boleta WHERE id_p LIKE '$idp'";
-            $cols_name = array('N', 'FECHA', 'COD PLANILLA', 'ANULADO', 'IDP', 'ACCION');
-            $result_boletas = $db->query($query_boleta);
-            
-            ?>
-            
-            <!-- LISTA DE BOLETAS -->
-            <table class='table table-sm'>
-                <thead>
-                    <tr>
-                        <?php foreach($cols_name as $col): ?>
-                            <th scope="col"><?= $col ?></th>
-                        <?php endforeach; ?>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while($row = $result_boletas->fetch_array()){ ?>
+            <div class="card-body" id='div-bol'>
+                <?php
+                $idp = $row['id_p'];
+                $query_boleta = "SELECT * FROM boleta WHERE id_p LIKE '$idp'";
+                $cols_name = array('N', 'FECHA', 'COD PLANILLA', 'ANULADO', 'IDP', 'ACCION');
+                $result_boletas = $db->query($query_boleta);
+                
+                ?>
+                
+                <!-- LISTA DE BOLETAS -->
+                <table class='table table-sm'>
+                    <thead>
                         <tr>
-                            <td><?= $row['n'] ?></td>
-                            <td><?= $row['fecha'] ?></td>
-                            <td><?= $row['codPlanilla']?></td>
-                            <td><?= $row['anulado']?></td>
-                            <td><?= $row['id_p']?></td>
-                            <td>
-                                <button class="btn btn-outline-success btn-sm editbtn" name='editbtn-bol' id='' type='button'> <i class="bi bi-pencil"></i></button>
-                                <button class="btn btn-outline-primary btn-sm" name='' type='button'><i class="bi bi-eye"></i></button>
-
-                            </td>
+                            <?php foreach($cols_name as $col): ?>
+                                <th scope="col"><?= $col ?></th>
+                            <?php endforeach; ?>
                         </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php while($row = $result_boletas->fetch_array()){ ?>
+                            <tr>
+                                <td><?= $row['n'] ?></td>
+                                <td><?= $row['fecha'] ?></td>
+                                <td><?= $row['codPlanilla']?></td>
+                                <td><?= $row['anulado']?></td>
+                                <td><?= $row['id_p']?></td>
+                                <td>
+                                    <button class="btn btn-outline-success btn-sm editbtn" name='editbtn-bol' id='' type='button'> <i class="bi bi-pencil"></i></button>
+                                    <button class="btn btn-outline-primary btn-sm" name='' type='button'><i class="bi bi-eye"></i></button>
 
-            <!-- FIN LISTA DE BOLETAS -->
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+
+                <!-- FIN LISTA DE BOLETAS -->
 
             </div>
     </div>
