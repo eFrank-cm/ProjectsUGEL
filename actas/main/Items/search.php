@@ -16,7 +16,7 @@ if(array_key_exists('idp', $_POST)){
 $codigos = array();
 if(array_key_exists('n', $_POST)){
     $n = $_POST['n'];
-    $query = "SELECT * FROM monto WHERE n LIKE '$n'";
+    $query = "SELECT * FROM monto WHERE n LIKE '$n' ORDER BY id_m DESC";
     array_push($cols_name, 'cod', 'monto', 'accion');
 
     $codigos = $db->query("SELECT cod, nombre FROM codigo");
@@ -30,7 +30,7 @@ $result = $db->query($query);
     <h4>No se encontro resultados para los criterios de busqueda</h4>
 <?php elseif(array_key_exists('n', $_POST)):?>
 
-    <form class='col container p-1'>
+    <div class='col container p-1'>
         <div class='card'>
             <h4 class='card-header'>Boleta</h4>
             <div class="shw-data-per">
@@ -55,6 +55,7 @@ $result = $db->query($query);
             </div>
 
             <div class="div-bol">
+                <!-- FORMULARIO - DATOS BOLETA -->
                 <form id='frm-data-bol' method='POST'>
                     <div class="col p-2"> 
                         <div class="row align-items-start">
@@ -81,7 +82,7 @@ $result = $db->query($query);
                 </form>
             </div>
         </div>
-    </form>
+    </div>
 
     <script>
         $(document).ready(function () {
@@ -113,6 +114,14 @@ $result = $db->query($query);
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td></td>
+                            <td class='td-monto' id='add-cod-monto' contenteditable>
+                                
+                            </td>
+                            <td class='td-monto' contenteditable></td>
+                            <td><button class='add-monto btn btn-outline-primary btn-sm' disabled><i class="bi bi-plus-circle"></i> Agregar</button></td>
+                        </tr>
                         <?php while($row = $result->fetch_array()){ ?>
                             <tr>
                                 <td><?= $row['id_m'] ?></td>
@@ -127,19 +136,6 @@ $result = $db->query($query);
                                 </td>
                             </tr>
                         <?php } ?>
-                        <tr>
-                            <td></td>
-                            <td class='td-monto' id='add-cod-monto' contenteditable>
-                                <select name="cod" id="cod-add-monto">
-                                    <option value=""></option>
-                                    <?php while($cod = $codigos->fetch_array()) {?>
-                                        <option value='<?= $cod['cod'] ?>'><?= $cod['cod']?></option>
-                                    <?php } ?>
-                                </select>
-                            </td>
-                            <td class='td-monto' contenteditable></td>
-                            <td><button class='add-monto btn btn-outline-primary btn-sm' disabled><i class="bi bi-plus-circle"></i> Agregar</button></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>

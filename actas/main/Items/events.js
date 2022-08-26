@@ -204,6 +204,7 @@ $(document).ready(function(){
                 $('#tb-montos #add-cod-monto').focus();
             }
         });
+        return false;
     });
 
     // BUTTON - DELETE MONTO

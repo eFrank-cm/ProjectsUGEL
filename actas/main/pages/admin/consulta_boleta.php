@@ -65,34 +65,19 @@ $result = $db->query($query);
             </div>
     </div>
     
-    <div class="card">
+    <div class="card" id='hh'>
             <!-- <h5 class="card-header">Boletas</h5>
             <div class="card-body card" id='div-bol'> -->
         <h5 class="card-header mt-1">Boletas
         <!-- BOTON PARA ABRIR MODAL DE AGREGAR BOLETA -->
-        <button type="button" class="btn btn-secondary btn-sm float-end" id='buttonmodal2'>
-        <i class="bi bi-card-list"></i> Agregar Boleta
+        <button type="button" class="btn btn-secondary btn-sm float-end" id='btn-add-bol'>
+            <i class="bi bi-card-list"></i> Agregar Boleta Nueva
         </button>
-        <!-- FIN BOTON PARA ABRIR MODAL DE AGREGAR BOLETA -->
         <script>
-            $("#buttonmodal2").click(function(e)
-            {
-                e.preventDefault();
-                $("#myModal2").modal('show');
-                // AJAX request
-                $.ajax({
-                url: 'buscar.php',
-                type: 'post',
-                data: {orderid: orderid},
-                success: function(data){ 
-                    // Add response in Modal body
-                    $('.modal-body-2').html(data);
-                    // Display Modal
-                    $('#modal2').modal('show'); 
-                }
-                });
-            });
+            
         </script>
+        <!-- FIN BOTON PARA ABRIR MODAL DE AGREGAR BOLETA -->
+
         <!-- MODAL DE AGREGAR BOLETA -->
         <div class="modal m-1 fade" id="myModal2">
             <div class="modal-dialog modal-xl">
@@ -190,212 +175,7 @@ $result = $db->query($query);
             </div>
     </div>
 
-    <script>
-        $(document).ready(function () 
-        {
-            $('#div-bol').on('click', '.editbtn', function () 
-            {
-                console.log("OK");
-                $('#editBmodal').modal('show');
-                $tr = $(this).closest('tr');
-                var data = $tr.children("td").map(function() 
-                {
-                    return $(this).text().replace(/\s+/g, " ").trim();
-                }).get();
-                console.log(data);
-
-                dataTmp = data
-                dataBol = {'n':dataTmp[0], 'fecha':dataTmp[1], 'codPlanilla':dataTmp[2], 'anulado':dataTmp[3]}
-                dataBoleta(dataBol);
-
-            });
-        });
-
-        // BUTTON - ADD BOLETA
-        $('.modal-body-2').on('click', '#save-bol', function(){
-            dataBol = getDataFormJSON('#frm-data-bol');
-            if(dataBol['n']!=''){
-                dataBol['accion'] = 'update';
-                console.log('update');
-            }
-            console.log(dataBol);
-            $.ajax({
-                type: 'POST',
-                url: '../../Items/add.php',
-                data: dataBol,
-                success: function(res){
-                    bol = JSON.parse(res);
-                    console.log(bol);
-                    $('#n-data-bol').val(bol['n']);
-                    $('.add-monto').prop('disabled', false)
-                    $('#delbtn-bol').prop('disabled', false);
-
-                    da = {'idp':$('#bol-idp-shw').val()};
-                    $.ajax({
-                        type: 'post',
-                        url: '../../Items/search.php',
-                        data: da,
-                        success: function(res){
-                            $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
-                            $('#div-bol').html(res);
-                        }
-                    }); 
-                }
-            })
-
-            
-            return false;
-        });
-
-        // BUTTON - DEL BOLETA
-        $('.modal-body-2').on('click', '#delbtn-bol', function(){
-            n = $('#n-data-bol').val();
-            fecha = $('#fecha-data-bol').val();
-            codPlanilla = $('#codPlanilla-data-bol').val();
-            DatosBoleta = { 'n':n, 'fecha': fecha, 'codPlanilla': codPlanilla,  idp: '--', 'accion': 'del'};
-            respuesta = confirm('se eliminara la boleta Nro ' + DatosBoleta['n']);
-            if (respuesta){
-                $.ajax({
-                    type: 'post',
-                    url: '../../Items/add.php',
-                    data: DatosBoleta,
-                    success: function(res){
-                        console.log(res);
-
-                        da = {'idp':$('#bol-idp-shw').val()};
-                        $.ajax({
-                            type: 'post',
-                            url: '../../Items/search.php',
-                            data: da,
-                            success: function(res){
-                                $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
-                                $('#div-bol').html(res);
-                                $('#editBmodal').modal('hide');
-                            }
-                        });
-                    }
-                });
-            }
-            return false;
-        })
-
-        // BUTTON - ADD MONTO
-        $('.modal-body-2').on('click', '.add-monto', function(){
-            dataTmp = getDataRow(this);
-            dataMonto = {'cod': dataTmp[1], 'monto': dataTmp[2], 'n': $('#n-data-bol').val(), 'accion': 'add'};
-            console.log(dataMonto);
-
-            $.ajax({
-                type: 'post',
-                url: '../../Items/add.php',
-                data: dataMonto,
-                success: function(res){
-                    datos = JSON.parse(res);
-                    rowCount = document.getElementById('tb-montos').rows.length;
-                    n = 1;
-                    if(rowCount > 2){
-                        n = rowCount - 1;
-                    }
-                    tabla = document.getElementById('tb-montos').insertRow(n);
-                
-                    col1 = tabla.insertCell(0)
-                    col2 = tabla.insertCell(1);
-                    col3 = tabla.insertCell(2);
-                    col4 = tabla.insertCell(3);
-                    col1.innerHTML = datos['idm'];
-
-                    col2.innerHTML = datos['cod'];
-                    col2.setAttribute('contenteditable', 'true')
-
-                    col3.innerHTML = datos['monto'];
-                    col3.setAttribute('contenteditable', 'true')
-
-                    col4.innerHTML = "<button class='del-monto'>Eliminar</button>  <button class='update-monto'>editar</button>"
-
-                    $('#tb-montos .td-monto').empty();
-                    $('#tb-montos #add-cod-monto').focus();
-                }
-            });
-        });
-
-        // BUTTON - DELETE MONTO
-        $('.modal-body-2').on('click', '.del-monto', function(){
-            dataRow = getDataRow(this);
-            console.log(dataRow);
-            dataDel = {'idm': dataRow[0], 'cod':dataRow[1], 'monto': dataRow[2], 'n':$('#n-data-bol').val(), 'accion': 'del'};
-            
-            respuesta = confirm('Eliminar monto: ' + dataDel['cod']  + ' y ' + dataDel['monto']);
-            if (respuesta){
-                $.ajax({
-                    type:'post',
-                    url: '../../Items/add.php',
-                    data: dataDel,
-                    success: function(res){
-                        console.log(res);
-                    }
-                });
-                $(this).closest('tr').remove();
-            }
-            
-        });
-
-        // BUTTON - EDIT MONTO
-        $('.modal-body-2').on('click', '.update-monto', function(){
-            dataRow = getDataRow(this);
-            dataMonto = {'idm': dataRow[0], 'cod': dataRow[1], 'monto': dataRow[2], 'n':$('#n-data-bol').val(), 'accion': 'update'};
-
-            $.ajax({
-                type: 'post',
-                url: '../../Items/add.php',
-                data: dataMonto,
-                success: function(res){
-                    console.log(res);
-                }
-            });
-
-            console.log(dataMonto);
-        });
-
-        function getDataFormJSON(idForm){
-            dataObj = {};
-            $($(idForm).serializeArray()).each(function(_, field){
-                dataObj[field.name] = field.value;
-            });
-            return dataObj
-        }
-
-        function dataBoleta(datosBoleta){
-            $.ajax({
-                type: "POST", 
-                url: "../../items/search.php",
-                data: datosBoleta,
-                success: function(data){
-                    $('.modal-body-2').html(data);
-                    $('#bol-idp-shw').val($('#idp-shw').val());
-                    $('#idp-data-bol').val($('#idp-shw').val());
-                    $('#bol-codMod-shw').val($('#codMod-shw').val());
-                    $('#bol-nombres-shw').val($('#apPaterno-shw').val() + ' ' +  $('#apMaterno-shw').val() + ' ' + $('#nombres-shw').val());
-                    $('#bol-condicion-shw').val($('#condicion-shw').val());
-
-                    console.log(datosBoleta);
-                    if(datosBoleta['fecha']!=''){
-                        $('.add-monto').prop('disabled', false);
-                        $('#delbtn-bol').prop('disabled', false);
-                    }
-                } 
-            });
-        }
-
-        function getDataRow(obj){
-            $tr = $(obj).closest('tr');
-            data = $tr.children("td").map(function(){
-                return $(this).text().replace(/\s+/g, " ").trim();
-            }).get();
-            return data
-        }
-
-
-    </script>
+    <script src='consulta_boleta.js'></script>
 
     <!-- <hr>
     <div class='boleta'>
