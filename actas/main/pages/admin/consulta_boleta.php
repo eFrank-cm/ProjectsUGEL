@@ -73,7 +73,7 @@ $result = $db->query($query);
         <h5 class="card-header mt-1">Boletas
         <!-- BOTON PARA ABRIR MODAL DE AGREGAR BOLETA -->
         <button type="button" class="btn btn-secondary btn-sm float-end" id='btn-add-bol'>
-            <i class="bi bi-card-list"></i> Agregar Boleta Nueva
+            <i class="bi bi-card-list"></i> Agregar Boleta
         </button>
         <script>
             
@@ -139,7 +139,7 @@ $result = $db->query($query);
             <div class="card-body" id='div-bol'>
                 <?php
                 $idp = $row['id_p'];
-                $query_boleta = "SELECT * FROM boleta WHERE id_p LIKE '$idp'";
+                $query_boleta = "SELECT * FROM boleta WHERE id_p LIKE '$idp' ORDER BY n DESC";
                 $cols_name = array('N', 'FECHA', 'COD PLANILLA', 'ANULADO', 'IDP', 'ACCION');
                 $result_boletas = $db->query($query_boleta);
                 
@@ -166,7 +166,11 @@ $result = $db->query($query);
                     <thead>
                         <tr>
                             <?php foreach($cols_name as $col): ?>
-                                <th scope="col"><?= $col ?></th>
+                                <?php if($col=='IDP'): ?>
+                                    <th scope="col" hidden><?= $col ?></th>
+                                <?php else:?>
+                                    <th scope="col"><?= $col ?></th>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </tr>
                     </thead>
@@ -177,11 +181,10 @@ $result = $db->query($query);
                                 <td><?= $row['fecha'] ?></td>
                                 <td><?= $row['codPlanilla']?></td>
                                 <td><?= $row['anulado']?></td>
-                                <td><?= $row['id_p']?></td>
+                                <td hidden><?= $row['id_p']?></td>
                                 <td>
-                                    <button class="btn btn-outline-success btn-sm editbtn" name='editbtn-bol' id='' type='button'> <i class="bi bi-pencil"></i></button>
-                                    <button class="btn btn-outline-primary btn-sm" name='' type='button'><i class="bi bi-eye"></i></button>
-
+                                    <button class="btn btn-outline-success btn-sm editbtn" name='editbtn-bol' type='button'><i class="bi bi-pencil"></i></button>
+                                    <button class="btn btn-outline-primary btn-sm verbtn-bol" type='submit'><i class="bi bi-eye"></i></button>
                                 </td>
                             </tr>
                         <?php } ?>

@@ -263,7 +263,7 @@
     <main>              
     <!-- YA NO DEBE TENER BORDER EL DIV CONTAINER -->
     <div class="container">
-        <h3 style="text-align: center;">REGISTRO DE PERSONAS </h3>
+        <h3 style="text-align: center;">REGISTRO DE BOLETAS - ACTAS Y CERTIFICADOS</h3>
 
 
         <form id="frmajax" method="POST">
@@ -701,7 +701,7 @@
 
     <!-- ==================INICIO MODAL EDITAR BOLETAS================= -->
     
-    <div class="modal fade" id="editBmodal" data-bs-backdrop="dynamic" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="modalBoleta" data-bs-backdrop="dynamic" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 
@@ -725,30 +725,6 @@
         </div>
     </div>
 
-        
-    <div class="modal fade" id="newBmodal" data-bs-backdrop="dynamic" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> <i class="bi bi-file-earmark-check"></i> Nueva Boleta </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="container">
-                    <div class="modal-body-2" id='newBoleta'>
-                        
-                    </div>
-                </div>
-                
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"> Cancelar</button>
-                    <button type="button" name="updatedata" class="btn btn-success"> Guardar cambios</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
 
     <!-- ==================FIN MODAL EDITAR BOLETAS================= -->
 

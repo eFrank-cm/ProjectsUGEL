@@ -1,7 +1,7 @@
 <?php
 include('conexion.php');
 
-$boleta_per = explode_keys('; ', $_POST['array']);
+$boleta_per = $_POST; // explode_keys('; ', $_POST['array'])
 
 $montos = array();
 $rem_total = 0;

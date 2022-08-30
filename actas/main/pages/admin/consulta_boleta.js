@@ -1,8 +1,7 @@
 $(document).ready(function(){
     // ELEGIR BOLETA
     $('#div-bol').on('click', '.editbtn', function(){
-        console.log("OK");
-        $('#editBmodal').modal('show');
+        $('#modalBoleta').modal('toggle');
         $tr = $(this).closest('tr');
         var data = $tr.children("td").map(function() 
         {
@@ -13,14 +12,46 @@ $(document).ready(function(){
         dataTmp = data
         dataBol = {'n':dataTmp[0], 'fecha':dataTmp[1], 'codPlanilla':dataTmp[2], 'anulado':dataTmp[3]}
         dataBoleta(dataBol, '#editBoleta');
+    });
 
+    // VER BOLETA
+    $('#div-bol').on('click', '.verbtn-bol', function(){
+        dtRow = getDataRow(this);
+        dataBol = {
+            'codMod': $('#codMod-shw').val(),
+            'nombres': $('#nombres-shw').val() + ' ' + $('#apPaterno-shw').val() + ' ' + $('#apMaterno-shw').val(),
+            'condicion': $('#condicion-shw').val(),
+            'n' : dtRow[0],
+            'fecha': dtRow[1],
+            'codPlanilla': dtRow[2],
+            'anulado': dtRow[3]
+        };
+        console.log(dataBol);
+        const form = document.createElement('form');
+        form.method = 'post';
+        form.action = 'ver_boleta.php';
+        form.target = '_blank'
+
+        for(const key in dataBol){
+            if(dataBol.hasOwnProperty(key)){
+                const hiddenField = document.createElement('input');
+                hiddenField.type = 'hidden';
+                hiddenField.name = key;
+                hiddenField.value = dataBol[key];
+
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
     });
 
     // NEW BOLETA
     $('#btn-add-bol').on('click', function(){
-        $('#newBmodal').modal('show');
+        $('#modalBoleta').modal('toggle');
         datosBoleta = {'n':'', 'fecha':'', 'codPlanilla':'', 'anulado':''};
-        dataBoleta(datosBoleta, '#newBoleta');
+        dataBoleta(datosBoleta, '#editBoleta');
 
     });
 
@@ -82,7 +113,7 @@ $(document).ready(function(){
                         success: function(res){
                             $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
                             $('#div-bol').html(res);
-                            $('#editBmodal').modal('hide');
+                            $('#modalBoleta').modal('hide');
                         }
                     });
                 }
@@ -95,6 +126,7 @@ $(document).ready(function(){
     // BUTTON - ADD MONTO
     $('.modal-body-2').on('click', '.add-monto', function(){
         dataTmp = getDataRow(this);
+        console.log(dataTmp);
         dataMonto = {'cod': dataTmp[1], 'monto': dataTmp[2], 'n': $('#n-data-bol').val(), 'accion': 'add'};
         console.log(dataMonto);
         $.ajax({
@@ -104,10 +136,11 @@ $(document).ready(function(){
             success: function(res){
                 datos = JSON.parse(res);
                 rowCount = document.getElementById('tb-montos').rows.length;
-                n = 1;
+                n = -1;
                 if(rowCount > 2){
                     n = 2;
                 }
+                console.log(n);
                 tabla = document.getElementById('tb-montos').insertRow(n);
             
                 col1 = tabla.insertCell(0);
@@ -115,6 +148,7 @@ $(document).ready(function(){
                 col3 = tabla.insertCell(2);
                 col4 = tabla.insertCell(3);
                 col1.innerHTML = datos['idm'];
+                col1.setAttribute('hidden', 'true')
 
                 col2.innerHTML = datos['cod'];
                 col2.setAttribute('contenteditable', 'true')

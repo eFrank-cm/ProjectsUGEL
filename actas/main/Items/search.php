@@ -9,7 +9,7 @@ if(array_key_exists('kw', $_POST)){
 }
 if(array_key_exists('idp', $_POST)){
     $id_p = $_POST['idp'];
-    $query = "SELECT * FROM boleta WHERE id_p LIKE '$id_p'";
+    $query = "SELECT * FROM boleta WHERE id_p LIKE '$id_p' ORDER BY n DESC";
     array_push($cols_name, 'N', 'FECHA', 'COD PLANILLA', 'ANULADO', 'IDP', 'ACCION');
 }
 
@@ -29,7 +29,6 @@ $result = $db->query($query);
 <?php if(mysqli_num_rows($result)==0 and !array_key_exists('n', $_POST)): ?>
     <h4>No se encontro resultados para los criterios de busqueda</h4>
 <?php elseif(array_key_exists('n', $_POST)):?>
-
     <div class='col container p-1'>
         <div class='card'>
             <h4 class='card-header'>Boleta</h4>
@@ -85,29 +84,35 @@ $result = $db->query($query);
     </div>
 
     <script>
-        // $(document).ready(function () {
-        //     $('#tb-montos').DataTable({
-        //         "language": {
-        //         "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-        //         },
-        //         "iDisplayLength": 10,
-        //         "ordering": false,
-        //         lengthMenu: [
-        //             [10, 25, 36],
-        //             [10, 25, 36],
-        //         ]
-        //     });
-        // });
+        $(document).ready(function () {
+            $('#tb-montos').DataTable({
+                "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                },
+                "iDisplayLength": 10,
+                "ordering": false,
+                lengthMenu: [
+                    [10, 25, 36],
+                    [10, 25, 36],
+                ],
+                "columnDefs": [
+                    {
+                        "targets": [ 0 ],
+                        "visible": true
+                    }
+                ]
+            });
+        });
     </script>
     <form class='col container p-1'>
         <div class='card'>
             <h4 class='card-header'>Montos de la boleta</h4>
         
-            <div class='p-2'>
-                <table class="display m-1" id='tb-montos'>
+            <div class='container p-2 '>
+                <table class="display m-1 w-100" id='tb-montos'>
                     <thead>
                         <tr>
-                            <th>idm</th>
+                            <th hidden>idm</th>
                             <th>Codigo</th>
                             <th>Monto</th>
                             <th>Acción</th>
@@ -115,7 +120,7 @@ $result = $db->query($query);
                     </thead>
                     <tbody>
                         <tr>
-                            <td></td>
+                            <td hidden></td>
                             <td class='td-monto' id='add-cod-monto' contenteditable>
                                 
                             </td>
@@ -124,15 +129,14 @@ $result = $db->query($query);
                         </tr>
                         <?php while($row = $result->fetch_array()){ ?>
                             <tr>
-                                <td><?= $row['id_m'] ?></td>
+                                <td hidden><?= $row['id_m'] ?></td>
                                 <td contenteditable>
                                     <?= $row['cod'] ?>
-
                                 </td>
                                 <td contenteditable><?= $row['monto'] ?></td>
                                 <td>
                                     <button class='update-monto btn btn-outline-success btn-sm'><i class="bi bi-pencil-square"></i> Editar</button>
-                                    <button class='del-monto btn btn-outline-danger btn-sm' type='button'><i class="bi bi-trash3"></i> Eliminar</button>
+                                    <button class='del-monto btn btn-outline-danger btn-sm' type='su'><i class="bi bi-trash3"></i> Eliminar</button>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -143,11 +147,30 @@ $result = $db->query($query);
     </form>  
 <?php else:?>
     <br>
-    <table>
+    <script>
+        $(document).ready(function () {
+            $('#tabla2Boletas').DataTable({
+                "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                },
+                "iDisplayLength": 10,
+                "ordering": false,
+                lengthMenu: [
+                    [10, 25, 35, -1],
+                    [10, 25, 35, 'Todos'],
+                ]
+            });
+        });
+    </script>
+    <table class='table table-sm' id='tabla2Boletas'>
         <thead>
             <tr>
                 <?php foreach($cols_name as $col): ?>
-                    <th scope="col"><?= $col ?></th>
+                    <?php if($col=='IDP'): ?>
+                        <th scope="col" hidden><?= $col ?></th>
+                    <?php else:?>
+                        <th scope="col"><?= $col ?></th>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </tr>
         </thead>
@@ -167,10 +190,10 @@ $result = $db->query($query);
                         <td><?= $row['fecha'] ?></td>
                         <td><?= $row['codPlanilla']?></td>
                         <td><?= $row['anulado']?></td>
-                        <td><?= $row['id_p']?></td>
+                        <td hidden><?= $row['id_p']?></td>
                         <td>
-                            <button class="editbtn" name='editbtn-bol' type='button'>Elegir</button>
-                            <button class="" name='' type='button'>Ver</button>
+                            <button class="btn btn-outline-success btn-sm editbtn" name='editbtn-bol' type='button'><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-outline-primary btn-sm verbtn-bol" name='' type='button'><i class="bi bi-eye"></i></button>
                         </td>
                     </tr>
                 <?php endif; ?>
