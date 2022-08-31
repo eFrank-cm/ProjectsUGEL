@@ -17,7 +17,7 @@ $codigos = array();
 if(array_key_exists('n', $_POST)){
     $n = $_POST['n'];
     $query = "SELECT * FROM monto WHERE n LIKE '$n' ORDER BY id_m DESC";
-    array_push($cols_name, 'cod', 'monto', 'accion');
+    array_push($cols_name, 'CODIGO', 'MONTO', 'ACCION');
 
     $codigos = $db->query("SELECT cod, nombre FROM codigo");
 }
@@ -112,10 +112,10 @@ $result = $db->query($query);
                 <table class="display m-1 w-100" id='tb-montos'>
                     <thead>
                         <tr>
-                            <th hidden>idm</th>
-                            <th>Codigo</th>
-                            <th>Monto</th>
-                            <th>Acción</th>
+                            <th hidden>IDM</th>
+                            <th>CODIGO</th>
+                            <th>MONTO</th>
+                            <th>ACCION</th>
                         </tr>
                     </thead>
                     <tbody>
