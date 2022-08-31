@@ -2,16 +2,10 @@ $(document).ready(function(){
     // ELEGIR BOLETA
     $('#div-bol').on('click', '.editbtn', function(){
         $('#modalBoleta').modal('toggle');
-        $tr = $(this).closest('tr');
-        var data = $tr.children("td").map(function() 
-        {
-            return $(this).text().replace(/\s+/g, " ").trim();
-        }).get();
-        console.log(data);
-
-        dataTmp = data
+        $('#modaltitle').text(" Editar Boleta");
+        dataTmp = getDataRow(this)
         dataBol = {'n':dataTmp[0], 'fecha':dataTmp[1], 'codPlanilla':dataTmp[2], 'anulado':dataTmp[3]}
-        dataBoleta(dataBol, '#editBoleta');
+        dataBoleta(dataBol);
     });
 
     // VER BOLETA
@@ -50,13 +44,14 @@ $(document).ready(function(){
     // NEW BOLETA
     $('#btn-add-bol').on('click', function(){
         $('#modalBoleta').modal('toggle');
+        $('#modaltitle').text(" Nueva Boleta");
         datosBoleta = {'n':'', 'fecha':'', 'codPlanilla':'', 'anulado':''};
-        dataBoleta(datosBoleta, '#editBoleta');
-
+        dataBoleta(datosBoleta);
     });
 
     // BUTTON - ADD BOLETA
     $('.modal-body-2').on('click', '#save-bol', function(){
+        $('#frm-monto').removeAttr("hidden");
         dataBol = getDataFormJSON('#frm-data-bol');
         
         if(dataBol['n']!=''){
@@ -96,6 +91,8 @@ $(document).ready(function(){
         fecha = $('#fecha-data-bol').val();
         codPlanilla = $('#codPlanilla-data-bol').val();
         DatosBoleta = { 'n':n, 'fecha': fecha, 'codPlanilla': codPlanilla,  idp: '--', 'accion': 'del'};
+
+
         respuesta = confirm('se eliminara la boleta Nro ' + DatosBoleta['n']);
         if (respuesta){
             $.ajax({
@@ -177,36 +174,31 @@ $(document).ready(function(){
         dataRow = getDataRow(this);
         console.log(dataRow);
         dataDel = {'idm': dataRow[0], 'cod':dataRow[1], 'monto': dataRow[2], 'n':$('#n-data-bol').val(), 'accion': 'del'};
-        // respuesta = confirm('Eliminar monto: ' + dataDel['cod']  + ' y ' + dataDel['monto']);
         swal({
             title: "Estas seguro de eliminar esta entrada?",
             text: 'Se eliminará el codigo ' + dataDel['cod']  + ' y monto ' + dataDel['monto'],
             icon: "warning",
             buttons: true,
-            dangerMode: true,
-          })
-          .then((willDelete) => {
-            if (willDelete) 
-            {
-                // if (respuesta){
-                    $.ajax({
-                        type:'post',
-                        url: '../../Items/add.php',
-                        data: dataDel,
-                        success: function(res){
-                            
-                            console.log(res);
-                        }
-                    });
-                // }
+            dangerMode: true
+        })
+        .then((willDelete) => {
+            if (willDelete){
+                $.ajax({
+                    type:'post',
+                    url: '../../Items/add.php',
+                    data: dataDel,
+                    success: function(res){
+                        console.log(res);
+                    }
+                });
                 $(this).closest('tr').remove();
 
-              swal('El codigo ' + dataDel['cod']  + ' con monto ' + dataDel['monto'] +' ha sido eliminado!', 
-              {
-                icon: "success",
-              });
+                swal({
+                    title: 'El codigo ' + dataDel['cod']  + ' con monto ' + dataDel['monto'] +' ha sido eliminado!',
+                    icon: 'success'
+                })
             }
-          });
+        });
         return false;
     });
 
@@ -247,14 +239,13 @@ $(document).ready(function(){
         return dataObj
     }
     
-    function dataBoleta(datosBoleta, conte){
-        console.log(conte);
+    function dataBoleta(datosBoleta){
         $.ajax({
             type: "POST", 
             url: "../../items/search.php",
             data: datosBoleta,
             success: function(data){
-                $(conte).html(data);
+                $('#bodyModalBoleta').html(data);
                 $('#bol-idp-shw').val($('#idp-shw').val());
                 $('#idp-data-bol').val($('#idp-shw').val());
                 $('#bol-codMod-shw').val($('#codMod-shw').val());
@@ -262,9 +253,10 @@ $(document).ready(function(){
                 $('#bol-condicion-shw').val($('#condicion-shw').val());
     
                 console.log(datosBoleta);
-                if(datosBoleta['fecha']!=''){
+                if(datosBoleta['fecha']!='' && datosBoleta['codPlanilla']!='' && datosBoleta['anulado']!=''){
                     $('.add-monto').prop('disabled', false);
                     $('#delbtn-bol').prop('disabled', false);
+                    $('#frm-monto').removeAttr("hidden");
                 }
             } 
         });

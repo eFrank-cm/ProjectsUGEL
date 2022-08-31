@@ -265,7 +265,6 @@
     <div class="container">
         <h3 style="text-align: center;">REGISTRO DE BOLETAS - ACTAS Y CERTIFICADOS</h3>
 
-
         <form id="frmajax" method="POST">
             <div class="row">
                 <div class="col-md-3">&nbsp;</div>
@@ -706,12 +705,12 @@
             <div class="modal-content">
                 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> <i class="bi bi-file-earmark-check"></i> Editar Boleta </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-file-earmark-check"></i><div id='modaltitle' class='d-inline'></div></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="container">
-                    <div class="modal-body-2" id='editBoleta'>
+                    <div class="modal-body-2" id='bodyModalBoleta'>
                         
                     </div>
                 </div>

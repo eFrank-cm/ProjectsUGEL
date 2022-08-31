@@ -70,7 +70,7 @@ $result = $db->query($query);
                             <div class='col-3 align-self-end'>
                                 <!-- <label>Anulado: </label><input name="anulado" id='anulado-data-bol' type="checkbox"> -->
                                 <button class='btn btn-success btn-sm' id='save-bol' style='position: static;'><i class="bi bi-check2"></i> Guardar</button>
-                                <button class='btn btn-danger btn-sm' id='delbtn-bol' style='position: static;' disabled><i class="bi bi-trash"></i> Eliminar</button>
+                                <button class='btn btn-danger btn-sm' id='delbtn-bol' style='position: static;' disabled><i class="bi bi-trash"></i> Eliminar Boleta</button>
                             </div>
                             <!-- GUARDAR ID -->
                             <div class="col-auto">
@@ -104,7 +104,7 @@ $result = $db->query($query);
             });
         });
     </script>
-    <form class='col container p-1'>
+    <form class='col container p-1' id='frm-monto' hidden>
         <div class='card'>
             <h4 class='card-header'>Montos de la boleta</h4>
         
@@ -114,6 +114,7 @@ $result = $db->query($query);
                         <tr>
                             <th hidden>IDM</th>
                             <th>CODIGO</th>
+                            <th>TAG</th>
                             <th>MONTO</th>
                             <th>ACCION</th>
                         </tr>
@@ -121,18 +122,16 @@ $result = $db->query($query);
                     <tbody>
                         <tr>
                             <td hidden></td>
-                            <td class='td-monto' id='add-cod-monto' contenteditable>
-                                
-                            </td>
+                            <td class='td-monto' id='add-cod-monto' contenteditable></td>
+                            <td class='tag' contenteditable></td>
                             <td class='td-monto' contenteditable></td>
                             <td><button class='add-monto btn btn-outline-primary btn-sm' disabled><i class="bi bi-plus-circle"></i> Agregar</button></td>
                         </tr>
                         <?php while($row = $result->fetch_array()){ ?>
                             <tr>
                                 <td hidden><?= $row['id_m'] ?></td>
-                                <td contenteditable>
-                                    <?= $row['cod'] ?>
-                                </td>
+                                <td contenteditable><?= $row['cod'] ?></td>
+                                <td contendeditable><?= $row['tag'] ?></td>
                                 <td contenteditable><?= $row['monto'] ?></td>
                                 <td>
                                     <button class='update-monto btn btn-outline-success btn-sm'><i class="bi bi-pencil-square"></i> Editar</button>

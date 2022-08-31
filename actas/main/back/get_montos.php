@@ -39,7 +39,7 @@ if(!empty($boleta_per)){
     $codigos_keys = array();
     while($row = $cod_result->fetch_array()){
         if(in_array($row['cod'], $codigos_keys_tmp)){
-            array_push($codigos_value, $row['nombre']);         
+            array_push($codigos_value, $row['tag']);         
             array_push($codigos_keys, $row['cod']);
         }
     }
