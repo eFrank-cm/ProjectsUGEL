@@ -228,7 +228,6 @@ $(document).ready(function(){
     $('#data-bol').on('click', '.update-monto', function(){
         dataRow = getDataRow(this);
         dataMonto = {'idm': dataRow[0], 'cod': dataRow[1], 'monto': dataRow[2], 'n':$('#n-data-bol').val(), 'accion': 'update'};
-
         $.ajax({
             type: 'post',
             url: 'add.php',
@@ -237,7 +236,6 @@ $(document).ready(function(){
                 console.log(res);
             }
         });
-
         console.log(dataMonto);
     });
 });

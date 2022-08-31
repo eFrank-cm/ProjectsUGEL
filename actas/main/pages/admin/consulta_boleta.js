@@ -177,20 +177,37 @@ $(document).ready(function(){
         dataRow = getDataRow(this);
         console.log(dataRow);
         dataDel = {'idm': dataRow[0], 'cod':dataRow[1], 'monto': dataRow[2], 'n':$('#n-data-bol').val(), 'accion': 'del'};
-        
-        respuesta = confirm('Eliminar monto: ' + dataDel['cod']  + ' y ' + dataDel['monto']);
-        if (respuesta){
-            $.ajax({
-                type:'post',
-                url: '../../Items/add.php',
-                data: dataDel,
-                success: function(res){
-                    
-                    console.log(res);
-                }
-            });
-        }
-        $(this).closest('tr').remove();
+        // respuesta = confirm('Eliminar monto: ' + dataDel['cod']  + ' y ' + dataDel['monto']);
+        swal({
+            title: "Estas seguro de eliminar esta entrada?",
+            text: 'Se eliminará el codigo ' + dataDel['cod']  + ' y monto ' + dataDel['monto'],
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) 
+            {
+                // if (respuesta){
+                    $.ajax({
+                        type:'post',
+                        url: '../../Items/add.php',
+                        data: dataDel,
+                        success: function(res){
+                            
+                            console.log(res);
+                        }
+                    });
+                // }
+                $(this).closest('tr').remove();
+
+              swal('El codigo ' + dataDel['cod']  + ' con monto ' + dataDel['monto'] +' ha sido eliminado!', 
+              {
+                icon: "success",
+              });
+            }
+          });
+        return false;
     });
 
     // BUTTON - EDIT MONTO
@@ -203,7 +220,18 @@ $(document).ready(function(){
             url: '../../Items/add.php',
             data: dataMonto,
             success: function(res){
+                
+                var resultado = $.trim(res);
                 console.log(res);
+                
+                if(resultado == "ERROR")
+                {
+                    swal('Error!', 'No se pudo guardar los datos por que existen campos vacios', 'error');
+                }
+                else
+                {
+                    swal('Exito!', 'Se guardaron los datos!', 'success');
+                }
             }
         });
 

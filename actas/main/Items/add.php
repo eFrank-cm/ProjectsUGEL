@@ -89,6 +89,7 @@ else if($isDt_mnt){
         }
 
         echo json_encode($monto);
+
     }
     else if($_POST['accion']=='del'){
         $idm = $_POST['idm'];
@@ -108,11 +109,12 @@ else if($isDt_mnt){
         $query_update = "UPDATE monto SET cod='$cod', monto='$monto' WHERE id_m='$idm'";
         $db->query($query_update);
         echo $query_update;
+        
     }    
 }
 
 else{
-    echo "campos vacios";
+    echo "ERROR";
 }
 ?>
 
