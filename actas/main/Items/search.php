@@ -136,7 +136,7 @@ $result = $db->query($query);
                                 <td contenteditable><?= $row['monto'] ?></td>
                                 <td>
                                     <button class='update-monto btn btn-outline-success btn-sm'><i class="bi bi-pencil-square"></i> Editar</button>
-                                    <button class='del-monto btn btn-outline-danger btn-sm' type='su'><i class="bi bi-trash3"></i> Eliminar</button>
+                                    <button class='del-monto btn btn-outline-danger btn-sm'><i class="bi bi-trash3"></i> Eliminar</button>
                                 </td>
                             </tr>
                         <?php } ?>
