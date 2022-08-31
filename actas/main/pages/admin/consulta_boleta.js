@@ -64,22 +64,32 @@ $(document).ready(function(){
             url: '../../Items/add.php',
             data: dataBol,
             success: function(res){
-                bol = JSON.parse(res);
-                console.log(bol);
-                $('#n-data-bol').val(bol['n']);
-                $('.add-monto').prop('disabled', false)
-                $('#delbtn-bol').prop('disabled', false);
-
-                da = {'idp':$('#bol-idp-shw').val()};
-                $.ajax({
-                    type: 'post',
-                    url: '../../Items/search.php',
-                    data: da,
-                    success: function(res){
-                        $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
-                        $('#div-bol').html(res);
-                    }
-                }); 
+                var resultado = $.trim(res);
+                console.log(resultado);
+                if(resultado == "ERROR")
+                {
+                    swal('ERROR!', 'No se pudo guardar por que existen campos vacios', 'error');
+                }
+                else
+                {
+                    bol = JSON.parse(res);
+                    console.log(bol);
+                    $('#n-data-bol').val(bol['n']);
+                    $('.add-monto').prop('disabled', false)
+                    $('#delbtn-bol').prop('disabled', false);
+    
+                    da = {'idp':$('#bol-idp-shw').val()};
+                    $.ajax({
+                        type: 'post',
+                        url: '../../Items/search.php',
+                        data: da,
+                        success: function(res){
+                            $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
+                            $('#div-bol').html(res);
+                            swal('EXITO!', 'Se guardaron los cambios de la boleta!', 'success');
+                        }
+                    }); 
+                }
             }
         })
         return false;
@@ -91,31 +101,42 @@ $(document).ready(function(){
         fecha = $('#fecha-data-bol').val();
         codPlanilla = $('#codPlanilla-data-bol').val();
         DatosBoleta = { 'n':n, 'fecha': fecha, 'codPlanilla': codPlanilla,  idp: '--', 'accion': 'del'};
+        swal({
+            title: "Estas seguro de eliminar esta boleta?",
+            text: 'Se eliminará la boleta n° ' + DatosBoleta['n']+' y todos los montos que contenga',
+            icon: "warning",
+            buttons: ["Cancelar","Eliminar"],
+            dangerMode: true
+        })
+        .then((willDelete) => {
+            if (willDelete){
+                $.ajax({
+                    type: 'post',
+                    url: '../../Items/add.php',
+                    data: DatosBoleta,
+                    success: function(res){
+                        console.log(res);
+    
+                        da = {'idp':$('#bol-idp-shw').val()};
+                        $.ajax({
+                            type: 'post',
+                            url: '../../Items/search.php',
+                            data: da,
+                            success: function(res){
+                                $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
+                                $('#div-bol').html(res);
+                                $('#modalBoleta').modal('hide');
+                            }
+                        });
+                    }
+                });
+                swal({
+                    title: 'La boleta n° ' + DatosBoleta['n']  + ' ha sido eliminada!',
+                    icon: 'success'
+                })
+            }
+        });
 
-
-        respuesta = confirm('se eliminara la boleta Nro ' + DatosBoleta['n']);
-        if (respuesta){
-            $.ajax({
-                type: 'post',
-                url: '../../Items/add.php',
-                data: DatosBoleta,
-                success: function(res){
-                    console.log(res);
-
-                    da = {'idp':$('#bol-idp-shw').val()};
-                    $.ajax({
-                        type: 'post',
-                        url: '../../Items/search.php',
-                        data: da,
-                        success: function(res){
-                            $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
-                            $('#div-bol').html(res);
-                            $('#modalBoleta').modal('hide');
-                        }
-                    });
-                }
-            });
-        }
         return false;
     })
 
@@ -178,7 +199,7 @@ $(document).ready(function(){
             title: "Estas seguro de eliminar esta entrada?",
             text: 'Se eliminará el codigo ' + dataDel['cod']  + ' y monto ' + dataDel['monto'],
             icon: "warning",
-            buttons: true,
+            buttons: ["Cancelar","Eliminar"],
             dangerMode: true
         })
         .then((willDelete) => {

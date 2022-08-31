@@ -178,7 +178,11 @@
                                 Editar/Eliminar
                             </a> -->
 
-                            <div class="sb-sidenav-menu-heading">Interface</div>
+                            <div class="sb-sidenav-menu-heading">Funciones</div>
+                            <a class="nav-link" href="main_admin.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Boletas
+                            </a>
                             <!-- LAYOUTS BLOQUEADO -->
                             <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -193,7 +197,7 @@
                             </div> -->
                             
                             <!-- BOLETAS DASHBOARD -->
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Boletas
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -201,10 +205,10 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="main_admin.php">Buscar</a>
-                                    <a class="nav-link" href="#" disabled>Agregar</a>
-                                    <a class="nav-link" href="#" disabled>Editar</a>
+                                    <a class="nav-link" href="#" disabled hidden>Agregar</a>
+                                    <a class="nav-link" href="#" disabled hidden>Editar</a>
                                 </nav>
-                            </div>
+                            </div> -->
 
                             <!-- PAGES BLOQUEADO -->
                             <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -239,14 +243,16 @@
                                 </nav>
                             </div> -->
 
-                            <div class="sb-sidenav-menu-heading">Addons</div>
-                            <a class="nav-link" href="charts.html">
+                            <div class="sb-sidenav-menu-heading">Reportes</div>
+                            <!-- <a class="nav-link" href="charts.html"> -->
+                            <a class="nav-link" href="#">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Charts
+                                Registros
                             </a>
-                            <a class="nav-link" href="tables.html">
+                            <!-- <a class="nav-link" href="tables.html"> -->
+                            <a class="nav-link" href="#">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
+                                Tablas
                             </a>
                         </div>
                     </div>
@@ -267,20 +273,24 @@
 
         <form id="frmajax" method="POST">
             <div class="row">
-                <div class="col-md-3">&nbsp;</div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary float-end" id='ModalAgregarPersona'>
+                    <i class="bi bi-person-plus"></i> Agregar Persona
+                    </button>
+                </div>
                 <div class="col-md-6">
                     <div class="autoComplete_wrapper">
                         <input id="autoComplete" name="search_bar" type="search" style='border-radius:4px; border-color: rgba(206,212,218,255); color: rgba(108,117,125,255); width: 633px;' dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off">
                     </div>
                 </div>
-                <div class="col-md-2 ">
-                    <button type="button" id='main-searcher' class="btn btn-secondary" style='position:relative; top:5px;'>
+                <div class="col-md-3">
+                    <button type="button" id='main-searcher' class="btn btn-secondary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layer-backward" viewBox="0 0 16 16">
                     <path d="M8.354 15.854a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708l1-1a.5.5 0 0 1 .708 0l.646.647V4H1a1 1 0 0 1-1-1V1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9v7.793l.646-.647a.5.5 0 0 1 .708 0l1 1a.5.5 0 0 1 0 .708l-3 3z"/>
                     <path d="M1 9a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4.5a.5.5 0 0 1 0 1H1v2h4.5a.5.5 0 0 1 0 1H1zm9.5 0a.5.5 0 0 1 0-1H15V6h-4.5a.5.5 0 0 1 0-1H15a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4.5z"/>
-                    </svg> Elegir 2.0</button>
+                    </svg> Elegir</button>
                 </div>
-                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-1"></div>
             </div>
         </form>
 
@@ -340,106 +350,15 @@
         });
     </script>
 
-
-
         <!-- ==================FIN================= -->
         <!-- ==================FIN================= -->
         <!-- ==================FIN================= -->
-
-
-
-        <!-- ==================INICIO================= -->
-                    <!--MODAL AÑADIR-->
-                    <!-- <div class="modal-dialog modal-xl" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-person-plus-fill"></i> Añadir nuevo usuario </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                        </button>
-                                    </div>
-                                    <form action="" method="POST">
-
-                                        <div class="modal-body">
-                                            <div class="form-group pb-1">
-                                                <label> DNI: </label>
-                                                <input required type="number" name="dni" class="form-control" onKeyPress="if(this.value.length==8) return false;" >
-                                            </div>
-                                            <div class="form-group pb-1">
-                                                <label> Nombres: </label>
-                                                <input required type="text" name="fname" class="form-control" onkeyup="this.value = this.value.toUpperCase();" onKeyPress="return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32 ) || (event.charCode == 241))" style="text-transform:uppercase" >
-                                            </div>
-                                            <div class="form-group pb-1">
-                                                <label> Apellidos: </label>
-                                                <input required type="text" name="lname" class="form-control" onkeyup="this.value = this.value.toUpperCase();" onKeyPress="return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32 ) || (event.charCode == 241))" style="text-transform:uppercase" >
-                                            </div>
-                                            <div class="form-group pb-1">
-                                                <label> Email: </label>
-                                                <input required type="email" name="email" class="form-control" >
-                                            </div>
-                                            <div class="form-group mb-2">
-                                            <label for="privilegio">Privilegios:</label>
-                                            <select name ="user_type" class="form-select" aria-label="Default select example">
-                                                <option selected required value="user">Usuario</option>
-                                                <option required value="admin">Administrador</option>
-                                            </select> 
-                                            </div>
-                                            <div class="form-group pmb-2">
-                                            <label for="privilegio">Estado:</label>
-                                            <select readonly name ="state" class="form-select" aria-label="Default select example">
-                                                <option selected required value="habilitado">Activo</option>
-                                            </select> 
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <p class="fw-lighter">*La contraseña será el nro de DNI.</p>
-                                            <div></div>
-                                            <div></div>
-                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"> Cancelar</button>
-                                            <button type="submit" name="insertdata" class="btn btn-success"> Guardar</button>
-                                        </div>
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div> -->
-        <!-- ==================SCRIPT ABRIR MODAL AGREGAR BOLETA================= -->
-                <!-- <script>
-                    $(document).ready(function () 
-                    {
-                        $('.addboletabtn').on('click', function () 
-                        {
-                            console.log("OK");
-                            $('#addmodal').modal('show');
-                            $tr = $(this).closest('tr');
-                            var data = $tr.children("td").map(function () 
-                            {
-                                return $(this).text().replace(/\s+/g, " ").trim();
-                            }).get();
-                            console.log(data);
-                            // $('#update_id').val(data[0]);
-                            // $('#dni').val(data[1]);
-                            // $('#fname').val(data[2]);
-                            // $('#lname').val(data[3]);
-                            // $('#email').val(data[4]);
-                            // // val(5) for password and not editable for admin --- u can only reset the password
-                            // $('#user_type_edit').val(data[6])
-                            // $('#state_edit').val(data[7])
-                        });
-                    });
-                </script> -->
-    <script>
-
-    </script>
 
     <!-- <input type="text" id='id_persona' style='display:none;'> -->
     <input type="text" id='id_persona' style='display:none;'>
 
     <!-- ==================INICIO MODAL================= -->
-    <button type="button" class="btn btn-secondary" id='ModalAgregarPersona'>
-    <i class="bi bi-person-plus"></i> Agregar Persona
-    </button>
+
 
 
     <!-- The Modal -->
@@ -833,9 +752,9 @@
                                 };
                             };
             ?>
-        <hr>
+        
 
-                <div class='border' name='resultado_elegido' id='resultado_elegido'>
+                <div class='' name='resultado_elegido' id='resultado_elegido'>
                             
                 </div>
     </div>

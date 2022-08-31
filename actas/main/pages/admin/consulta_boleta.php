@@ -40,27 +40,27 @@ $result = $db->query($query);
                     <input id='idp-shw' type="text" value='<?= $row['id_p'] ?>' hidden>
                     <div class="col-2">
                         <label for="exampleInputEmail1" class="form-label fw-bolder">Cod Modular</label>
-                        <input for="exampleInputEmail1" id='codMod-shw' class="text form-control form-control-sm" value="<?php echo $row['codMod']?>" disabled="disabled" style='background: white;'></input>
+                        <input for="exampleInputEmail1" id='codMod-shw' class="text form-control form-control-sm" value="<?php echo $row['codMod']?>" disabled="disabled" readonly></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
                     <div class="col-2">
                         <label for="exampleInputEmail1" class="form-label fw-bolder">Apellido Paterno</label>
-                        <input for="exampleInputEmail1" id='apPaterno-shw' class="text form-control form-control-sm" value="<?php echo $row['apPaterno']?>" disabled="disabled" style='background: white;'></input>
+                        <input for="exampleInputEmail1" id='apPaterno-shw' class="text form-control form-control-sm" value="<?php echo $row['apPaterno']?>" disabled="disabled" readonly></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
                     <div class="col-2">
                         <label for="exampleInputEmail1" class="form-label fw-bolder">Apellido Materno</label>
-                        <input for="exampleInputEmail1" id='apMaterno-shw' class="text form-control form-control-sm" value="<?php echo $row['apMaterno']?>" disabled="disabled" style='background: white;'></input>
+                        <input for="exampleInputEmail1" id='apMaterno-shw' class="text form-control form-control-sm" value="<?php echo $row['apMaterno']?>" disabled="disabled" readonly></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
                     <div class="col-3">
                         <label for="exampleInputEmail1" class="form-label fw-bolder">Nombres</label>
-                        <input for="exampleInputEmail1" id='nombres-shw' class="text form-control form-control-sm" value="<?php echo $row['nombres']?>" disabled="disabled" style='background: white;'></input>
+                        <input for="exampleInputEmail1" id='nombres-shw' class="text form-control form-control-sm" value="<?php echo $row['nombres']?>" disabled="disabled" readonly></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
                     <div class="col-2">
-                        <label for="exampleInputEmail1" class="form-label fw-bolder">Condicion</label>
-                        <input for="exampleInputEmail1" id='condicion-shw' class="text form-control form-control-sm" value="<?php echo $row['condicion']?>" disabled="disabled" style='background: white;'></input>
+                        <label for="exampleInputEmail1" class="form-label fw-bolder">Condición</label>
+                        <input for="exampleInputEmail1" id='condicion-shw' class="text form-control form-control-sm" value="<?php echo $row['condicion']?>" disabled="disabled" readonly></input>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
                 </div>
