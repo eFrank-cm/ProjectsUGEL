@@ -195,11 +195,6 @@ $result = $db->query($query);
 
             </div>
     </div>
-
-
-
-    <script src='consulta_boleta.js'></script>
-
     <!-- <hr>
     <div class='boleta'>
         <label for="codMod">Codigo Modular: </label>

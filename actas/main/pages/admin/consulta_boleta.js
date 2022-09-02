@@ -1,6 +1,91 @@
 $(document).ready(function(){
+    // BUTTON -  AGREGAR / EDITAR PERSONA
+    $('#savepersona').click(function(e){
+        e.preventDefault();
+        var personData = {
+            'idp': $("#id_persona").val(),
+            'dni': $("#inputDNI").val(),
+            'codMod': $("#inputCodModular").val(),
+            'apPaterno': $("#inputAPaterno").val(),
+            'apMaterno': $("#inputAMaterno").val(),
+            'nombres': $("#inputNombres").val(),
+            'condicion': $("#inputCondicion").val(),
+        };
+        //Si el check no está activado se va a modificar datos de persona
+        if (document.getElementById("AddCheck").checked == false)
+        {   
+            if ($("#inputid").val() == ""){
+                // alert("Por favor primero realice una busqueda");
+                swal('Error','Por favor seleccione una persona','error');
+            }
+            else{
+                // alert("Se va a modificar los datos");
+                $.ajax({
+                    url: '../../Items/add.php',
+                    type: 'post',
+                    data: personData,
+                    success: function(data){ 
+                        swal({
+                            text: 'Datos modificados exitosamente!',
+                            icon: 'success'
+                        });
+                    }
+                });
+
+                document.getElementById("inputid").value = "";
+                $('.modal-body').html('');
+                document.getElementById("inputDNI").value = "";
+                document.getElementById("inputCodModular").value = "";
+                document.getElementById("inputAPaterno").value = "";
+                document.getElementById("inputAMaterno").value = "";
+                document.getElementById("inputNombres").value = "";
+                document.getElementById("inputCondicion").value = "0";
+                document.getElementById("AddCheck").checked = true;
+            }
+
+        }
+        //Si el check está activado se va a agregar una nueva persona
+        else{
+            $.ajax({
+                url: '../../Items/add.php',
+                type: 'post',
+                data: personData,
+                success: function(res){ 
+                    swal({
+                        text: 'Datos añadidos exitosamente!',
+                        icon: 'success'
+                    });
+                }
+            });
+
+            document.getElementById("inputDNI").value = "";
+            document.getElementById("inputCodModular").value = "";
+            document.getElementById("inputAPaterno").value = "";
+            document.getElementById("inputAMaterno").value = "";
+            document.getElementById("inputNombres").value = "";
+            document.getElementById("inputCondicion").value = "0";
+            document.getElementById("AddCheck").checked = true;
+        }
+    });
+
+    // SWITCH - AGREGAR PERSONA
+    var switchStatus = false;
+    $("#AddCheck").on('change', function() {
+        if ($(this).is(':checked')) {
+            switchStatus = $(this).is(':checked');
+            document.getElementById("textDNI").value = "";
+            $("#textDNI").attr("disabled", "disabled");
+            $("#BuscarDNI").attr("disabled", "disabled");  
+        }
+        else {
+            switchStatus = $(this).is(':checked');
+            $("#textDNI").removeAttr("disabled"); 
+            $("#BuscarDNI").removeAttr("disabled"); 
+        }
+    });
+
     // ELEGIR BOLETA
-    $('#div-bol').on('click', '.editbtn', function(){
+    $('#resultado_elegido').on('click', '.editbtn', function(){
         $('#modalBoleta').modal('show');
         $('#modaltitle').text(" Editar Boleta");
         dataTmp = getDataRow(this)
@@ -9,7 +94,7 @@ $(document).ready(function(){
     });
 
     // VER BOLETA
-    $('#div-bol').on('click', '.verbtn-bol', function(){
+    $('#resultado_elegido').on('click', '.verbtn-bol', function(){
         dtRow = getDataRow(this);
         dataBol = {
             'codMod': $('#codMod-shw').val(),
@@ -42,7 +127,7 @@ $(document).ready(function(){
     });
 
     // NEW BOLETA
-    $('#btn-add-bol').on('click', function(){
+    $('#resultado_elegido').on('click', '#btn-add-bol', function(){
         $('#modalBoleta').modal('show');
         $('#modaltitle').text(" Nueva Boleta");
         var datosBoleta = {'n':'', 'fecha':'', 'codPlanilla':'', 'anulado':''};
@@ -303,6 +388,54 @@ $(document).ready(function(){
                 });
             }
         });
+    });
+
+    $('#main-searcher').click(function(){
+        datos = $('#frmajax').serialize();
+        $.ajax({
+            type: "POST",
+            url: "consulta_boleta.php",
+            data: datos,
+            success:function(r){
+                $('#resultado_elegido').html(r)
+                $('.select').on('click', function(){
+                    $tr = $(this).closest('tr');
+                    var data = $tr.children("td").map(function(){
+                        return $(this).text().replace(/\s+/g, " ").trim();
+                    }).get();
+                    $('#codMod').val(data[0])
+                    $('#nombres').val(data[1])
+                    $('#condicion').val(data[2])
+                });
+            }
+        });
+        return false;
+    });
+
+    $("#ModalAgregarPersona").click(function(e){
+        $("#myModal").modal('show');
+        e.preventDefault();
+        $("#BuscarDNI").click(function(e)
+        {
+            // alert('Ingresó a buscar DNI');
+            e.preventDefault();
+            var formData = {
+                dni: $("#textDNI").val(),
+            };
+            $.ajax({
+            url: 'buscarDNI.php',
+            type: 'post',
+            data: formData,
+            success: function(data){ 
+                // Add response in Modal body
+                $('.modal-body').html(data);
+                // Display Modal
+                // $('#modal2').modal('show');
+            }
+            });
+
+        });
+        // AJAX request
     });
 
     // FUNCTIONS

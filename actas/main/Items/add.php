@@ -1,32 +1,30 @@
 <?php include('../back/conexion.php'); ?>
 <?php
 
-$isDt_per = (!empty($_POST['codMod']) and !empty($_POST['nombres']) and !empty($_POST['condicion']));
+$isDt_per = (!empty($_POST['codMod']) and !empty($_POST['apPaterno']) and !empty($_POST['apMaterno']) and !empty($_POST['nombres']) and !empty($_POST['condicion']));
 $isDt_bol = (!empty($_POST['fecha']) and !empty($_POST['codPlanilla']) and !empty($_POST['idp']));
 $isDt_mnt = (!empty($_POST['cod']) and !empty($_POST['monto']) and !empty($_POST['n']));
 
 if($isDt_per){
+    $dni = $_POST['dni'];
     $codMod = $_POST['codMod'];
+    $apPaterno = strtoupper($_POST['apPaterno']);
+    $apMaterno = strtoupper($_POST['apMaterno']);
     $nombres = strtoupper($_POST['nombres']);
     $condicion = strtoupper($_POST['condicion']);
 
-    $query_insert = "INSERT INTO persona (codMod, nombres, condicion) VALUE ('$codMod', '$nombres', '$condicion'); ";
-    $db->query($query_insert);
-
-    $query_select = "SELECT * FROM persona WHERE codMod='$codMod' AND nombres='$nombres' AND condicion='$condicion'; ";
-    $result = $db->query($query_select);
-
-    $per = array();
-    while($row = $result->fetch_array()){
-        $per = array(
-            'idp'=> $row['id_p'],
-            'codMod' => $row['codMod'],
-            'nombres' => $row['nombres'],
-            'condicion'=> $row['condicion'],
-            'mensaje' => 'se agrego una persona' 
-        );
+    if($_POST['idp']==''){
+        $query_insert = "INSERT INTO persona (dni, codMod, apPaterno, apMaterno, nombres, condicion) VALUE ('$dni', '$codMod', '$apPaterno', '$apMaterno', '$nombres', '$condicion'); ";
+        $db->query($query_insert);
+        //$query_select = "SELECT * FROM persona WHERE dni='$dni' AND codMod='$codMod' AND apPaterno='$apPaterno' AND apMaterno='$apMaterno' AND nombres='$nombres' AND condicion='$condicion'; ";
+        //$db->query($query_select);
     }
-    echo json_encode($per);
+    else if(!empty($_POST['idp'])){
+        $idp = $_POST['idp'];
+        $query_update = "UPDATE persona SET dni='$dni', codMod='$codMod', apPaterno='$apPaterno', apMaterno='$apMaterno', nombres='$nombres', condicion='$condicion' WHERE id_p='$idp'";
+        $db->query($query_update);
+    }
+    
 }
 else if($isDt_bol){
     $fecha = $_POST['fecha'];

@@ -398,8 +398,8 @@
                                         <hr width="1" size="90">
                                     </div>
                                     <div class="col-3">
-                                        <label for="inputPassword2" class="">Id</label>
-                                        <input type="number" class="form-control form-control-sm" id="inputid" value='' placeholder="" disabled>
+                                        <label for="inputPassword2" class="" hidden>Id</label>
+                                        <input type="number" class="form-control form-control-sm" id="inputid" value='' placeholder="" disabled hidden>
                                         <label for="inputPassword2" class="">DNI</label>
                                         <input type="number" class="form-control form-control-sm" id="inputDNI" value='' placeholder="">
                                         <label for="inputPassword2" class="">Codigo Modular</label>
@@ -454,168 +454,6 @@
             </div>
         </div>
     </div>
-
-
-    <script>
-       
-        $(document).ready(function(){
-
-            var switchStatus = false;
-            $("#AddCheck").on('change', function() {
-                if ($(this).is(':checked')) {
-                    switchStatus = $(this).is(':checked');
-                    document.getElementById("textDNI").value = "";
-                    $("#textDNI").attr("disabled", "disabled");
-                    $("#BuscarDNI").attr("disabled", "disabled");  
-                    // alert(switchStatus);// To verify
-                }
-                else {
-                switchStatus = $(this).is(':checked');
-                $("#textDNI").removeAttr("disabled"); 
-                $("#BuscarDNI").removeAttr("disabled"); 
-                // alert(switchStatus);// To verify
-                }
-            });
-
-            $('#savepersona').click(function(e)
-            {
-                e.preventDefault();
-                //Si el check no está activado se va a modificar datos de persona
-                if (document.getElementById("AddCheck").checked == false)
-                {   
-                    if ($("#inputid").val() == "")
-                    {
-                        // alert("Por favor primero realice una busqueda");
-                        swal('Error','Por favor seleccione una persona','error');
-                    }
-                    else
-                    {
-                        // alert("Se va a modificar los datos");
-                        var formData = {
-                            input_id_persona: $("#id_persona").val(),
-                            input_dni: $("#inputDNI").val(),
-                            input_codmodular: $("#inputCodModular").val(),
-                            input_apellidoP: $("#inputAPaterno").val(),
-                            input_apellidoM: $("#inputAMaterno").val(),
-                            input_nombres: $("#inputNombres").val(),
-                            input_condicion: $("#inputCondicion").val(),
-                        };
-                        $.ajax({
-                        url: 'ModificarPersona.php',
-                        type: 'post',
-                        data: formData,
-                        success: function(data){ 
-                            // Add response in Modal body
-                            $('.modal-body').html(data);
-                            // Display Modal
-                            // $('#modal2').modal('show'); 
-                        }
-                        });
-                    }
-
-                }
-                //Si el check está activado se va a agregar una nueva persona
-                else
-                {
-                    alert("Se va a agregar nuevos datos");
-                    var formData2 = {
-                        input_id_persona: $("#id_persona").val(),
-                        input_dni: $("#inputDNI").val(),
-                        input_codmodular: $("#inputCodModular").val(),
-                        input_apellidoP: $("#inputAPaterno").val(),
-                        input_apellidoM: $("#inputAMaterno").val(),
-                        input_nombres: $("#inputNombres").val(),
-                        input_condicion: $("#inputCondicion").val(),
-                    };
-                    $.ajax({
-                    url: 'AgregarPersona.php',
-                    type: 'post',
-                    data: formData2,
-                    success: function(data){ 
-                        // Add response in Modal body
-                        $('.modal-body').html(data);
-                        // Display Modal
-                        // $('#modal2').modal('show'); 
-                    }
-                    });
-                }
-            });
-
-
-            $('#main-searcher').click(function(){
-                datos = $('#frmajax').serialize();
-                $.ajax({
-                    type: "POST",
-                    url: "consulta_boleta.php",
-                    data: datos,
-                    success:function(r){
-                        $('#resultado_elegido').html(r)
-                        $('.select').on('click', function(){
-                            $tr = $(this).closest('tr');
-                            var data = $tr.children("td").map(function(){
-                                return $(this).text().replace(/\s+/g, " ").trim();
-                            }).get();
-                            $('#codMod').val(data[0])
-                            $('#nombres').val(data[1])
-                            $('#condicion').val(data[2])
-                        });
-                    }
-                });
-                return false;
-            });
-
-
-            $("#buttonmodal2").click(function(e)
-            {
-
-                e.preventDefault();
-                $("#myModal2").modal('show');
-
-                // AJAX request
-                $.ajax({
-                url: 'buscar.php',
-                type: 'post',
-                data: {orderid: orderid},
-                success: function(data){ 
-                    // Add response in Modal body
-                    $('.modal-body-2').html(data);
-                    // Display Modal
-                    $('#modal2').modal('show'); 
-                }
-                });
-                });
-
-            
-            $("#ModalAgregarPersona").click(function(e)
-            {
-                $("#myModal").modal('show');
-                e.preventDefault();
-                $("#BuscarDNI").click(function(e)
-                {
-                    // alert('Ingresó a buscar DNI');
-                    e.preventDefault();
-                    var formData = {
-                        dni: $("#textDNI").val(),
-                    };
-                    $.ajax({
-                    url: 'buscarDNI.php',
-                    type: 'post',
-                    data: formData,
-                    success: function(data){ 
-                        // Add response in Modal body
-                        $('.modal-body').html(data);
-                        // Display Modal
-                        // $('#modal2').modal('show');
-                    }
-                    });
-
-                });
-                // AJAX request
-            });
-
-            });
-
-    </script>
 
     <!-- ==================INICIO MODAL EDITAR BOLETAS================= -->
     
@@ -820,5 +658,6 @@
         <script src="../../assets/demo/chart-bar-demo.js"></script>
         <!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script> -->
         <script src="../../js/datatables-simple-demo.js"></script>
+        <script src='consulta_boleta.js'></script>
     </body>
 </html>
