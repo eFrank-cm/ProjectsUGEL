@@ -66,7 +66,7 @@ $result = $db->query($query);
                 </div>
             </div>
     </div>
-    
+    <br>
     <div class="card" id='hh'>
             <!-- <h5 class="card-header">Boletas</h5>
             <div class="card-body card" id='div-bol'> -->

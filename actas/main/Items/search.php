@@ -19,7 +19,19 @@ if(array_key_exists('n', $_POST)){
     $query = "SELECT * FROM monto WHERE n LIKE '$n' ORDER BY id_m DESC";
     array_push($cols_name, 'CODIGO', 'MONTO', 'ACCION');
 
-    $codigos = $db->query("SELECT cod, nombre FROM codigo");
+    $codigos = $db->query("SELECT cod FROM codigo");
+}
+
+if(array_key_exists('cod', $_POST)){
+    $cod = $_POST['cod'];
+    $res = $db->query("SELECT tag FROM codigo WHERE cod='$cod'");
+
+    $tags = array();
+    while($row = $res->fetch_array()){
+        array_push($tags, $row['tag']);
+    }
+    echo json_encode($tags);
+    die();
 }
 
 $result = $db->query($query);
@@ -119,22 +131,40 @@ $result = $db->query($query);
                             <th>ACCION</th>
                         </tr>
                     </thead>
+                    <!-- <form action="">
+                            <label for="">h: </label><input type="text" name="" id="">
+                            <label for="">j: </label><input type="text" name="" id="">
+                            <label for="">e: </label><input type="text" name="" id="">
+                            <button class='add-monto btn btn-outline-primary btn-sm' disabled><i class="bi bi-plus-circle"></i> Agregar</button>
+                        </form> -->
                     <tbody>
                         <tr>
                             <td hidden></td>
-                            <td class='td-monto' id='add-cod-monto' contenteditable></td>
-                            <td class='tag' contenteditable></td>
-                            <td class='td-monto' contenteditable></td>
+                            <!-- <td class='td-monto onlynumber' id='add-cod-monto' contenteditable> -->
+                            <td>
+                                <select class='form-select cmb-monto' id='cmb-cod'>
+                                    <option value=""></option>
+                                    <?php while($row = $codigos->fetch_array()){?>
+                                        <option value='<?= $row['cod'] ?>'><?= $row['cod'] ?></option>
+                                    <?php };?>
+                                </select>
+                            </td>
+                            <td class=''>
+                                <select class='form-select cmb-monto' id='cmb-tag'>
+                                    <option value=""></option>
+                                </select>
+                            </td>
+                            <td class='td-monto onlynumber' contenteditable></td>
                             <td><button class='add-monto btn btn-outline-primary btn-sm' disabled><i class="bi bi-plus-circle"></i> Agregar</button></td>
                         </tr>
                         <?php while($row = $result->fetch_array()){ ?>
                             <tr>
                                 <td hidden><?= $row['id_m'] ?></td>
-                                <td contenteditable><?= $row['cod'] ?></td>
-                                <td contendeditable><?= $row['tag'] ?></td>
-                                <td contenteditable><?= $row['monto'] ?></td>
+                                <td class='onlynumber'><?= $row['cod'] ?></td>
+                                <td><?= $row['tag'] ?></td>
+                                <td class='onlynumber'><?= $row['monto'] ?></td>
                                 <td>
-                                    <button class='update-monto btn btn-outline-success btn-sm'><i class="bi bi-pencil-square"></i> Editar</button>
+                                    <!-- <button class='update-monto btn btn-outline-success btn-sm'><i class="bi bi-pencil-square"></i> Editar</button> -->
                                     <button class='del-monto btn btn-outline-danger btn-sm'><i class="bi bi-trash3"></i> Eliminar</button>
                                 </td>
                             </tr>

@@ -36,7 +36,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.02.min.css">
 
         <!-- TYPEHEAD CSS -->
-        <link href="../../js/bootstrap.min.css" rel="stylesheet" />
+        <!-- <link href="../../js/bootstrap.min.css" rel="stylesheet" /> -->
         <!-- <script src="../../js/bootstrap.bundle.min2.js"></script> -->
         <script src="../../js/autocomplete.js"></script>
 

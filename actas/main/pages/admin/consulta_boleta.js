@@ -1,7 +1,7 @@
 $(document).ready(function(){
     // ELEGIR BOLETA
     $('#div-bol').on('click', '.editbtn', function(){
-        $('#modalBoleta').modal('toggle');
+        $('#modalBoleta').modal('show');
         $('#modaltitle').text(" Editar Boleta");
         dataTmp = getDataRow(this)
         dataBol = {'n':dataTmp[0], 'fecha':dataTmp[1], 'codPlanilla':dataTmp[2], 'anulado':dataTmp[3]}
@@ -43,9 +43,9 @@ $(document).ready(function(){
 
     // NEW BOLETA
     $('#btn-add-bol').on('click', function(){
-        $('#modalBoleta').modal('toggle');
+        $('#modalBoleta').modal('show');
         $('#modaltitle').text(" Nueva Boleta");
-        datosBoleta = {'n':'', 'fecha':'', 'codPlanilla':'', 'anulado':''};
+        var datosBoleta = {'n':'', 'fecha':'', 'codPlanilla':'', 'anulado':''};
         dataBoleta(datosBoleta);
     });
 
@@ -84,7 +84,7 @@ $(document).ready(function(){
                         url: '../../Items/search.php',
                         data: da,
                         success: function(res){
-                            $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
+                            // $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
                             $('#div-bol').html(res);
                             swal('EXITO!', 'Se guardaron los cambios de la boleta!', 'success');
                         }
@@ -123,7 +123,7 @@ $(document).ready(function(){
                             url: '../../Items/search.php',
                             data: da,
                             success: function(res){
-                                $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
+                                // $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
                                 $('#div-bol').html(res);
                                 $('#modalBoleta').modal('hide');
                             }
@@ -144,60 +144,82 @@ $(document).ready(function(){
     // BUTTON - ADD MONTO
     $('.modal-body-2').on('click', '.add-monto', function(){
         dataTmp = getDataRow(this);
-        console.log(dataTmp);
-        dataMonto = {'cod': dataTmp[1], 'monto': dataTmp[2], 'n': $('#n-data-bol').val(), 'accion': 'add'};
-        console.log(dataMonto);
-        $.ajax({
-            type: 'post',
-            url: '../../Items/add.php',
-            data: dataMonto,
-            success: function(res){
-                datos = JSON.parse(res);
-                rowCount = document.getElementById('tb-montos').rows.length;
-                n = -1;
-                if(rowCount > 2){
-                    n = 2;
-                }
-                console.log(n);
-                tabla = document.getElementById('tb-montos').insertRow(n);
-            
-                col1 = tabla.insertCell(0);
-                col2 = tabla.insertCell(1);
-                col3 = tabla.insertCell(2);
-                col4 = tabla.insertCell(3);
-                col1.innerHTML = datos['idm'];
-                col1.setAttribute('hidden', 'true')
-
-                col2.innerHTML = datos['cod'];
-                col2.setAttribute('contenteditable', 'true')
-
-                col3.innerHTML = datos['monto'];
-                col3.setAttribute('contenteditable', 'true')
-
-                col4.innerHTML = "<button class='update-monto  btn btn-outline-success btn-sm'><i class='bi bi-pencil-square'></i> editar</button>"
-                col4.innerHTML += "   " 
-                col4.innerHTML += "<button class='del-monto btn btn-outline-danger btn-sm'><i class='bi bi-trash3'></i> Eliminar</button>"  
-
+        dataMonto = {'cod': $('#cmb-cod').val(), 'tag':$('#cmb-tag').val(), 'monto': dataTmp[3], 'n': $('#n-data-bol').val(), 'accion': 'add'};
+        //console.log(dataMonto);
+        if((dataMonto['monto'] == 0) || (dataMonto['cod']==0)){
+            swal("No es posible ingresar un codigo o monto igual a 0!", {
+                position: 'top-end',
+                button: false,
+                icon: 'warning',
+                timer: 2500
+            }).then(()=>{
                 $('#tb-montos .td-monto').empty();
+                $('#cmb-cod').val('').change()
+                $('#cmb-tag').val('').change()
                 $('#tb-montos #add-cod-monto').focus();
+            });
+        }
+        else{
+            $.ajax({
+                type: 'post',
+                url: '../../Items/add.php',
+                data: dataMonto,
+                success: function(res){
+                    var datos = JSON.parse(res);
+                    console.log(datos);
+                    rowCount = document.getElementById('tb-montos').rows.length;
+                    n = -1;
+                    if(rowCount > 2){
+                        n = 2;
+                    }
+                    console.log(n);
+                    tabla = document.getElementById('tb-montos').insertRow(n);
+                
+                    col1 = tabla.insertCell(0);
+                    col2 = tabla.insertCell(1);
+                    col3 = tabla.insertCell(2);
+                    col4 = tabla.insertCell(3);
+                    col5 = tabla.insertCell(4);
+    
+                    col1.innerHTML = datos['idm'];
+                    col1.setAttribute('hidden', 'true')
+    
+                    col2.innerHTML = datos['cod'];
+                    col2.setAttribute('contenteditable', 'true');
+    
+                    col3.innerHTML = datos['tag'];
+                    col3.setAttribute('contenteditable', 'true');
+    
+                    col4.innerHTML = datos['monto'];
+                    col4.setAttribute('contenteditable', 'true');
+    
+                    //col5.innerHTML = "<button class='update-monto  btn btn-outline-success btn-sm'><i class='bi bi-pencil-square'></i> editar</button>"
+                    //col5.innerHTML += "   " 
+                    col5.innerHTML += "<button class='del-monto btn btn-outline-danger btn-sm'><i class='bi bi-trash3'></i> Eliminar</button>"  
+    
+                    $('#tb-montos .td-monto').empty();
+                    $('#cmb-cod').val('').change()
+                    $('#cmb-tag').val('').change()
+                    $('#cmb-cod').focus();
 
-                // ACTUALIZAR TABLA DE MONTOS
-                // dataBol = {'n':$('#n-data-bol').val(), 'fecha': $('#fecha-data-bol').val(), 'codPlanilla':$('#codPlanilla-data-bol').val(), 'anulado':''}
-                // dataBoleta(dataBol);
-            }
-        });
 
+                    // // ACTUALIZAR TABLA DE MONTOS
+                    // var dataBol = {'n':$('#n-data-bol').val(), 'fecha': $('#fecha-data-bol').val(), 'codPlanilla':$('#codPlanilla-data-bol').val(), 'anulado':'-'}
+                    // dataBoleta(dataBol);
+                }
+            });
+        }
         return false;
     });
 
     // BUTTON - DELETE MONTO
     $('.modal-body-2').on('click', '.del-monto', function(){
         dataRow = getDataRow(this);
-        console.log(dataRow);
-        dataDel = {'idm': dataRow[0], 'cod':dataRow[1], 'monto': dataRow[2], 'n':$('#n-data-bol').val(), 'accion': 'del'};
+        dataDel = {'idm': dataRow[0], 'cod':dataRow[1], 'tag':dataRow[2], 'monto': dataRow[3], 'n':$('#n-data-bol').val(), 'accion': 'del'};
+        console.log(dataDel);
         swal({
             title: "Estas seguro de eliminar esta entrada?",
-            text: 'Se eliminará el codigo ' + dataDel['cod']  + ' y monto ' + dataDel['monto'],
+            text: 'Se eliminará el codigo ' + dataDel['cod'] + ', ' + dataDel['tag'] + ' y monto ' + dataDel['monto'],
             icon: "warning",
             buttons: ["Cancelar","Eliminar"],
             dangerMode: true
@@ -217,7 +239,7 @@ $(document).ready(function(){
                 swal({
                     title: 'El codigo ' + dataDel['cod']  + ' con monto ' + dataDel['monto'] +' ha sido eliminado!',
                     icon: 'success'
-                })
+                });
             }
         });
         return false;
@@ -226,32 +248,64 @@ $(document).ready(function(){
     // BUTTON - EDIT MONTO
     $('.modal-body-2').on('click', '.update-monto', function(){
         dataRow = getDataRow(this);
-        dataMonto = {'idm': dataRow[0], 'cod': dataRow[1], 'monto': dataRow[2], 'n':$('#n-data-bol').val(), 'accion': 'update'};
+        dataMonto = {'idm': dataRow[0], 'cod': dataRow[1], 'tag':dataRow[2], 'monto': dataRow[3], 'n':$('#n-data-bol').val(), 'accion': 'update'};
         console.log(dataMonto);
-        $.ajax({
-            type: 'post',
-            url: '../../Items/add.php',
-            data: dataMonto,
-            success: function(res){
-                
-                var resultado = $.trim(res);
-                console.log(res);
-                
-                if(resultado == "ERROR")
-                {
-                    swal('Error!', 'No se pudo guardar los datos por que existen campos vacios', 'error');
-                }
-                else
-                {
-                    swal('Exito!', 'Se guardaron los datos!', 'success');
-                }
-            }
-        });
 
+        if((dataMonto['monto'] == 0) || (dataMonto['cod']==0)){
+            swal("No es posible ingresar un codigo o monto igual a 0!", {
+                position: 'top-end  ',
+                button: false,
+                icon: 'warning',
+                timer: 2500
+            }).then(()=>{
+                dataBol = {'n':$('#n-data-bol').val(), 'fecha':$('#fecha-data-bol').val(), 'codPlanilla':$('#codPlanilla-data-bol').val()}
+                dataBoleta(dataBol);
+            });
+        }
+        else{
+            $.ajax({
+                type: 'post',
+                url: '../../Items/add.php',
+                data: dataMonto,
+                success: function(res){
+                    var resultado = $.trim(res);
+                    console.log(res);
+                    
+                    if(resultado == "ERROR")
+                    {
+                        swal('Error!', 'No se pudo guardar los datos por que existen campos vacios', 'error');
+                    }
+                    else
+                    {
+                        swal('Exito!', 'Se guardaron los datos!', 'success');
+                    }
+                }
+            });
+        }
         console.log(dataMonto);
         return false;
     });
 
+    // COMBOBOX - CHANGE
+    $('.modal-body-2').on('change', '#cmb-cod', function(){
+        var cod = this.value;
+        console.log(cod);
+        $.ajax({
+            type: 'post',
+            url: '../../Items/search.php',
+            data: {'cod': cod},
+            success: function(res){
+                var newOptions = JSON.parse(res);
+                var select = $("#cmb-tag");
+                select.empty();
+                newOptions.forEach(e => {
+                    select.append($("<option></option>").attr("value", e).text(e));
+                });
+            }
+        });
+    });
+
+    // FUNCTIONS
     function getDataFormJSON(idForm){
         dataObj = {};
         $($(idForm).serializeArray()).each(function(_, field){
@@ -261,19 +315,21 @@ $(document).ready(function(){
     }
     
     function dataBoleta(datosBoleta){
+        console.log(datosBoleta);
         $.ajax({
             type: "POST", 
             url: "../../items/search.php",
             data: datosBoleta,
             success: function(data){
+                $('#bodyModalBoleta').html('');
                 $('#bodyModalBoleta').html(data);
                 $('#bol-idp-shw').val($('#idp-shw').val());
                 $('#idp-data-bol').val($('#idp-shw').val());
                 $('#bol-codMod-shw').val($('#codMod-shw').val());
                 $('#bol-nombres-shw').val($('#apPaterno-shw').val() + ' ' +  $('#apMaterno-shw').val() + ' ' + $('#nombres-shw').val());
                 $('#bol-condicion-shw').val($('#condicion-shw').val());
+                $('.onlynumber').keydown(soloNumeros);
     
-                console.log(datosBoleta);
                 if(datosBoleta['fecha']!='' && datosBoleta['codPlanilla']!='' && datosBoleta['anulado']!=''){
                     $('.add-monto').prop('disabled', false);
                     $('#delbtn-bol').prop('disabled', false);
@@ -282,6 +338,8 @@ $(document).ready(function(){
             } 
         });
     }
+
+
     
     function getDataRow(obj){
         $tr = $(obj).closest('tr');
@@ -291,7 +349,12 @@ $(document).ready(function(){
         return data
     }
 
-
+    function soloNumeros(e){
+        var key = window.Event ? e.which : e.keyCode;
+        if ((key < 48 || key > 57) && (key < 96 || key > 105) && (key!==8 && key!==109 && key!==9)){
+            e.preventDefault();  
+        }
+    }
 });
 
 

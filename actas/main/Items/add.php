@@ -4,7 +4,6 @@
 $isDt_per = (!empty($_POST['codMod']) and !empty($_POST['nombres']) and !empty($_POST['condicion']));
 $isDt_bol = (!empty($_POST['fecha']) and !empty($_POST['codPlanilla']) and !empty($_POST['idp']));
 $isDt_mnt = (!empty($_POST['cod']) and !empty($_POST['monto']) and !empty($_POST['n']));
-$isDel_mnt = (!empty($_POST['cod']) and !empty($_POST['monto']));
 
 if($isDt_per){
     $codMod = $_POST['codMod'];
@@ -72,19 +71,21 @@ else if($isDt_bol){
 else if($isDt_mnt){
     if($_POST['accion']=='add'){
         $cod = $_POST['cod'];
+        $tag = $_POST['tag'];
         $monto = $_POST['monto'];
         $n = $_POST['n'];
 
-        $query_insert = "INSERT INTO monto (cod, monto, n) VALUE ('$cod', '$monto', '$n')";
+        $query_insert = "INSERT INTO monto (cod, tag, monto, n) VALUE ('$cod', '$tag', '$monto', '$n')";
         $db->query($query_insert);
 
-        $query_select = "SELECT * FROM monto WHERE cod='$cod' AND monto='$monto' AND n='$n'";
+        $query_select = "SELECT * FROM monto WHERE cod='$cod' AND tag='$tag' AND monto='$monto' AND n='$n'";
         $result = $db->query($query_select);
 
-        $monto = array('mensaje'=>'hay monto');
+        $monto = array('mensaje'=>$query_insert);
         while($row = $result->fetch_array()){
             $monto['idm'] = $row['id_m'];
             $monto['cod'] = $row['cod'];
+            $monto['tag'] = $row['tag'];
             $monto['monto'] = $row['monto'];
         }
 
@@ -94,19 +95,22 @@ else if($isDt_mnt){
     else if($_POST['accion']=='del'){
         $idm = $_POST['idm'];
         $cod = $_POST['cod'];
+        $tag = $_POST['tag'];
         $monto = $_POST['monto'];
 
-        $query_del = "DELETE FROM monto WHERE cod='$cod' AND monto='$monto' AND id_m='$idm'";
+        $query_del = "DELETE FROM monto WHERE cod='$cod' AND tag='$tag' AND monto='$monto' AND id_m='$idm'";
+
         $db->query($query_del);
 
-        echo "Se eliminara {$_POST['cod']} y {$_POST['monto']}";
+        echo "Se elimino {$_POST['cod']} y {$_POST['monto']}";
     }
     else if($_POST['accion'] == 'update'){
         $idm = $_POST['idm'];
         $cod = $_POST['cod'];
+        $tag = $_POST['tag'];
         $monto = $_POST['monto'];
 
-        $query_update = "UPDATE monto SET cod='$cod', monto='$monto' WHERE id_m='$idm'";
+        $query_update = "UPDATE monto SET cod='$cod', tag='$tag', monto='$monto' WHERE id_m='$idm'";
         $db->query($query_update);
         echo $query_update;
         
@@ -117,5 +121,3 @@ else{
     echo "ERROR";
 }
 ?>
-
-

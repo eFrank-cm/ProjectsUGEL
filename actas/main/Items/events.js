@@ -170,7 +170,7 @@ $(document).ready(function(){
     // BUTTON - ADD MONTO
     $('#data-bol').on('click', '.add-monto', function(){
         dataTmp = getDataRow(this);
-        dataMonto = {'cod': dataTmp[1], 'monto': dataTmp[2], 'n': $('#n-data-bol').val(), 'accion': 'add'};
+        dataMonto = {'cod': dataTmp[1], 'tag':dataTmp[2], 'monto': dataTmp[3], 'n': $('#n-data-bol').val(), 'accion': 'add'};
         console.log(dataMonto);
 
         $.ajax({
@@ -184,7 +184,7 @@ $(document).ready(function(){
                 if(rowCount > 2){
                     n = rowCount - 1;
                 }
-                tabla = document.getElementById('tb-montos').insertRow(n);
+                tabla = document.getElementById('tb-montos').insertRow(1);
             
                 col1 = tabla.insertCell(0)
                 col2 = tabla.insertCell(1);
