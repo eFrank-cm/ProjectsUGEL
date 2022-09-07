@@ -183,6 +183,10 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Boletas
                             </a>
+                            <a class="nav-link" href="codigos.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Codigos
+                            </a>
                             <!-- LAYOUTS BLOQUEADO -->
                             <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -243,17 +247,17 @@
                                 </nav>
                             </div> -->
 
-                            <div class="sb-sidenav-menu-heading">Reportes</div>
+                            <!-- <div class="sb-sidenav-menu-heading">Reportes</div> -->
                             <!-- <a class="nav-link" href="charts.html"> -->
-                            <a class="nav-link" href="#">
+                            <!-- <a class="nav-link" href="#">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Registros
-                            </a>
+                                Codigos
+                            </a> -->
                             <!-- <a class="nav-link" href="tables.html"> -->
-                            <a class="nav-link" href="#">
+                            <!-- <a class="nav-link" href="#">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tablas
-                            </a>
+                                Codigos
+                            </a> -->
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">

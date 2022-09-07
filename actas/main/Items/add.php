@@ -4,6 +4,7 @@
 $isDt_per = (!empty($_POST['codMod']) and !empty($_POST['apPaterno']) and !empty($_POST['apMaterno']) and !empty($_POST['nombres']) and !empty($_POST['condicion']));
 $isDt_bol = (!empty($_POST['fecha']) and !empty($_POST['codPlanilla']) and !empty($_POST['idp']));
 $isDt_mnt = (!empty($_POST['cod']) and !empty($_POST['monto']) and !empty($_POST['n']));
+$isDt_cod = (!empty($_POST['cod']) and !empty($_POST['tag']));
 
 if($isDt_per){
     $dni = $_POST['dni'];
@@ -114,7 +115,19 @@ else if($isDt_mnt){
         
     }    
 }
-
+else if($isDt_cod){
+    $idc = $_POST['idc'];
+    $cod = $_POST['cod'];
+    $tag = $_POST['tag'];
+    
+    if($_POST['accion'] == 'add'){
+        $db->query("INSERT INTO codigo (cod, tag) VALUE ('$cod', '$tag')");
+    }
+    else if($_POST['accion'] == 'del'){
+        $db->query("DELETE FROM codigo WHERE id_c='$idc'");
+    }
+    echo 'OK';
+}
 else{
     echo "ERROR";
 }

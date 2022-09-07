@@ -356,12 +356,10 @@ $(document).ready(function(){
                     var resultado = $.trim(res);
                     console.log(res);
                     
-                    if(resultado == "ERROR")
-                    {
+                    if(resultado == "ERROR"){
                         swal('Error!', 'No se pudo guardar los datos por que existen campos vacios', 'error');
                     }
-                    else
-                    {
+                    else{
                         swal('Exito!', 'Se guardaron los datos!', 'success');
                     }
                 }
@@ -472,8 +470,6 @@ $(document).ready(function(){
         });
     }
 
-
-    
     function getDataRow(obj){
         $tr = $(obj).closest('tr');
         data = $tr.children("td").map(function(){

@@ -131,12 +131,6 @@ $result = $db->query($query);
                             <th>ACCION</th>
                         </tr>
                     </thead>
-                    <!-- <form action="">
-                            <label for="">h: </label><input type="text" name="" id="">
-                            <label for="">j: </label><input type="text" name="" id="">
-                            <label for="">e: </label><input type="text" name="" id="">
-                            <button class='add-monto btn btn-outline-primary btn-sm' disabled><i class="bi bi-plus-circle"></i> Agregar</button>
-                        </form> -->
                     <tbody>
                         <tr>
                             <td hidden></td>
