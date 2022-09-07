@@ -18,7 +18,7 @@ while($row = $result_pos->fetch_array()){
         array_push($codigos_pos, $cod);
     }
 }
-// $codigos_neg = array_reverse($codigos_neg);
+$codigos_neg = array_reverse($codigos_neg);
 ?>
 <br>
 <div class='container row'>
@@ -48,16 +48,16 @@ while($row = $result_pos->fetch_array()){
             <h5>INGRESOS</h5>
             <table class='codtable table table-sm' id='codtable-pos'>
                 <thead>
-                    <th>CODIGO</th>
                     <th hidden>IDC</th>
+                    <th>CODIGO</th>
                     <th>ETIQUETA</th>
                     <th>ACCION</th>
                 </thead>
                 <tbody>
                     <?php foreach($codigos_pos as $cod): ?>
                         <tr>
-                            <td><?= $cod['cod'] ?></td>
                             <td hidden><?= $cod['idc'] ?></td>
+                            <td><?= $cod['cod'] ?></td>
                             <td><?= $cod['tag'] ?></td>
                             <td>
                                 <button class='delbtn-cod btn btn-outline-danger btn-sm'><i class="bi bi-trash3"></i> Eliminar</button>
@@ -73,16 +73,16 @@ while($row = $result_pos->fetch_array()){
             <h5>EGRESOS</h5>
             <table class='codtable table table-sm' id='codtable-neg'>
                 <thead>
-                    <th>CODIGO</th>
                     <th hidden>IDC</th>
+                    <th>CODIGO</th>
                     <th>ETIQUETA</th>
                     <th>ACCION</th>
                 </thead>
                 <tbody>
                     <?php foreach($codigos_neg as $cod): ?>
                         <tr>
-                            <td><?= $cod['cod'] ?></td>
                             <td hidden><?= $cod['idc'] ?></td>
+                            <td><?= $cod['cod'] ?></td>
                             <td><?= $cod['tag'] ?></td>
                             <td>
                                 <button class='delbtn-cod btn btn-outline-danger btn-sm'><i class="bi bi-trash3"></i> Eliminar</button>

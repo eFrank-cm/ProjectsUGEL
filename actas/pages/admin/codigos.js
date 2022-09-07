@@ -1,18 +1,10 @@
 $(document).ready(function(){
-    $('#codtable-pos').DataTable({
+    $('.codtable').DataTable({
         language: { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-        iDisplayLength: 15,
-        searching: false,
-        info: false,
-        dom: '<"toolbar">frtip'
-    });
-
-    $('#codtable-neg').DataTable({
-        language: { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-        iDisplayLength: 15,
-        searching: false,
-        info: false,
         order: [],
+        iDisplayLength: 15,
+        searching: false,
+        info: false,
         dom: '<"toolbar">frtip'
     });
 
@@ -54,7 +46,7 @@ $(document).ready(function(){
     $('.delbtn-cod').click(function(){
         var delbtn = this;
         dataRow = getDataRow(delbtn);
-        dataToPOST = {'idc': dataRow[1], 'cod': dataRow[0], 'tag':dataRow[2], 'accion': 'del'};
+        dataToPOST = {'idc': dataRow[0], 'cod': dataRow[1], 'tag':dataRow[2], 'accion': 'del'};
         console.log(dataToPOST);
 
         swal({
