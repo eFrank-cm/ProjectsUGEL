@@ -8,7 +8,6 @@ $dni = $_POST['dni'];
 
 $query = "SELECT * FROM persona WHERE (codMod LIKE '%$dni%' or DNI LIKE '%$dni%')";
 $result = $db->query($query);
-var_dump(mysqli_num_rows($result));
 ?>
 
 
@@ -72,6 +71,14 @@ var_dump(mysqli_num_rows($result));
                 $('#inputAMaterno').val(data[4]);
                 $('#inputNombres').val(data[5]);
                 $('#inputCondicion').val(data[6]);
+
+                $('#inputDNI').removeAttr("disabled"); 
+                $('#inputCodModular').removeAttr("disabled"); 
+                $('#inputAPaterno').removeAttr("disabled"); 
+                $('#inputAMaterno').removeAttr("disabled"); 
+                $('#inputNombres').removeAttr("disabled"); 
+                $('#inputCondicion').removeAttr("disabled"); 
+                $('#savepersona').removeAttr("disabled"); 
                 // // val(5) for password and not editable for admin --- u can only reset the password
                 // $('#user_type_edit').val(data[6])
                 // $('#state_edit').val(data[7])

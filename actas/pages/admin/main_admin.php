@@ -403,29 +403,29 @@
                                     </div>
                                     <div class="col-3">
                                         <label for="inputPassword2" class="" hidden>Id</label>
-                                        <input type="number" class="form-control form-control-sm" id="inputid" value='' placeholder="" disabled hidden>
+                                        <input type="number" class="form-control form-control-sm" id="inputid" disabled hidden>
                                         <label for="inputPassword2" class="">DNI</label>
-                                        <input type="number" class="form-control form-control-sm" id="inputDNI" value='' placeholder="">
+                                        <input type="number" class="form-control form-control-sm" id="inputDNI" disabled>
                                         <label for="inputPassword2" class="">Codigo Modular</label>
-                                        <input type="text" class="form-control form-control-sm" id="inputCodModular" value='' placeholder="">
+                                        <input type="text" class="form-control form-control-sm" id="inputCodModular" disabled>
                                     </div>
                                     <div class="col-6">
                                         <label for="inputPassword2" class="">Apellido Paterno</label>
-                                        <input type="text" class="form-control form-control-sm" id="inputAPaterno" value=''>
+                                        <input type="text" class="form-control form-control-sm" id="inputAPaterno" disabled>
                                         <label for="inputPassword2" class="">Apellido Materno</label>
-                                        <input type="text" class="form-control form-control-sm" id="inputAMaterno" value='' placeholder="">
+                                        <input type="text" class="form-control form-control-sm" id="inputAMaterno" disabled>
                                         <label for="inputPassword2" class="">Nombres</label>
-                                        <input type="text" class="form-control form-control-sm" id="inputNombres" value='' placeholder="">
+                                        <input type="text" class="form-control form-control-sm" id="inputNombres" disabled>
                                     </div>
                                     <div class="col">
                                         <label for="inputPassword2" class="">Condición</label>
-                                        <select class="form-select form-select-sm" id='inputCondicion' aria-label="Default select example">
+                                        <select class="form-select form-select-sm" id='inputCondicion' aria-label="Default select example"  disabled>
                                             <option value="0" selected>Seleccionar...</option>
                                             <option value="ACTIVO">ACTIVO</option>
                                             <option value="CESANTE">CESANTE</option>
                                         </select>
                                         <!-- GUARDAR NUEVA PERSONA -->
-                                        <button type="submit" class="btn btn-success mb-3 btn-sm" id='savepersona' style ="position: relative; top: 23px;"><i class="bi bi-person-check"></i>/<i class="bi bi-person-plus"></i> Guardar</button>
+                                        <button type="submit" class="btn btn-success mb-3 btn-sm" id='savepersona' style ="position: relative; top: 23px;"  disabled><i class="bi bi-person-check"></i>/<i class="bi bi-person-plus"></i> Guardar</button>
                                     </div>
                                 </div>
                             </div>

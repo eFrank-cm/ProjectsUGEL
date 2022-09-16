@@ -75,12 +75,37 @@ $(document).ready(function(){
             switchStatus = $(this).is(':checked');
             document.getElementById("textDNI").value = "";
             $("#textDNI").attr("disabled", "disabled");
-            $("#BuscarDNI").attr("disabled", "disabled");  
+            $("#BuscarDNI").attr("disabled", "disabled");
+
+            $('#id_persona').val('');
+            $('#inputid').val('');
+            $('#inputDNI').val('');
+            $('#inputCodModular').val('');
+            $('#inputAPaterno').val('');
+            $('#inputAMaterno').val('');
+            $('#inputNombres').val('');
+            $('#inputCondicion').val('');
+            
+            $('#inputDNI').removeAttr("disabled"); 
+            $('#inputCodModular').removeAttr("disabled"); 
+            $('#inputAPaterno').removeAttr("disabled"); 
+            $('#inputAMaterno').removeAttr("disabled"); 
+            $('#inputNombres').removeAttr("disabled"); 
+            $('#inputCondicion').removeAttr("disabled"); 
+            $('#savepersona').removeAttr("disabled"); 
         }
         else {
             switchStatus = $(this).is(':checked');
             $("#textDNI").removeAttr("disabled"); 
-            $("#BuscarDNI").removeAttr("disabled"); 
+            $("#BuscarDNI").removeAttr("disabled");
+
+            $('#inputDNI').attr("disabled", "disabled");
+            $('#inputCodModular').attr("disabled", "disabled");
+            $('#inputAPaterno').attr("disabled", "disabled");
+            $('#inputAMaterno').attr("disabled", "disabled");
+            $('#inputNombres').attr("disabled", "disabled");
+            $('#inputCondicion').attr("disabled", "disabled");
+            $('#savepersona').attr("disabled", "disabled");
         }
     });
 
@@ -98,7 +123,7 @@ $(document).ready(function(){
         dtRow = getDataRow(this);
         dataBol = {
             'codMod': $('#codMod-shw').val(),
-            'nombres': $('#nombres-shw').val() + ' ' + $('#apPaterno-shw').val() + ' ' + $('#apMaterno-shw').val(),
+            'nombres': $('#apPaterno-shw').val() + ' ' + $('#apMaterno-shw').val() + ' ' + $('#nombres-shw').val(),
             'condicion': $('#condicion-shw').val(),
             'n' : dtRow[0],
             'fecha': dtRow[1],
@@ -480,7 +505,7 @@ $(document).ready(function(){
 
     function soloNumeros(e){
         var key = window.Event ? e.which : e.keyCode;
-        if ((key < 48 || key > 57) && (key < 96 || key > 105) && (key!==8 && key!==109 && key!==9)){
+        if ((key < 48 || key > 57) && (key < 96 || key > 105) && (key!==8 && key!==109 && key!==9) && (key!=190 && key!=110)){
             e.preventDefault();  
         }
     }
