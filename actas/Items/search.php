@@ -57,7 +57,7 @@ $result = $db->query($query);
                             <div class="col-6">
                                 <label>Apellidos y Nombres: </label><input class='form-control form-control-sm' id='bol-nombres-shw' type="text" style="width:100%;" readonly>
                             </div>
-                            <div class="col-1">
+                            <div class="col-2">
                                 <label>Condicion: </label><input class='form-control form-control-sm' id='bol-condicion-shw' type="text" readonly>
                             </div>
                         <!-- </div> -->
@@ -74,7 +74,7 @@ $result = $db->query($query);
                                 <label>Nro: </label><input class='form-control form-control-sm' name='n' id='n-data-bol' type="text" value='<?= $_POST['n']?>' readonly>
                             </div>
                             <div class="col-4">
-                                <label>Fecha: </label><input class='form-control form-control-sm' name='fecha' id='fecha-data-bol' value='<?= $_POST['fecha']?>' type="text">
+                                <label>Lugar y Fecha: </label><input class='form-control form-control-sm' name='fecha' id='fecha-data-bol' value='<?= $_POST['fecha']?>' type="text">
                             </div>
                             <div class="col-3">
                                 <label>Planilla: </label><input class='form-control form-control-sm' name='codPlanilla' id='codPlanilla-data-bol' value='<?= $_POST['codPlanilla']?>' type="text">

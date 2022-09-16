@@ -273,7 +273,7 @@
     <main>              
     <!-- YA NO DEBE TENER BORDER EL DIV CONTAINER -->
     <div class="container">
-        <h3 style="text-align: center;">REGISTRO DE BOLETAS - ACTAS Y CERTIFICADOS</h3>
+        <h3 style="text-align: center;">REGISTRO DE BOLETAS - CERTIFICACION DE PAGOS</h3>
 
         <form id="frmajax" method="POST">
             <div class="row">
@@ -284,7 +284,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="autoComplete_wrapper">
-                        <input id="autoComplete" name="search_bar" type="search" style='border-radius:4px; border-color: rgba(206,212,218,255); color: rgba(108,117,125,255); width: 633px;' dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off">
+                        <input id="autoComplete" name="search_bar" type="search" style='width: 550px !important; border-radius:4px; border-color: rgba(206,212,218,255); color: rgba(108,117,125,255); width: 633px;' dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off">
                     </div>
                 </div>
                 <div class="col-md-3">
