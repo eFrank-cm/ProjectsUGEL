@@ -1,49 +1,50 @@
 $(document).ready(function(){
-    $('.codtable').DataTable({
-        language: { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-        order: [],
-        iDisplayLength: 15,
-        searching: false,
-        info: false,
-        dom: '<"toolbar">frtip'
-    });
-
-    $('div.toolbar').html('');
+    getCodes();
 
     $('.onlynumber').keydown(soloNumeros);
 
-    $('#addbtn-cod').click(function(){
+    // ADD CODIGO
+    $('#addbtn-cod').click(function(e){
         var dataToPOST = getDataFormJSON('#addfrm-cod');
         dataToPOST.accion = 'add';
-        
         console.log(dataToPOST);
-        $.ajax({
-            type: 'post',
-            url: '../../Items/add.php',
-            data: dataToPOST,
-            success: function(res){
-                if(res == 'ERROR'){
-                    swal({
-                        title: 'No deje campos vacios.',
-                        icon: 'error'
-                    });
-                    
-                }
-                else{
-                    swal({
-                        title: 'El codigo fue añadido exitosamente!',
-                        icon: 'success'
-                    })
-                    .then(() => {
-                        location.reload(); 
-                    });
-                }
-            }
-        });
-        return false;
+        e.preventDefault();
+
+        if(dataToPOST['cod']!=='' && dataToPOST['tag']!==''){
+            swal({
+                title: 'El codigo fue añadido exitosamente!',
+                icon: 'success'
+            })
+            .then(()=>{
+                $.ajax({
+                    type: 'post',
+                    url: '../../Items/add.php',
+                    data: dataToPOST,
+                    success: function(res){
+                        console.log(res)
+                    }
+                });
+
+                $('#cod').val('');
+                $('#tag').val('');
+                getCodes();
+            })
+        }
+        else{
+            swal({
+                title: 'No deje campos vacios.',
+                icon: 'error'
+            });
+        }
     });
 
-    $('.delbtn-cod').click(function(){
+
+    $('#updbtn').click(function(e){
+        getCodes();
+    });
+
+    // DEL CODIGO
+    $('#divtb-posneg').on('click', '.delbtn-cod', function(){
         var delbtn = this;
         dataRow = getDataRow(delbtn);
         dataToPOST = {'idc': dataRow[0], 'cod': dataRow[1], 'tag':dataRow[2], 'accion': 'del'};
@@ -63,20 +64,16 @@ $(document).ready(function(){
                     url: '../../Items/add.php',
                     data: dataToPOST,
                     success: function(){
-                        // delbtn.closest('tr').remove();
+                        delbtn.closest('tr').remove();
                     }
                 });
 
                 swal({
                     title: 'El codigo ' + dataToPOST['cod']  + ' - ' + dataToPOST['tag'] +' ha sido eliminado!',
-                    icon: 'success'
-                })
-                .then(() => {
-                    location.reload(); 
+                    icon: 'success' 
                 });
             }
         });
-        return false;
     });
 
     function getDataRow(obj){
@@ -100,6 +97,16 @@ $(document).ready(function(){
         if ((key < 48 || key > 57) && (key < 96 || key > 105) && (key!==8 && key!==109 && key!==9)){
             e.preventDefault();  
         }
+    }
+
+    function getCodes(){
+        $.ajax({
+            type: 'post',
+            url: 'searchCodes.php',
+            success: function(res){
+                $('#divtb-posneg').html(res);
+            }
+        });
     }
 
 });

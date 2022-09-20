@@ -12,9 +12,9 @@ $(document).ready(function(){
             'condicion': $("#inputCondicion").val(),
         };
         //Si el check no está activado se va a modificar datos de persona
-        if (document.getElementById("AddCheck").checked == false)
+        if (document.getElementById("AddCheck").checked === false)
         {   
-            if ($("#inputid").val() == ""){
+            if ($("#inputid").val() === ""){
                 // alert("Por favor primero realice una busqueda");
                 swal('Error','Por favor seleccione una persona','error');
             }
@@ -486,7 +486,7 @@ $(document).ready(function(){
                 $('#bol-condicion-shw').val($('#condicion-shw').val());
                 $('.onlynumber').keydown(soloNumeros);
     
-                if(datosBoleta['fecha']!='' && datosBoleta['codPlanilla']!='' && datosBoleta['anulado']!=''){
+                if(datosBoleta['fecha']!='' && datosBoleta['codPlanilla']!=''){
                     $('.add-monto').prop('disabled', false);
                     $('#delbtn-bol').prop('disabled', false);
                     $('#frm-monto').removeAttr("hidden");

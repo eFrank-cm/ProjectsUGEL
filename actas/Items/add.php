@@ -116,7 +116,6 @@ else if($isDt_mnt){
     }    
 }
 else if($isDt_cod){
-    $idc = $_POST['idc'];
     $cod = $_POST['cod'];
     $tag = $_POST['tag'];
     
@@ -124,6 +123,7 @@ else if($isDt_cod){
         $db->query("INSERT INTO codigo (cod, tag) VALUE ('$cod', '$tag')");
     }
     else if($_POST['accion'] == 'del'){
+        $idc = $_POST['idc'];
         $db->query("DELETE FROM codigo WHERE id_c='$idc'");
     }
     echo 'OK';
