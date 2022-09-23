@@ -1,6 +1,5 @@
 <?php include("../templates/head.php"); ?>
 <br>
-
 <div class='container row'>
     <div class="col-3">
         <h2 class='text-center'>CODIGO DE BOLETAS</h2>

@@ -1,6 +1,9 @@
 
 <?php
 include('../../back/get_montos.php');
+setlocale(LC_ALL,"es_PE");
+date_default_timezone_set('America/Lima');
+$emision = strtoupper(strftime("%d de %B del %Y"));
 
 ?>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -188,11 +191,10 @@ body {
             <div class='row'>
                 <div class='text-left inline-block ml-2' style='width: 0px; font-weight: bold;font-family:Book Antiqua;font-size: 13px;'> </div>
                 <div class='text-left mr-2 ml-2' style='width: 150px;font-weight: bold;font-family:Book Antiqua;font-size: 13px;'> FECHA DE EMISIÓN </div>
-                <div class='text-right mr-2 ml-2' style='width: 150px; padding: 0; font-family:Book Antiqua;font-size: 13px;'>  24 DE MAYO DEL 2022 </div>
+                <div class='text-right mr-2 ml-2' style='width: 180px; padding: 0; font-family:Book Antiqua;font-size: 13px;'> <?= $emision ?> </div>
 
-                <div class='text-center inline-block  mr-1 ml-1' style='width: 1px; font-weight: bold;font-family:Book Antiqua;font-size: 13px;'> </div>
                 <div class='text-left mr-2 ml-2' style='width: 1px;font-weight: bold;font-family:Book Antiqua;font-size: 13px;'> </div>
-                <div class='text-right mr-2 ml-2' style='width: 90px; padding: 0; font-family:Book Antiqua;font-size: 13px;'> </div>
+                <div class='text-right mr-2 ml-2' style='width: 70px; padding: 0; font-family:Book Antiqua;font-size: 13px;'> </div>
 
                 <div class='text-center inline-block  mr-1 ml-1' style='width: 40px; font-weight: bold;font-family:Book Antiqua;font-size: 13px;'> </div>
                 <div class='text-left mr-2 ml-2' style='width: 120px;font-weight: bold;font-family:Book Antiqua;font-size: 13px;'> </div>

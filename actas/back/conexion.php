@@ -1,8 +1,8 @@
 <?php
-$servidor = 'localhost';
-$usuario = 'root';
-$password = '';
-$nombreBD = 'bd_conta';
+$servidor = "localhost";
+$usuario = "root";
+$password = "";
+$nombreBD = "bd_conta";
 $db = new mysqli($servidor, $usuario, $password, $nombreBD);
 
 // Verificar la bd

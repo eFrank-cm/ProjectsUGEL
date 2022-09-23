@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
     <?php
-      @include '../../back/conexion.php'; 
+      ob_start();
+      //ini_set('display_errors', 1);
       session_start();
-
+      echo $_SESSION['name'];
+      @include '../../back/conexion.php'; 
       if(!isset($_SESSION['name'])){
-      header('location:../../index.php');
+        header('location:../../index.php');
       }
       //botar de la sesion de administrador (cambiar user por admin)
       if($_SESSION['user_type']!='admin')
@@ -14,7 +14,10 @@
       }
       @include '../../back/crud_users.php'; 
       include '../../img/svg_icons.php';
+      ob_end_flush();
     ?>
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />

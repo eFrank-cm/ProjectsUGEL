@@ -76,7 +76,8 @@ $(document).ready(function(){
             document.getElementById("textDNI").value = "";
             $("#textDNI").attr("disabled", "disabled");
             $("#BuscarDNI").attr("disabled", "disabled");
-
+            
+            // limpiar campos
             $('#id_persona').val('');
             $('#inputid').val('');
             $('#inputDNI').val('');
@@ -86,6 +87,7 @@ $(document).ready(function(){
             $('#inputNombres').val('');
             $('#inputCondicion').val('');
             
+            // habilitar edicion
             $('#inputDNI').removeAttr("disabled"); 
             $('#inputCodModular').removeAttr("disabled"); 
             $('#inputAPaterno').removeAttr("disabled"); 
@@ -98,7 +100,8 @@ $(document).ready(function(){
             switchStatus = $(this).is(':checked');
             $("#textDNI").removeAttr("disabled"); 
             $("#BuscarDNI").removeAttr("disabled");
-
+            
+            // deshabilitar edicion de campos 
             $('#inputDNI').attr("disabled", "disabled");
             $('#inputCodModular').attr("disabled", "disabled");
             $('#inputAPaterno').attr("disabled", "disabled");
@@ -474,7 +477,7 @@ $(document).ready(function(){
         console.log(datosBoleta);
         $.ajax({
             type: "POST", 
-            url: "../../items/search.php",
+            url: "../../Items/search.php",
             data: datosBoleta,
             success: function(data){
                 $('#bodyModalBoleta').html('');
@@ -505,7 +508,7 @@ $(document).ready(function(){
 
     function soloNumeros(e){
         var key = window.Event ? e.which : e.keyCode;
-        if ((key < 48 || key > 57) && (key < 96 || key > 105) && (key!==8 && key!==109 && key!==9) && (key!=190 && key!=110)){
+        if ((key < 48 || key > 57) && (key < 96 || key > 105) && (key!==8 && key!==109 && key!==9) && (key!=190 && key!=110)){ 
             e.preventDefault();  
         }
     }

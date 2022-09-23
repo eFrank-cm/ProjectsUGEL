@@ -1,27 +1,25 @@
+<?php
+  @include '../../back/conexion.php'; 
+  session_start();
+
+  if(!isset($_SESSION['name'])){
+  header('location:../../index.php');
+  }
+  //botar de la sesion de administrador (cambiar user por admin)
+  if($_SESSION['user_type']!='admin')
+  {
+    header('location:../../index.php');
+  }
+?>
 <!DOCTYPE html>
 <html lang="ES">
-    <?php
-      @include '../../back/conexion.php'; 
-      session_start();
-
-      if(!isset($_SESSION['name'])){
-      header('location:../../index.php');
-      }
-      //botar de la sesion de administrador (cambiar user por admin)
-      if($_SESSION['user_type']!='admin')
-      {
-        header('location:../../index.php');
-      }
-      
-    ?>
-    
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dashboard - SB Admin</title>
+        <title>Sistema Boletas</title>
         <!-- <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" /> -->
         <link href="../../css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -126,7 +124,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">Duplicado Boletas</a>
+            <a class="navbar-brand ps-3" href="main_admin.php">Duplicado Boletas</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -308,7 +306,7 @@
     <?php
 
         //$query = "SELECT nombres FROM persona ORDER BY nombres ASC";    
-        $query = "SELECT CONCAT (`codMod`,' ',`nombres`) as nombres FROM `persona` ORDER BY nombres ASC";
+        $query = "SELECT CONCAT (`codMod`,' ',`apPaterno`,' ',`apMaterno`,' ',`nombres`) as nombres FROM `persona` ORDER BY apPaterno";
         $result = $db->query($query);
         $data2 = array();
         
@@ -419,13 +417,13 @@
                                     </div>
                                     <div class="col">
                                         <label for="inputPassword2" class="">Condición</label>
-                                        <select class="form-select form-select-sm" id='inputCondicion' aria-label="Default select example"  disabled>
+                                        <select class="form-select form-select-sm" id='inputCondicion' aria-label="Default select example" disabled>
                                             <option value="0" selected>Seleccionar...</option>
                                             <option value="ACTIVO">ACTIVO</option>
                                             <option value="CESANTE">CESANTE</option>
                                         </select>
                                         <!-- GUARDAR NUEVA PERSONA -->
-                                        <button type="submit" class="btn btn-success mb-3 btn-sm" id='savepersona' style ="position: relative; top: 23px;"  disabled><i class="bi bi-person-check"></i>/<i class="bi bi-person-plus"></i> Guardar</button>
+                                        <button type="submit" class="btn btn-success mb-3 btn-sm" id='savepersona' style ="position: relative; top: 23px;" disabled><i class="bi bi-person-check"></i>/<i class="bi bi-person-plus"></i> Guardar</button>
                                     </div>
                                 </div>
                             </div>

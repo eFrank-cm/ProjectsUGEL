@@ -1,5 +1,6 @@
 <?php
-$db = new mysqli('localhost', 'root', '', 'bd_conta');
+//$db = new mysqli('localhost', 'root', '', 'bd_conta');
+@include '../../back/conexion.php';
 $codMod = $_POST['search_bar']; 
 $str = $_POST['search_bar'];
 $delimiter = ' ';
@@ -140,7 +141,7 @@ $result = $db->query($query);
                 <?php
                 $idp = $row['id_p'];
                 $query_boleta = "SELECT * FROM boleta WHERE id_p LIKE '$idp' ORDER BY n DESC";
-                $cols_name = array('Nº', 'LUGAR Y FECHA', 'COD PLANILLA', 'ANULADO', 'IDP', 'ACCION');
+                $cols_name = array('Nro', 'LUGAR Y FECHA', 'COD PLANILLA', 'ANULADO', 'IDP', 'ACCION');
                 $result_boletas = $db->query($query_boleta);
                 
                 ?>

@@ -10,7 +10,7 @@ $(document).ready(function(){
         console.log(dataToPOST);
         e.preventDefault();
 
-        if(dataToPOST['cod']!=='' && dataToPOST['tag']!==''){
+        if(dataToPOST['cod']!=='' && dataToPOST['cod']!='-' && dataToPOST['tag']!==''){
             swal({
                 title: 'El codigo fue añadido exitosamente!',
                 icon: 'success'
@@ -24,26 +24,25 @@ $(document).ready(function(){
                         console.log(res)
                     }
                 });
-
-                $('#cod').val('');
-                $('#tag').val('');
-                getCodes();
+                // getCodes();
+                // $('#cod').val('');
+                // $('#tag').val('');
+                location.reload();
             })
         }
         else{
             swal({
-                title: 'No deje campos vacios.',
+                title: 'ERROR: campos vacios o valores incorrectos.',
                 icon: 'error'
             });
         }
     });
-
-
+    
     $('#updbtn').click(function(e){
         getCodes();
     });
 
-    // DEL CODIGO
+    // DEL CODIGOS
     $('#divtb-posneg').on('click', '.delbtn-cod', function(){
         var delbtn = this;
         dataRow = getDataRow(delbtn);
@@ -70,10 +69,11 @@ $(document).ready(function(){
 
                 swal({
                     title: 'El codigo ' + dataToPOST['cod']  + ' - ' + dataToPOST['tag'] +' ha sido eliminado!',
-                    icon: 'success' 
-                });
+                    icon: 'success'
+                })
             }
         });
+        // return false;
     });
 
     function getDataRow(obj){
@@ -98,7 +98,7 @@ $(document).ready(function(){
             e.preventDefault();  
         }
     }
-
+    
     function getCodes(){
         $.ajax({
             type: 'post',
