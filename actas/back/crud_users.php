@@ -19,7 +19,7 @@ if(isset($_POST['insertdata'])){
       if($pass != $cpass){
          $error[] = 'ERROR: La contraseña no coincide!';
       }else{
-         $insert = "INSERT INTO user_form(dni,name,lname, email, password, user_type,state) VALUES('$dni','$name','$lname','$email','$pass','$user_type','$state')";
+         $insert = "INSERT INTO user_form(dni, names, surnames, email, password, user_type,state) VALUES('$dni','$name','$lname','$email','$pass','$user_type','$state')";
          mysqli_query($db, $insert);
          #header('location:login_index.php');
          $mensaje[] = 'EXITO! Se agregó correctamente un nuevo usuario!';

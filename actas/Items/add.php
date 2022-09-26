@@ -3,8 +3,8 @@
 
 $isDt_per = (!empty($_POST['codMod']) and !empty($_POST['apPaterno']) and !empty($_POST['apMaterno']) and !empty($_POST['nombres']) and !empty($_POST['condicion']));
 $isDt_bol = (!empty($_POST['fecha']) and !empty($_POST['codPlanilla']) and !empty($_POST['idp']));
-$isDt_mnt = (!empty($_POST['cod']) and !empty($_POST['monto']) and !empty($_POST['n']));
-$isDt_cod = (!empty($_POST['cod']) and !empty($_POST['tag']));
+$isDt_mnt = (!empty($_POST['monto']) and !empty($_POST['n']));
+$isDt_cod = (!empty($_POST['tag']) and !empty($_POST['tipo']));
 
 if($isDt_per){
     $dni = $_POST['dni'];
@@ -69,21 +69,21 @@ else if($isDt_bol){
 }
 else if($isDt_mnt){
     if($_POST['accion']=='add'){
-        $cod = $_POST['cod'];
+        $tipo = $_POST['tipo']=='ingreso'?1:-1;
         $tag = $_POST['tag'];
-        $monto = $_POST['monto'];
+        $monto = floatval($_POST['monto']);
         $n = $_POST['n'];
 
-        $query_insert = "INSERT INTO monto (cod, tag, monto, n) VALUE ('$cod', '$tag', '$monto', '$n')";
+        $query_insert = "INSERT INTO monto (tipo, tag, monto, n) VALUE ('$tipo', '$tag', '$monto', '$n')";
         $db->query($query_insert);
 
-        $query_select = "SELECT * FROM monto WHERE cod='$cod' AND tag='$tag' AND monto='$monto' AND n='$n'";
+        $query_select = "SELECT * FROM monto WHERE tipo='$tipo' AND tag='$tag' AND monto LIKE '$monto' AND n='$n'";
         $result = $db->query($query_select);
 
-        $monto = array('mensaje'=>$query_insert);
+        $monto = array('mensaje'=>"OK");
         while($row = $result->fetch_array()){
             $monto['idm'] = $row['id_m'];
-            $monto['cod'] = $row['cod'];
+            $monto['tipo'] = $row['tipo'];
             $monto['tag'] = $row['tag'];
             $monto['monto'] = $row['monto'];
         }
@@ -93,15 +93,9 @@ else if($isDt_mnt){
     }
     else if($_POST['accion']=='del'){
         $idm = $_POST['idm'];
-        $cod = $_POST['cod'];
-        $tag = $_POST['tag'];
-        $monto = $_POST['monto'];
-
-        $query_del = "DELETE FROM monto WHERE cod='$cod' AND tag='$tag' AND monto='$monto' AND id_m='$idm'";
-
+        $query_del = "DELETE FROM monto WHERE id_m='$idm'";
         $db->query($query_del);
-
-        echo "Se elimino {$_POST['cod']} y {$_POST['monto']}";
+        echo "OK";
     }
     else if($_POST['accion'] == 'update'){
         $idm = $_POST['idm'];
@@ -116,11 +110,11 @@ else if($isDt_mnt){
     }    
 }
 else if($isDt_cod){
-    $cod = $_POST['cod'];
     $tag = $_POST['tag'];
-    
+    $tipo = $_POST['tipo']=='ingreso'?1:-1;
+
     if($_POST['accion'] == 'add'){
-        $db->query("INSERT INTO codigo (cod, tag) VALUE ('$cod', '$tag')");
+        $db->query("INSERT INTO codigo (tipo, tag) VALUE ('$tipo', '$tag')");
     }
     else if($_POST['accion'] == 'del'){
         $idc = $_POST['idc'];

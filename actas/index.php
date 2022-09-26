@@ -18,25 +18,25 @@ if(isset($_POST['submit'])){
       $row = mysqli_fetch_array($result);
 
       if(($row['user_type'] == 'admin')&&($row['state'] == 'habilitado')){
-         $_SESSION['name'] = $row['name'];
+         $_SESSION['name'] = $row['names'];
          $_SESSION['id'] = $row['id'];
          $_SESSION['user_type'] = $row['user_type'];
          header('location: ./pages/admin/main_admin.php');
+      }
+      elseif(($row['user_type'] == 'user')&&($row['state'] == 'habilitado')){
 
-      }elseif(($row['user_type'] == 'user')&&($row['state'] == 'habilitado')){
-
-         $_SESSION['name'] = $row['name'];
+         $_SESSION['name'] = $row['surnames'];
          $_SESSION['id'] = $row['id'];
          $_SESSION['user_type'] = $row['user_type'];
-         header('location: ./pages/user/files_page.php');
-      } else
-      {
+         header('location: ./pages/admin/main_users.php');
+      } 
+      else{
          $error[] = 'La cuenta ingresada está inactiva!';
       }
-   }else
-      {
-         $error[] = 'El email o la contraseña son incorrectas!';
-      }
+   }
+   else{
+      $error[] = 'El email o la contraseña son incorrectas!';
+   }
 
    
 };

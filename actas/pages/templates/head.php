@@ -7,12 +7,8 @@
       if(!isset($_SESSION['name'])){
       header('location:../../index.php');
       }
-      //botar de la sesion de administrador (cambiar user por admin)
-      if($_SESSION['user_type']!='admin')
-      {
-        header('location:../../index.php');
-      }
-      @include '../../back/crud_users.php'; 
+
+      @include '../../back/crud_users.php';
       include '../../img/svg_icons.php';
     ?>
     <head>
@@ -70,17 +66,18 @@
                         <div class="nav">
                             <!-- IMAGEN GIF-->
                             <div><img src="../../img/logonormal.gif" class="img-fluid" alt=""></div>
-                            
                             <!-- MANTENIMIENTO-->
-                            <div class="sb-sidenav-menu-heading">MANTENIMIENTO</div>
-                            <a class="nav-link" href="main_users.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Usuarios
-                            </a>
+                            <?php if($_SESSION['user_type']=='admin'): ?>
+                                <div class="sb-sidenav-menu-heading">MANTENIMIENTO</div>
+                                <a class="nav-link" href="users.php">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Usuarios
+                                </a>
+                            <?php endif; ?>
 
                             <!-- FUNCIONES  -->
                             <div class="sb-sidenav-menu-heading">FUNCIONES</div>
-                            <a class="nav-link" href="main_admin.php">
+                            <a class="nav-link" href="<?= $_SESSION['user_type']=='admin'?"main_admin.php":"main_users.php" ?>">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Boletas
                             </a>

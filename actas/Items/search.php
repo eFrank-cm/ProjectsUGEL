@@ -19,7 +19,7 @@ if(array_key_exists('n', $_POST)){
     $query = "SELECT * FROM monto WHERE n LIKE '$n' ORDER BY id_m DESC";
     array_push($cols_name, 'CODIGO', 'MONTO', 'ACCION');
 
-    $codigos = $db->query("SELECT cod FROM codigo");
+    $codigos = $db->query("SELECT * FROM codigo");
 }
 
 if(array_key_exists('cod', $_POST)){
@@ -109,7 +109,7 @@ $result = $db->query($query);
                 ],
                 "columnDefs": [
                     {
-                        "targets": [ 0 ],
+                        "targets": 1,
                         "visible": true
                     }
                 ]
@@ -118,46 +118,49 @@ $result = $db->query($query);
     </script>
     <form class='col container p-1' id='frm-monto' hidden>
         <div class='card'>
-            <h4 class='card-header'>Montos de la boleta</h4>
+            <h4 class='card-header'>Montos</h4>
         
-            <div class='container p-2 '>
+            <div class='container p-4'>
                 <table class="display m-1 w-100" id='tb-montos'>
                     <thead>
                         <tr>
                             <th hidden>IDM</th>
-                            <th>CODIGO</th>
-                            <th>TAG</th>
-                            <th>MONTO</th>
-                            <th>ACCION</th>
+                            <th></th>
+                            <th class='text-center'>ETIQUETA</th>
+                            <th class='text-center'>MONTO (S/.)</th>
+                            <th class='text-center'>ACCION</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td hidden></td>
                             <!-- <td class='td-monto onlynumber' id='add-cod-monto' contenteditable> -->
-                            <td>
-                                <select class='form-select cmb-monto' id='cmb-cod'>
+                            <td><h6></h6></td>
+                            <td class='text-center'>
+                                <select class='form-select form-select-sm cmb-monto' id='cmb-tag'>
                                     <option value=""></option>
                                     <?php while($row = $codigos->fetch_array()){?>
-                                        <option value='<?= $row['cod'] ?>'><?= $row['cod'] ?></option>
+                                        <?php $tp = $row['tipo']>0?"+":"-"; ?>
+                                        <option value='<?= $tp.' '. $row['tag'] ?>'><?= $row['tag']." (".$tp.")"?></option>
                                     <?php };?>
                                 </select>
                             </td>
-                            <td class=''>
-                                <select class='form-select cmb-monto' id='cmb-tag'>
-                                    <option value=""></option>
-                                </select>
-                            </td>
-                            <td class='td-monto onlynumber' contenteditable></td>
-                            <td><button class='add-monto btn btn-outline-primary btn-sm' disabled><i class="bi bi-plus-circle"></i> Agregar</button></td>
+                            <td class='text-center'><input id='inptmonto' class='form-control form-control-sm text-end td-monto onlynumber' maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"></td>
+                            <td class='text-center'><button class='add-monto btn btn-outline-primary btn-sm' disabled><i class="bi bi-plus-circle"></i> Agregar</button></td>
                         </tr>
                         <?php while($row = $result->fetch_array()){ ?>
                             <tr>
                                 <td hidden><?= $row['id_m'] ?></td>
-                                <td class='onlynumber'><?= $row['cod'] ?></td>
+                                <td class='text-end'><h5>
+                                    <?php if($row['tipo']>0): ?>
+                                        <i class="bi bi-plus-circle-fill text-success"></i>
+                                    <?php else:?>
+                                        <i class="bi bi-dash-circle-fill text-danger"></i>
+                                    <?php endif; ?>
+                                </h5></td>
                                 <td><?= $row['tag'] ?></td>
-                                <td class='onlynumber'><?= $row['monto'] ?></td>
-                                <td>
+                                <td class='text-end onlynumber'><?= number_format($row['monto'], 2, '.', ' ') ?></td>
+                                <td class='text-center'>
                                     <!-- <button class='update-monto btn btn-outline-success btn-sm'><i class="bi bi-pencil-square"></i> Editar</button> -->
                                     <button class='del-monto btn btn-outline-danger btn-sm'><i class="bi bi-trash3"></i> Eliminar</button>
                                 </td>

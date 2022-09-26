@@ -10,7 +10,7 @@ $(document).ready(function(){
         console.log(dataToPOST);
         e.preventDefault();
 
-        if(dataToPOST['cod']!=='' && dataToPOST['cod']!='-' && dataToPOST['tag']!==''){
+        if(dataToPOST['tipo']!=='' && dataToPOST['tag']!==''){
             swal({
                 title: 'El codigo fue añadido exitosamente!',
                 icon: 'success'
@@ -46,12 +46,13 @@ $(document).ready(function(){
     $('#divtb-posneg').on('click', '.delbtn-cod', function(){
         var delbtn = this;
         dataRow = getDataRow(delbtn);
-        dataToPOST = {'idc': dataRow[0], 'cod': dataRow[1], 'tag':dataRow[2], 'accion': 'del'};
+        dataToPOST = {'idc': dataRow[0], 'tipo':dataRow[1], 'tag':dataRow[2], 'accion': 'del'};
+        var tipo = dataToPOST['tipo']==1?"INGRESO":"EGRESO";
         console.log(dataToPOST);
 
         swal({
-            title: "Estas seguro de eliminar esta entrada?",
-            text: 'Se eliminará el codigo ' + dataToPOST['cod'] + ' y ' + dataToPOST['tag'],
+            title: "Esta seguro de eliminar esta entrada?",
+            text: 'Se eliminará la etiqueta de ' + tipo + ': ' + dataToPOST['tag'],
             icon: "warning",
             buttons: ["Cancelar","Eliminar"],
             dangerMode: true
@@ -62,7 +63,8 @@ $(document).ready(function(){
                     type: 'post',
                     url: '../../Items/add.php',
                     data: dataToPOST,
-                    success: function(){
+                    success: function(res){
+                        console.log(res)
                         delbtn.closest('tr').remove();
                     }
                 });
@@ -73,7 +75,7 @@ $(document).ready(function(){
                 })
             }
         });
-        // return false;
+        return false;
     });
 
     function getDataRow(obj){

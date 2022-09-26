@@ -165,7 +165,7 @@ $(document).ready(function(){
     // BUTTON - ADD BOLETA
     $('.modal-body-2').on('click', '#save-bol', function(){
         $('#frm-monto').removeAttr("hidden");
-        dataBol = getDataFormJSON('#frm-data-bol');
+        var dataBol = getDataFormJSON('#frm-data-bol');
         
         if(dataBol['n']!=''){
             dataBol['accion'] = 'update';
@@ -210,10 +210,10 @@ $(document).ready(function(){
 
     // BUTTON - DEL BOLETA
     $('.modal-body-2').on('click', '#delbtn-bol', function(){
-        n = $('#n-data-bol').val();
-        fecha = $('#fecha-data-bol').val();
-        codPlanilla = $('#codPlanilla-data-bol').val();
-        DatosBoleta = { 'n':n, 'fecha': fecha, 'codPlanilla': codPlanilla,  idp: '--', 'accion': 'del'};
+        var n = $('#n-data-bol').val();
+        var fecha = $('#fecha-data-bol').val();
+        var codPlanilla = $('#codPlanilla-data-bol').val();
+        var DatosBoleta = { 'n':n, 'fecha': fecha, 'codPlanilla': codPlanilla,  idp: '--', 'accion': 'del'};
         swal({
             title: "Estas seguro de eliminar esta boleta?",
             text: 'Se eliminará la boleta n° ' + DatosBoleta['n']+' y todos los montos que contenga',
@@ -256,13 +256,15 @@ $(document).ready(function(){
 
     // BUTTON - ADD MONTO
     $('.modal-body-2').on('click', '.add-monto', function(){
-        dataTmp = getDataRow(this);
-        dataMonto = {'cod': $('#cmb-cod').val(), 'tag':$('#cmb-tag').val(), 'monto': dataTmp[3], 'n': $('#n-data-bol').val(), 'accion': 'add'};
-        //console.log(dataMonto);
-        if((dataMonto['monto'] == 0) || (dataMonto['cod']==0)){
+        // var dataTmp = getDataRow(this);
+        var tipo = $('#cmb-tag').val().split(' ')[0]=='+'?"ingreso":"egreso";
+        var tag = $('#cmb-tag').val().split(' ')[1]
+        var dataToPost = {'tipo': tipo, 'tag':tag, 'monto': $('#inptmonto').val(), 'n': $('#n-data-bol').val(), 'accion': 'add'};
+        var Decim = dataToPost['monto'].split('.').length > 1? true: false; 
+        console.log(dataToPost);
+        if((dataToPost['monto'] == 0) || (dataToPost['tag']==0)){
             swal("No es posible ingresar un codigo o monto igual a 0!", {
                 position: 'top-end',
-                button: false,
                 icon: 'warning',
                 timer: 2500
             }).then(()=>{
@@ -272,20 +274,28 @@ $(document).ready(function(){
                 $('#tb-montos #add-cod-monto').focus();
             });
         }
+        else if(Decim && dataToPost['monto'].split('.')[1].length > 2){
+            swal("No es posible ingresar un monto con mas de 2 decimales!", {
+                position: 'top-end',
+                icon: 'warning',
+                timer: 2500
+            }).then(()=>{
+                $('#tb-montos #inptmonto').focus();
+            });
+        }
         else{
             $.ajax({
                 type: 'post',
                 url: '../../Items/add.php',
-                data: dataMonto,
+                data: dataToPost,
                 success: function(res){
                     var datos = JSON.parse(res);
-                    console.log(datos);
+                    console.log(datos['mensaje']);
                     rowCount = document.getElementById('tb-montos').rows.length;
                     n = -1;
                     if(rowCount > 2){
                         n = 2;
                     }
-                    console.log(n);
                     tabla = document.getElementById('tb-montos').insertRow(n);
                 
                     col1 = tabla.insertCell(0);
@@ -297,24 +307,30 @@ $(document).ready(function(){
                     col1.innerHTML = datos['idm'];
                     col1.setAttribute('hidden', 'true')
     
-                    col2.innerHTML = datos['cod'];
-                    col2.setAttribute('contenteditable', 'true');
+                    col2.innerHTML = datos['tipo'];
+                    //col2.setAttribute('hidden', 'true')
+                    if(datos['tipo']=='1'){
+                        col2.innerHTML = "<h6><i class='bi bi-plus-circle-fill text-success'></i></h6>"
+                    }
+                    if(datos['tipo']=='-1'){
+                        col2.innerHTML = "<h6><i class='bi bi-dash-circle-fill text-danger'></i></h6>"
+                    }
+                    col2.classList.add('text-end');
     
                     col3.innerHTML = datos['tag'];
-                    col3.setAttribute('contenteditable', 'true');
+                    //col3.setAttribute('contenteditable', 'true');
     
-                    col4.innerHTML = datos['monto'];
-                    col4.setAttribute('contenteditable', 'true');
+                    col4.innerHTML = number_format(datos['monto'], 2, '.', ' ')
+                    col4.classList.add('text-end');
     
                     //col5.innerHTML = "<button class='update-monto  btn btn-outline-success btn-sm'><i class='bi bi-pencil-square'></i> editar</button>"
-                    //col5.innerHTML += "   " 
+                    //col5.innerHTML += "   "
                     col5.innerHTML += "<button class='del-monto btn btn-outline-danger btn-sm'><i class='bi bi-trash3'></i> Eliminar</button>"  
+                    col5.classList.add('text-center');
     
-                    $('#tb-montos .td-monto').empty();
-                    $('#cmb-cod').val('').change()
+                    $('#tb-montos #inptmonto').val('');
                     $('#cmb-tag').val('').change()
-                    $('#cmb-cod').focus();
-
+                    $('#cmb-tag').focus();
 
                     // // ACTUALIZAR TABLA DE MONTOS
                     // var dataBol = {'n':$('#n-data-bol').val(), 'fecha': $('#fecha-data-bol').val(), 'codPlanilla':$('#codPlanilla-data-bol').val(), 'anulado':'-'}
@@ -328,11 +344,11 @@ $(document).ready(function(){
     // BUTTON - DELETE MONTO
     $('.modal-body-2').on('click', '.del-monto', function(){
         dataRow = getDataRow(this);
-        dataDel = {'idm': dataRow[0], 'cod':dataRow[1], 'tag':dataRow[2], 'monto': dataRow[3], 'n':$('#n-data-bol').val(), 'accion': 'del'};
+        dataDel = {'idm': dataRow[0], 'tipo':dataRow[1], 'tag':dataRow[2], 'monto': dataRow[3], 'n':$('#n-data-bol').val(), 'accion': 'del'};
         console.log(dataDel);
         swal({
             title: "Estas seguro de eliminar esta entrada?",
-            text: 'Se eliminará el codigo ' + dataDel['cod'] + ', ' + dataDel['tag'] + ' y monto ' + dataDel['monto'],
+            text: 'Se eliminará el monto: ' + dataDel['tipo'] + ' / ' + dataDel['tag'] + ' / ' + dataDel['monto'],
             icon: "warning",
             buttons: ["Cancelar","Eliminar"],
             dangerMode: true
@@ -399,21 +415,21 @@ $(document).ready(function(){
 
     // COMBOBOX - CHANGE
     $('.modal-body-2').on('change', '#cmb-cod', function(){
-        var cod = this.value;
-        console.log(cod);
-        $.ajax({
-            type: 'post',
-            url: '../../Items/search.php',
-            data: {'cod': cod},
-            success: function(res){
-                var newOptions = JSON.parse(res);
-                var select = $("#cmb-tag");
-                select.empty();
-                newOptions.forEach(e => {
-                    select.append($("<option></option>").attr("value", e).text(e));
-                });
-            }
-        });
+        // var cod = this.value;
+        // console.log(cod);
+        // $.ajax({
+        //     type: 'post',
+        //     url: '../../Items/search.php',
+        //     data: {'cod': cod},
+        //     success: function(res){
+        //         var newOptions = JSON.parse(res);
+        //         var select = $("#cmb-tag");
+        //         select.empty();
+        //         newOptions.forEach(e => {
+        //             select.append($("<option></option>").attr("value", e).text(e));
+        //         });
+        //     }
+        // });
     });
 
     $('#main-searcher').click(function(){
@@ -508,9 +524,47 @@ $(document).ready(function(){
 
     function soloNumeros(e){
         var key = window.Event ? e.which : e.keyCode;
-        if ((key < 48 || key > 57) && (key < 96 || key > 105) && (key!==8 && key!==109 && key!==9) && (key!=190 && key!=110)){ 
-            e.preventDefault();  
+        var not_numbers = ((key < 48 || key > 57) && (key < 96 || key > 105));
+        var not_backspace_tab = (key!==8 && key!==9);
+        var not_points = (key!=190 && key!=110);
+        var not_arrows = (key < 37 || key > 40);
+        
+        // hay decimales?
+        var arr = $(this).val().split('.');
+        if(arr.length > 1){
+            if(not_numbers && not_backspace_tab && not_arrows){
+                e.preventDefault();
+            }
         }
+        else{
+            if(not_numbers && not_backspace_tab && not_points && not_arrows){
+                e.preventDefault();
+            }
+        }
+    }
+
+    function number_format(number, decimals, dec_point, thousands_sep) {
+        // Strip all characters but numerical ones.
+        number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+        var n = !isFinite(+number) ? 0 : +number,
+            prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+            sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+            dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+            s = '',
+            toFixedFix = function (n, prec) {
+                var k = Math.pow(10, prec);
+                return '' + Math.round(n * k) / k;
+            };
+        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+        s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+        if (s[0].length > 3) {
+            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+        }
+        if ((s[1] || '').length < prec) {
+            s[1] = s[1] || '';
+            s[1] += new Array(prec - s[1].length + 1).join('0');
+        }
+        return s.join(dec);
     }
 });
 
