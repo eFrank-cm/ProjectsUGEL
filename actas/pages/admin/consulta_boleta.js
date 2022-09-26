@@ -310,10 +310,10 @@ $(document).ready(function(){
                     col2.innerHTML = datos['tipo'];
                     //col2.setAttribute('hidden', 'true')
                     if(datos['tipo']=='1'){
-                        col2.innerHTML = "<h6><i class='bi bi-plus-circle-fill text-success'></i></h6>"
+                        col2.innerHTML = "<h4><i class='bi bi-arrow-up-circle-fill text-success'></i></h4>"
                     }
                     if(datos['tipo']=='-1'){
-                        col2.innerHTML = "<h6><i class='bi bi-dash-circle-fill text-danger'></i></h6>"
+                        col2.innerHTML = "<h4><i class='bi bi-arrow-down-circle-fill text-danger'></i></h4>"
                     }
                     col2.classList.add('text-end');
     
