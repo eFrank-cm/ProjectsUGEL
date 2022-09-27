@@ -24,7 +24,7 @@ while($row = $result->fetch_array()){
     <div class='col-5'>
         <!-- TABLA COD INGRESOS -->
         <br>
-        <h5><i class="bi bi-plus-circle-fill text-success"></i> INGRESOS</h5>
+        <h4><i class='bi bi-arrow-up-circle-fill text-success'></i> INGRESOS</h4>
         <table class='codtable table table-sm' id='codtable-pos'>
             <thead>
                 <th hidden>IDC</th>
@@ -49,7 +49,7 @@ while($row = $result->fetch_array()){
     <div class='col-5'>
         <!-- TABLA COD EGRESOS -->
         <br>
-        <h5><i class="bi bi-dash-circle-fill text-danger"></i> EGRESOS</h5>
+        <h4><i class="bi bi-arrow-down-circle-fill text-danger"></i> EGRESOS</h4>
         <table class='codtable table table-sm' id='codtable-neg'>
             <thead>
                 <th hidden>IDC</th>

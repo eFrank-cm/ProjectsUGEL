@@ -151,13 +151,13 @@ $result = $db->query($query);
                         <?php while($row = $result->fetch_array()){ ?>
                             <tr>
                                 <td hidden><?= $row['id_m'] ?></td>
-                                <td class='text-end'><h5>
+                                <td class='text-end'><h4>
                                     <?php if($row['tipo']>0): ?>
-                                        <i class="bi bi-plus-circle-fill text-success"></i>
+                                        <i class="bi bi-arrow-up-circle-fill text-success"></i>
                                     <?php else:?>
-                                        <i class="bi bi-dash-circle-fill text-danger"></i>
+                                        <i class="bi bi-arrow-down-circle-fill text-danger"></i>
                                     <?php endif; ?>
-                                </h5></td>
+                                </h4></td>
                                 <td><?= $row['tag'] ?></td>
                                 <td class='text-end onlynumber'><?= number_format($row['monto'], 2, '.', ' ') ?></td>
                                 <td class='text-center'>
