@@ -20,7 +20,7 @@ if(!empty($boleta_per)){
             'id_m' => $row['id_m'],
             'tipo' => $row['tipo'],
             'tag' => $row['tag'],
-            'monto' => $row['monto'],
+            'monto' => floatval($row['monto']),
             'n' => $row['n']
         );
         array_push($montos, $monto);
@@ -28,9 +28,10 @@ if(!empty($boleta_per)){
         array_push($codigos_keys_tmp, $row['tag']);
 
         // sumar montos
-        if($monto['tipo'] > 0){
+        if($monto['tipo'] == 1){
             $rem_total += $monto['monto'];
-        }else{
+        }
+        else if ($monto['tipo'] == -1){
             $des += $monto['monto'];
         }
     }
@@ -102,9 +103,7 @@ for($i = 0; $i < 36; $i++){
     }
 }
 
-
-$rem_total = number_format($rem_total, 2, '.', ' ');
-$des = number_format($des, 2, '.', ' ');
+$rem_liquida = $rem_total - $des;
 ?>
 
 
