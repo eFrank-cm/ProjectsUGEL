@@ -9,6 +9,7 @@ header('location:../../index.php');
 }
 
 include '../../img/svg_icons.php';
+@include '../../back/crud_users.php';
 ?>
 
 <!DOCTYPE html>
@@ -51,8 +52,8 @@ include '../../img/svg_icons.php';
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a id='change_password' class="dropdown-item changepass-btn" href="#!">Cambiar Contrase帽a</a></li>
-                        <li><a class="dropdown-item" href="#!">Registro de actividad</a></li>
+                        <li><a id='change_password' class="dropdown-item changepass-btn" href="#!">Cambiar Contraseña</a></li>
+                        <li hidden><a class="dropdown-item" href="#!">Registro de actividad</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="../login/logout.php">Cerrar Sesion</a></li>
                     </ul>
@@ -92,7 +93,7 @@ include '../../img/svg_icons.php';
 
                     <!-- FOOTER SIDE BAR -->
                     <div class="sb-sidenav-footer">
-                        <div class="small">Sesion iniciada como:</div>
+                        <div class="small">Sesión iniciada como:</div>
                         <span><?php echo $_SESSION['name'] ?>
                     </div>
                 </nav>
@@ -127,12 +128,142 @@ include '../../img/svg_icons.php';
         </form>
     </div>
 </div>
+<?php
+    if(isset($error))
+    {
+    foreach($error as $error)
+    {
+        echo  "<div class='alert alert-danger d-flex align-items-center alert-dismissible fade show' role='alert'>";
+        echo  "<svg class='bi flex-shrink-0 me-2' width='24' height='24' role='img' aria-label='Danger:'><use xlink:href='#exclamation-triangle-fill'/></svg>";
+        echo  "<div> $error </div>";
+        echo  "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+        echo  "</div>";
+    };
+    }
+    elseif (isset($mensaje)) {
+        foreach($mensaje as $mensaje)
+        {
+        echo  "<div class='alert alert-success d-flex align-items-center alert-dismissible fade show' role='alert'>";
+        echo  "<svg class='bi flex-shrink-0 me-2' width='24' height='24' role='img' aria-label='Success:'><use xlink:href='#check-circle-fill'/></svg>";
+        echo  "<div> $mensaje </div>";
+        echo  "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+        echo  "</div>"; 
+        };
+    };
+?>
 <br>
 <!-- TABLAS DE CODIGO -->
 <div id='divtb-posneg' class="container border" >
 </div>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src='codigos.js'></script>
+
+<!-- CHANGE PASSWORD -->
+<script>
+$(document).ready(function () 
+{
+    $('.changepass-btn').on('click', function () 
+    {
+        console.log("OK");
+        $('#changepassword').modal('show');
+        $tr = $(this).closest('tr');
+        var data = $tr.children("td").map(function () 
+        {
+            return $(this).text().replace(/\s+/g, " ").trim();
+        }).get();
+        console.log(data);
+        $('#reset_id').val(data[0]);
+        $('#reset_dni').val(data[1]);
+        $('#label-fname').text(data[2]);
+        $('#label-lname').text(data[3]);
+    });
+});
+</script>
+
+<!-- Modal CHANGE PASSWORD -->
+<script type="text/javascript">
+function mostrar_pass(icono_objeto, input_objeto)
+{
+    $(document).ready(function () 
+    {
+        if ($("#"+input_objeto).attr("type")=="password")
+        {
+            $("#"+icono_objeto).removeClass("fa-eye-slash");
+            $("#"+icono_objeto).addClass("fa-eye");
+            $("#"+input_objeto).attr("type", "text");
+        }
+        else
+        {
+            $("#"+icono_objeto).removeClass("fa-eye");
+            $("#"+icono_objeto).addClass("fa-eye-slash");
+            $("#"+input_objeto).attr("type", "password");
+        }
+    }); 
+}
+//F5 prevent upload form 
+if ( window.history.replaceState ) {
+    window.history.replaceState( null, null, window.location.href );
+    }
+</script>
+
+
+<div class="modal fade" id="changepassword" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="statichangepass" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+    <h5 class="modal-title" id="statichangepass"><i class="bi bi-key"></i> Cambiar contraseña</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<form action="" method="POST">
+    <input type="hidden" name="reset_id" id="reset_id">
+    <input type="hidden" name="reset_dni" id="reset_dni">
+    <div class="modal-body">
+        <div class="alert alert-warning mb-1" role="alert">
+            <h4 class="alert-heading">Atencion! <span><?php echo $_SESSION['name'] ?></h4>
+            <p><label id='label-fname'></label> <label id='label-lname'></label>Está a punto de cambiar su contraseña. </span></p>
+            <hr>
+            <label> Ingrese la contraseña actual: </label>
+            <div class="input-group mb-1">
+                <!-- <span class="input-group-text"><i class="fas fa-lock"></i></span> -->
+                <input required type="password" class="form-control" name="contra_actual" id="pass1" placeholder="">
+                <!-- <i class="far fa-eye" id="pruebita"  style="cursor: pointer"></i> -->
+                <span class="input-group-text" >
+                    <!-- <input type="checkbox" id="pruebita2"/> Mostrar -->
+                    <i class="far fa-eye-slash" id="icono1" onclick="mostrar_pass('icono1','pass1');" style="cursor: pointer"></i>
+                </span>
+            </div>
+            <label> Ingrese la nueva contraseña: </label>
+            <div class="input-group mb-1">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input required type="password" class="form-control" name="contra_nueva" id="pass2" placeholder="">
+                <!-- <i class="far fa-eye" id="pruebita"  style="cursor: pointer"></i> -->
+                <span class="input-group-text" >
+                    <!-- <input type="checkbox" id="pruebita2"/> Mostrar -->
+                    <i class="far fa-eye-slash" id="icono2" onclick="mostrar_pass('icono2','pass2');" style="cursor: pointer"></i>
+                </span>
+            </div>
+            <label> Vuelva a ingresar la nueva contraseña: </label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input required type="password" class="form-control" name="contra_nueva_confirma" id="pass3" placeholder="">
+                <!-- <i class="far fa-eye" id="pruebita"  style="cursor: pointer"></i> -->
+                <span class="input-group-text" >
+                    <!-- <input type="checkbox" id="pruebita2"/> Mostrar -->
+                    <i class="far fa-eye-slash" id="icono3" onclick="mostrar_pass('icono3','pass3');" style="cursor: pointer"></i>
+                </span>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"> Cancelar</button>
+        <button type="submit" name="changepass" class="btn btn-success">Cambiar contraseña</button>
+    </div>
+    </div>
+</form>    
+</div>
+</div>
 
 
 </main>

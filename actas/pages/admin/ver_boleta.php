@@ -1,4 +1,3 @@
-
 <?php
 include('../../back/get_montos.php');
 setlocale(LC_ALL,"es_PE");
@@ -140,17 +139,22 @@ body {
 
     <?php
     $result = $montos_2;
-    
+    $a=0;
     foreach($result as $datas)
     {
         echo "<div class='small' style='display:flex; flex-direction: column; margin-left: -30px;'>";
         // echo  "<div>" . $datas[$k]['model'] . "--></div>";
+        
         foreach($datas as $data)
         {
+            $a++;
+            if($a==25){
+                $a = 1;
+            }
             // echo $data  ;
             //print_r($data);
                     echo "<div class='row' style='margin-right: 38px;'>";
-                        echo "<div class='text-center inline-block  mr-2 ml-2' style='width: 40px; font-weight: bold;font-family:Book Antiqua;font-size: 13px;'> {$data[0]} </div>";
+                        echo "<div class='text-center inline-block  mr-2 ml-2' style='width: 40px; font-weight: bold;font-family:Book Antiqua;font-size: 13px;'>  $a </div>";
                         echo "<div class='text-left mr-2 ml-2' style='width: 120px;font-weight: bold;font-family:Book Antiqua;font-size: 13px;'> {$data[1]} </div>";
                         echo "<div class='text-right mr-2 ml-2' style='width: 100px; padding: 0; font-family:Book Antiqua;font-size: 13px;'> <div style ='border-bottom: 2px dotted;'> <div style = 'position:relative; top:3px;'>{$data[2]} </div> </div> </div>";
                     echo "</div>";
@@ -167,15 +171,15 @@ body {
             <div class='row'>
                 <div class='text-center inline-block  mr-2 ml-2' style='width: 40px; font-weight: bold;font-family:Book Antiqua;font-size: 13px;'> </div>
                 <div class='text-left mr-2 ml-2' style='width: 120px;font-weight: bold;font-family:Book Antiqua;font-size: 13px;'> REM. TOTAL </div>
-                <div class='text-right mr-2 ml-2' style='width: 100px; padding: 0; font-family:Book Antiqua;font-size: 13px;'> <div style ='border-bottom: 2px solid;'> <div style = 'position:relative; top:3px;'> <?= $rem_total ?> </div> </div> </div>
+                <div class='text-right mr-2 ml-2' style='width: 100px; padding: 0; font-family:Book Antiqua;font-size: 13px;'> <div style ='border-bottom: 2px solid;'> <div style = 'position:relative; top:3px;'>S/ <?= $rem_total ?> </div> </div> </div>
 
                 <div class='text-center inline-block  mr-1 ml-1' style='width: 40px; font-weight: bold;font-family:Book Antiqua;font-size: 13px;'> </div>
                 <div class='text-left mr-2 ml-2' style='width: 120px;font-weight: bold;font-family:Book Antiqua;font-size: 13px;'>T.DESCUENTOS </div>
-                <div class='text-right mr-2 ml-2' style='width: 100px; padding: 0; font-family:Book Antiqua;font-size: 13px;'> <div style ='border-bottom: 2px solid;'> <div style = 'position:relative; top:3px;'> <?= $des ?> </div> </div> </div>
+                <div class='text-right mr-2 ml-2' style='width: 100px; padding: 0; font-family:Book Antiqua;font-size: 13px;'> <div style ='border-bottom: 2px solid;'> <div style = 'position:relative; top:3px;'>S/ <?= $des ?> </div> </div> </div>
 
                 <div class='text-center inline-block  mr-1 ml-1' style='width: 40px; font-weight: bold;font-family:Book Antiqua;font-size: 13px;'> </div>
                 <div class='text-left mr-2 ml-2' style='width: 120px;font-weight: bold;font-family:Book Antiqua;font-size: 13px;'>REM.LIQUIDA </div>
-                <div class='text-right mr-2 ml-2' style='width: 100px; padding: 0; font-family:Book Antiqua;font-size: 13px;'> <div style ='border-bottom: 2px solid;'> <div style = 'position:relative; top:3px;'> <?= $rem_total-$des ?> </div> </div> </div>
+                <div class='text-right mr-2 ml-2' style='width: 100px; padding: 0; font-family:Book Antiqua;font-size: 13px;'> <div style ='border-bottom: 2px solid;'> <div style = 'position:relative; top:3px;'>S/ <?= number_format($rem_total-$des, 2, '.', ' ') ?> </div> </div> </div>
             </div>
         </div>
     </div>

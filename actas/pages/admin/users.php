@@ -56,7 +56,7 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a id='change_password' class="dropdown-item changepass-btn" href="#!">Cambiar Contraseña</a></li>
-                        <li><a class="dropdown-item" href="#!">Registro de actividad</a></li>
+                        <li hidden><a class="dropdown-item" href="#!">Registro de actividad</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="../login/logout.php">Cerrar Sesion</a></li>
                     </ul>
@@ -545,7 +545,7 @@
                                     <table id='dataTable1' class='table table-bordered table-striped display table-hover small w-100 border-bottom' style="width:100%">
                                     <thead>
                                     <tr>
-                                        <th scope="col" class ='text-center'>Id</th>
+                                        <th scope="col" class ='text-center' hidden>Id</th>
                                         <th scope="col" class ='text-center'>DNI</th>
                                         <th scope="col" class ='text-center'>Nombres</th>
                                         <th scope="col" class ='text-center'>Apellidos</th>
@@ -562,7 +562,7 @@
                                     <?php while($row = $resultado -> fetch_array()){
                                         ?>
                                         <tr>
-                                            <td> <?php echo $row['id']?> </td>
+                                            <td hidden> <?php echo $row['id']?> </td>
                                             <td> <?php echo $row['dni']?> </td>
                                             <td> <?php echo $row['names']?> </td>
                                             <td> <?php echo $row['surnames']?> </td>
@@ -575,7 +575,7 @@
                                                 <button type="button" class="btn btn-outline-danger bi bi-key resetpass-btn"> </button>  
                                             </td>
                                             </tr>
-                                        <?php    
+                                        <?php
                                     }
                                     ?>
                                     </tbody>        

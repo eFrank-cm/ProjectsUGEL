@@ -70,7 +70,7 @@ $(document).ready(function(){
                 });
 
                 swal({
-                    title: 'El codigo ' + dataToPOST['cod']  + ' - ' + dataToPOST['tag'] +' ha sido eliminado!',
+                    title: 'El codigo ha sido eliminado!',
                     icon: 'success'
                 })
             }

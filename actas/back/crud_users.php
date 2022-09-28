@@ -48,7 +48,7 @@ if(isset($_POST['updatedata']))
     }
     else
     {
-        $update = " UPDATE user_form SET dni ='$dni', name='$name', lname='$lname', email='$email', user_type='$user_type', state='$state' WHERE id='$id'  ";
+        $update = " UPDATE user_form SET dni ='$dni', names='$name', surnames='$lname', email='$email', user_type='$user_type', state='$state' WHERE id='$id'  ";
         #echo $update;
         mysqli_query($db, $update);
         #header('location:login_index.php');

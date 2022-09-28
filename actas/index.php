@@ -25,7 +25,7 @@ if(isset($_POST['submit'])){
       }
       elseif(($row['user_type'] == 'user')&&($row['state'] == 'habilitado')){
 
-         $_SESSION['name'] = $row['surnames'];
+         $_SESSION['name'] = $row['names'];
          $_SESSION['id'] = $row['id'];
          $_SESSION['user_type'] = $row['user_type'];
          header('location: ./pages/admin/main_users.php');
