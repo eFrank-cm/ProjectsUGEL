@@ -397,11 +397,11 @@
                                     </div>
                                     <div class="col-6">
                                         <label for="inputPassword2" class="">Apellido Paterno</label>
-                                        <input type="text" class="form-control form-control-sm" id="inputAPaterno" disabled>
+                                        <input type="text" class="form-control form-control-sm" id="inputAPaterno" style="text-transform:uppercase;" disabled>
                                         <label for="inputPassword2" class="">Apellido Materno</label>
-                                        <input type="text" class="form-control form-control-sm" id="inputAMaterno" disabled>
+                                        <input type="text" class="form-control form-control-sm" id="inputAMaterno" style="text-transform:uppercase;" disabled>
                                         <label for="inputPassword2" class="">Nombres</label>
-                                        <input type="text" class="form-control form-control-sm" id="inputNombres" disabled>
+                                        <input type="text" class="form-control form-control-sm" id="inputNombres" style="text-transform:uppercase;" disabled>
                                     </div>
                                     <div class="col">
                                         <label for="inputPassword2" class="">Condición</label>

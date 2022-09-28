@@ -179,7 +179,7 @@ $result = $db->query($query);
                         <?php while($row = $result_boletas->fetch_array()){ ?>
                             <tr>
                                 <td><?= $row['n'] ?></td>
-                                <td><?= $row['fecha'] ?></td>
+                                <td><?= $row['fecha']=='nan'?'': $row['fecha'] ?></td>
                                 <td><?= $row['lugar']=='nan'?'': $row['lugar']?></td>
                                 <td><?= $row['codPlanilla']?></td>
                                 <td hidden><?= $row['id_p']?></td>

@@ -74,10 +74,10 @@ $result = $db->query($query);
                                 <label>Nro: </label><input class='form-control form-control-sm' name='n' id='n-data-bol' type="text" value='<?= $_POST['n']?>' readonly>
                             </div>
                             <div class="col-3">
-                                <label>Fecha: </label><input class='form-control form-control-sm' name='fecha' id='fecha-data-bol' value='<?= $_POST['fecha']?>' type="text">
+                                <label>Fecha: </label><input class='form-control form-control-sm' name='fecha' id='fecha-data-bol' value='<?= $_POST['fecha']?>' type="text" style="text-transform:uppercase;">
                             </div>
                             <div class="col-3">
-                                <label>Lugar: </label><input class='form-control form-control-sm' name='lugar' id='lugar-data-bol' value='<?= $_POST['lugar']?>' type="text">
+                                <label>Lugar: </label><input class='form-control form-control-sm' name='lugar' id='lugar-data-bol' value='<?= $_POST['lugar']?>' type="text" style="text-transform:uppercase;">
                             </div>
                             <div class="col-2">
                                 <label>Planilla: </label><input class='form-control form-control-sm' name='codPlanilla' id='codPlanilla-data-bol' value='<?= $_POST['codPlanilla']?>' type="text">
@@ -216,8 +216,8 @@ $result = $db->query($query);
                 <?php elseif(array_key_exists('idp', $_POST)):?>
                     <tr>
                         <td><?= $row['n'] ?></td>
-                        <td><?= $row['fecha'] ?></td>
-                        <td><?= $row['lugar'] ?></td>
+                        <td><?= $row['fecha']=='nan'?'': $row['fecha'] ?></td>
+                        <td><?= $row['lugar']=='nan'?'': $row['lugar']?></td>
                         <td><?= $row['codPlanilla']?></td>
                         <td hidden><?= $row['id_p']?></td>
                         <td>
