@@ -148,9 +148,12 @@ body {
         foreach($datas as $data)
         {
             $a++;
+<<<<<<< HEAD
             if($a==25){
                 $a = 1;
             }
+=======
+>>>>>>> 66c7cbb22f831334c505fd5418cdeb87b5cf0620
             // echo $data  ;
             //print_r($data);
                     echo "<div class='row' style='margin-right: 38px;'>";
@@ -179,7 +182,11 @@ body {
 
                 <div class='text-center inline-block  mr-1 ml-1' style='width: 40px; font-weight: bold;font-family:Book Antiqua;font-size: 13px;'> </div>
                 <div class='text-left mr-2 ml-2' style='width: 120px;font-weight: bold;font-family:Book Antiqua;font-size: 13px;'>REM.LIQUIDA </div>
+<<<<<<< HEAD
                 <div class='text-right mr-2 ml-2' style='width: 100px; padding: 0; font-family:Book Antiqua;font-size: 13px;'> <div style ='border-bottom: 2px solid;'> <div style = 'position:relative; top:3px;'>S/ <?= number_format($rem_total-$des, 2, '.', ' ') ?> </div> </div> </div>
+=======
+                <div class='text-right mr-2 ml-2' style='width: 100px; padding: 0; font-family:Book Antiqua;font-size: 13px;'> <div style ='border-bottom: 2px solid;'> <div style = 'position:relative; top:3px;'>S/ <?= $rem_total-$des ?> </div> </div> </div>
+>>>>>>> 66c7cbb22f831334c505fd5418cdeb87b5cf0620
             </div>
         </div>
     </div>
