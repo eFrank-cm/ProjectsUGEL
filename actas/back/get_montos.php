@@ -20,11 +20,7 @@ if(!empty($boleta_per)){
             'id_m' => $row['id_m'],
             'tipo' => $row['tipo'],
             'tag' => $row['tag'],
-<<<<<<< HEAD
-            'monto' => number_format($row['monto'], 2, '.', ' '),
-=======
             'monto' => $row['monto'],
->>>>>>> 66c7cbb22f831334c505fd5418cdeb87b5cf0620
             'n' => $row['n']
         );
         array_push($montos, $monto);
