@@ -10,7 +10,7 @@ if(array_key_exists('kw', $_POST)){
 if(array_key_exists('idp', $_POST)){
     $id_p = $_POST['idp'];
     $query = "SELECT * FROM boleta WHERE id_p LIKE '$id_p' ORDER BY n DESC";
-    array_push($cols_name, 'N', 'FECHA', 'COD PLANILLA', 'ANULADO', 'IDP', 'ACCION');
+    array_push($cols_name, 'Nro', 'FECHA', 'LUGAR', 'COD PLANILLA', 'IDP', 'ACCION');
 }
 
 $codigos = array();
@@ -73,10 +73,13 @@ $result = $db->query($query);
                             <div class="col-1">
                                 <label>Nro: </label><input class='form-control form-control-sm' name='n' id='n-data-bol' type="text" value='<?= $_POST['n']?>' readonly>
                             </div>
-                            <div class="col-4">
-                                <label>Lugar y Fecha: </label><input class='form-control form-control-sm' name='fecha' id='fecha-data-bol' value='<?= $_POST['fecha']?>' type="text">
+                            <div class="col-3">
+                                <label>Fecha: </label><input class='form-control form-control-sm' name='fecha' id='fecha-data-bol' value='<?= $_POST['fecha']?>' type="text">
                             </div>
                             <div class="col-3">
+                                <label>Lugar: </label><input class='form-control form-control-sm' name='lugar' id='lugar-data-bol' value='<?= $_POST['lugar']?>' type="text">
+                            </div>
+                            <div class="col-2">
                                 <label>Planilla: </label><input class='form-control form-control-sm' name='codPlanilla' id='codPlanilla-data-bol' value='<?= $_POST['codPlanilla']?>' type="text">
                             </div>
                             <div class='col-3 align-self-end'>
@@ -214,8 +217,8 @@ $result = $db->query($query);
                     <tr>
                         <td><?= $row['n'] ?></td>
                         <td><?= $row['fecha'] ?></td>
+                        <td><?= $row['lugar'] ?></td>
                         <td><?= $row['codPlanilla']?></td>
-                        <td><?= $row['anulado']?></td>
                         <td hidden><?= $row['id_p']?></td>
                         <td>
                             <button class="btn btn-outline-success btn-sm editbtn" name='editbtn-bol' type='button'><i class="bi bi-pencil"></i></button>

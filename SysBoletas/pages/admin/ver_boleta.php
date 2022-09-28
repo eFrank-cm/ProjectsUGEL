@@ -72,7 +72,7 @@ body {
                 </div>
                 <div class='d-inline-flex ' > <!--style="text-decoration: underline; text-decoration-style: dotted;" -->
                     <div class='lead text-center' style='border-bottom: 2px dotted;  width: 703px; line-height: 1em; font-family:Book Antiqua;font-size: 16px;'>
-                    <?= $boleta_per['fecha'] ?>
+                    <?= $boleta_per['lugar']!=''? $boleta_per['lugar'].', '.$boleta_per['fecha']:$boleta_per['fecha']; ?>
                     </div>
                 </div>
             </div>

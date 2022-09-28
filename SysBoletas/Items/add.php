@@ -29,15 +29,16 @@ if($isDt_per){
 }
 else if($isDt_bol){
     $fecha = $_POST['fecha'];
+    $lugar = $_POST['lugar'];
     $codPlanilla = $_POST['codPlanilla'];
     $idp = $_POST['idp'];
 
     // add new boleta
     if(empty($_POST['n'])){
-        $query_insert = "INSERT INTO boleta (fecha, codPlanilla, anulado, doc, id_p) VALUE ('$fecha', '$codPlanilla', 'FALSE', '-', '$idp')";
+        $query_insert = "INSERT INTO boleta (fecha, lugar, codPlanilla, anulado, doc, id_p) VALUE ('$fecha', '$lugar','$codPlanilla', 'FALSE', '-', '$idp')";
         $db->query($query_insert);
 
-        $query_select = "SELECT * FROM boleta WHERE fecha='$fecha' AND codPlanilla='$codPlanilla' AND id_p='$idp';";
+        $query_select = "SELECT * FROM boleta WHERE fecha='$fecha' AND lugar='$lugar' AND codPlanilla='$codPlanilla' AND id_p='$idp';";
         $result = $db->query($query_select);
 
         $bol = array();
@@ -51,17 +52,13 @@ else if($isDt_bol){
     else{
         if($_POST['accion'] == 'del'){
             $n = $_POST['n'];
-            $fecha = $_POST['fecha'];
-            $codPlanilla = $_POST['codPlanilla'];
             $query_delete = "DELETE FROM boleta WHERE n='$n'";
             $db->query($query_delete);
             echo json_encode(array('n'=>$query_delete));
         }
         else if($_POST['accion'] == 'update'){
             $n = $_POST['n'];
-            $fecha = $_POST['fecha'];
-            $codPlanilla = $_POST['codPlanilla'];
-            $query_update = "UPDATE boleta SET fecha='$fecha', codPlanilla='$codPlanilla' WHERE n='$n'";
+            $query_update = "UPDATE boleta SET fecha='$fecha', codPlanilla='$codPlanilla', lugar='$lugar' WHERE n='$n'";
             $db->query($query_update);
             echo json_encode(array('n'=>$n));
         }

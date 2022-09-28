@@ -141,7 +141,7 @@ $result = $db->query($query);
                 <?php
                 $idp = $row['id_p'];
                 $query_boleta = "SELECT * FROM boleta WHERE id_p LIKE '$idp' ORDER BY n DESC";
-                $cols_name = array('Nro', 'LUGAR Y FECHA', 'COD PLANILLA', 'IDP', 'ACCION');
+                $cols_name = array('Nro', 'FECHA', 'LUGAR', 'COD PLANILLA', 'IDP', 'ACCION');
                 $result_boletas = $db->query($query_boleta);
                 
                 ?>
@@ -180,6 +180,7 @@ $result = $db->query($query);
                             <tr>
                                 <td><?= $row['n'] ?></td>
                                 <td><?= $row['fecha'] ?></td>
+                                <td><?= $row['lugar']=='nan'?'': $row['lugar']?></td>
                                 <td><?= $row['codPlanilla']?></td>
                                 <td hidden><?= $row['id_p']?></td>
                                 <td>

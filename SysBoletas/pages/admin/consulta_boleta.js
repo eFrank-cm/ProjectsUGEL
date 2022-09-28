@@ -117,7 +117,7 @@ $(document).ready(function(){
         $('#modalBoleta').modal('show');
         $('#modaltitle').text(" Editar Boleta");
         dataTmp = getDataRow(this)
-        dataBol = {'n':dataTmp[0], 'fecha':dataTmp[1], 'codPlanilla':dataTmp[2], 'anulado':dataTmp[3]}
+        dataBol = {'n':dataTmp[0], 'fecha':dataTmp[1], 'lugar':dataTmp[2] ,'codPlanilla':dataTmp[3], 'anulado':dataTmp[4]}
         dataBoleta(dataBol);
     });
 
@@ -130,8 +130,9 @@ $(document).ready(function(){
             'condicion': $('#condicion-shw').val(),
             'n' : dtRow[0],
             'fecha': dtRow[1],
-            'codPlanilla': dtRow[2],
-            'anulado': dtRow[3]
+            'lugar': dtRow[2],
+            'codPlanilla': dtRow[3],
+            'anulado': dtRow[4]
         };
         console.log(dataBol);
         const form = document.createElement('form');
@@ -158,13 +159,12 @@ $(document).ready(function(){
     $('#resultado_elegido').on('click', '#btn-add-bol', function(){
         $('#modalBoleta').modal('show');
         $('#modaltitle').text(" Nueva Boleta");
-        var datosBoleta = {'n':'', 'fecha':'', 'codPlanilla':'', 'anulado':''};
+        var datosBoleta = {'n':'', 'fecha':'', 'lugar':'', 'codPlanilla':'', 'anulado':''};
         dataBoleta(datosBoleta);
     });
 
     // BUTTON - ADD BOLETA
     $('.modal-body-2').on('click', '#save-bol', function(){
-        $('#frm-monto').removeAttr("hidden");
         var dataBol = getDataFormJSON('#frm-data-bol');
         
         if(dataBol['n']!=''){
@@ -179,12 +179,10 @@ $(document).ready(function(){
             success: function(res){
                 var resultado = $.trim(res);
                 console.log(resultado);
-                if(resultado == "ERROR")
-                {
+                if(resultado == "ERROR"){
                     swal('ERROR!', 'No se pudo guardar por que existen campos vacios', 'error');
                 }
-                else
-                {
+                else{
                     bol = JSON.parse(res);
                     console.log(bol);
                     $('#n-data-bol').val(bol['n']);
@@ -199,6 +197,7 @@ $(document).ready(function(){
                         success: function(res){
                             // $('#div-btn').html("<button class='btn' id='btn-add-bol' type='button'>Agregar Boleta</button>");
                             $('#div-bol').html(res);
+                            $('#frm-monto').removeAttr("hidden");
                             swal('EXITO!', 'Se guardaron los cambios de la boleta!', 'success');
                         }
                     }); 
@@ -213,7 +212,8 @@ $(document).ready(function(){
         var n = $('#n-data-bol').val();
         var fecha = $('#fecha-data-bol').val();
         var codPlanilla = $('#codPlanilla-data-bol').val();
-        var DatosBoleta = { 'n':n, 'fecha': fecha, 'codPlanilla': codPlanilla,  idp: '--', 'accion': 'del'};
+        var lugar = $('#lugar-data-bol').val();
+        var DatosBoleta = { 'n':n, 'fecha': fecha, 'lugar': lugar, 'codPlanilla': codPlanilla,  idp: '--', 'accion': 'del'};
         swal({
             title: "Estas seguro de eliminar esta boleta?",
             text: 'Se eliminará la boleta n° ' + DatosBoleta['n']+' y todos los montos que contenga',
