@@ -77,7 +77,7 @@ else if($isDt_mnt){
         $query_select = "SELECT * FROM monto WHERE tipo='$tipo' AND tag='$tag' AND monto LIKE '$monto' AND n='$n'";
         $result = $db->query($query_select);
 
-        $monto = array('mensaje'=>"OK");
+        $monto = array('mensaje'=>'OK');
         while($row = $result->fetch_array()){
             $monto['idm'] = $row['id_m'];
             $monto['tipo'] = $row['tipo'];
@@ -108,16 +108,25 @@ else if($isDt_mnt){
 }
 else if($isDt_cod){
     $tag = $_POST['tag'];
-    $tipo = $_POST['tipo']=='ingreso'?1:-1;
+    $tipo = $_POST['tipo']=='ingreso'? 1 : -1;
 
+    $message = 'ERROR';
     if($_POST['accion'] == 'add'){
-        $db->query("INSERT INTO codigo (tipo, tag) VALUE ('$tipo', '$tag')");
+        $q = "INSERT INTO codigo (tipo, tag) VALUE ('$tipo', '$tag')";
+        $result = $db->query($q);
+        if($result){
+            $message =  'OK';
+        }
+        else{
+            $message = 'ERROR REP';
+        }
     }
     else if($_POST['accion'] == 'del'){
         $idc = $_POST['idc'];
         $db->query("DELETE FROM codigo WHERE id_c='$idc'");
+        $message = 'OK DEL';
     }
-    echo 'OK';
+    echo $message;
 }
 else{
     echo "ERROR";

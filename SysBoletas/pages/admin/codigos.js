@@ -9,26 +9,40 @@ $(document).ready(function(){
         dataToPOST.accion = 'add';
         console.log(dataToPOST);
         e.preventDefault();
-
+        
         if(dataToPOST['tipo']!=='' && dataToPOST['tag']!==''){
-            swal({
-                title: 'El codigo fue añadido exitosamente!',
-                icon: 'success'
-            })
-            .then(()=>{
-                $.ajax({
-                    type: 'post',
-                    url: '../../Items/add.php',
-                    data: dataToPOST,
-                    success: function(res){
-                        console.log(res)
+            $.ajax({
+                type: 'post',
+                url: '../../Items/add.php',
+                data: dataToPOST,
+                success: function(res){
+                    console.log(res)
+                    if(res=='OK'){
+                        swal({
+                            title: 'El codigo fue añadido exitosamente!',
+                            icon: 'success'
+                        }).then(()=>{
+                            // getCodes();
+                            // $('#cod').val('');
+                            // $('#tag').val('');
+                            location.reload();
+                        })
                     }
-                });
-                // getCodes();
-                // $('#cod').val('');
-                // $('#tag').val('');
-                location.reload();
-            })
+                    else if(res=='ERROR REP'){
+                        swal({
+                            title: 'La etiqueta "' + dataToPOST.tag + '" ya existe. Verifique buscando en las tablas.',
+                            icon: 'warning'
+                        })
+                    }
+                    else if(res=='ERROR'){
+                        swal({
+                            title: 'ERROR: La etiqueta "' + dataToPOST.tag + '" no se pudo agregar.',
+                            icon: "warning",
+                            dangerMode: true
+                        })
+                    }
+                }
+            });            
         }
         else{
             swal({
@@ -66,6 +80,7 @@ $(document).ready(function(){
                     success: function(res){
                         console.log(res)
                         delbtn.closest('tr').remove();
+                        getCodes();
                     }
                 });
 

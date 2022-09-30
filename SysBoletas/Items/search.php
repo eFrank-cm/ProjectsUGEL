@@ -148,7 +148,7 @@ $result = $db->query($query);
                                     <?php };?>
                                 </select>
                             </td>
-                            <td class='text-center'><input id='inptmonto' class='form-control form-control-sm text-end td-monto onlynumber' maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"></td>
+                            <td class='text-center'><input id='inptmonto' class='form-control form-control-sm text-end td-monto onlynumber' maxlength="12" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"></td>
                             <td class='text-center'><button class='add-monto btn btn-outline-primary btn-sm' disabled><i class="bi bi-plus-circle"></i> Agregar</button></td>
                         </tr>
                         <?php while($row = $result->fetch_array()){ ?>

@@ -262,8 +262,8 @@ $(document).ready(function(){
         var dataToPost = {'tipo': tipo, 'tag':tag, 'monto': $('#inptmonto').val(), 'n': $('#n-data-bol').val(), 'accion': 'add'};
         var Decim = dataToPost['monto'].split('.').length > 1? true: false; 
         console.log(dataToPost);
-        if((dataToPost['monto'] == 0) || (dataToPost['tag']==0)){
-            swal("No es posible ingresar un codigo o monto igual a 0!", {
+        if((dataToPost['monto'] == 0) || (dataToPost['tag']==undefined)){
+            swal("Por favor indique una etiqueta o monto.", {
                 position: 'top-end',
                 icon: 'warning',
                 timer: 2500
@@ -348,7 +348,7 @@ $(document).ready(function(){
         console.log(dataDel);
         swal({
             title: "Estas seguro de eliminar esta entrada?",
-            text: 'Se eliminará el monto: ' + dataDel['tipo'] + ' / ' + dataDel['tag'] + ' / ' + dataDel['monto'],
+            text: 'Se eliminará el monto: ' + dataDel['tipo'] + ' ' + dataDel['tag'] + ' / ' + dataDel['monto'],
             icon: "warning",
             buttons: ["Cancelar","Eliminar"],
             dangerMode: true
