@@ -140,13 +140,16 @@ $result = $db->query($query);
                             <!-- <td class='td-monto onlynumber' id='add-cod-monto' contenteditable> -->
                             <td><h6></h6></td>
                             <td class='text-center'>
-                                <select class='form-select form-select-sm cmb-monto' id='cmb-tag'>
-                                    <option value=""></option>
+                                <!-- <select class='form-select form-select-sm cmb-monto' id='cmb-tag'> -->
+                                <input class="form-control cmb-monto" list="cmb-tag2" id="cmb-tag" placeholder="Busque el codigo">
+                                <datalist id="cmb-tag2">
+                                    <!-- <option value=""></option> -->
                                     <?php while($row = $codigos->fetch_array()){?>
                                         <?php $tp = $row['tipo']>0?"+":"-"; ?>
-                                        <option value='<?= $tp.' '. $row['tag'] ?>'><?= $row['tag']." (".$tp.")"?></option>
+                                        <option data-value='<?= $tp.' '. $row['tag'] ?>'><?= $row['tag']." (".$tp.")"?></option>
                                     <?php };?>
-                                </select>
+                                </datalist>
+                                <!-- </select> -->
                             </td>
                             <td class='text-center'><input id='inptmonto' class='form-control form-control-sm text-end td-monto onlynumber' maxlength="12" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"></td>
                             <td class='text-center'><button class='add-monto btn btn-outline-primary btn-sm' disabled><i class="bi bi-plus-circle"></i> Agregar</button></td>

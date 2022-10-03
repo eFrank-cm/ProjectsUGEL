@@ -271,6 +271,15 @@
     <!-- YA NO DEBE TENER BORDER EL DIV CONTAINER -->
     <div class="container">
         <h3 style="text-align: center;">REGISTRO DE BOLETAS</h3>
+        
+        <!-- <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Ingrese el codigo">
+        <datalist id="datalistOptions">
+            <option value="San Francisco">
+            <option value="New York">
+            <option value="Seattle">
+            <option value="Los Angeles">
+        </datalist> -->
+
         <form id="frmajax" method="POST">
             <div class="row">
                 <div class="col-md-3">

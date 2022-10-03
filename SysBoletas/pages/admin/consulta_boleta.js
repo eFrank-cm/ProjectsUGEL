@@ -257,8 +257,10 @@ $(document).ready(function(){
     // BUTTON - ADD MONTO
     $('.modal-body-2').on('click', '.add-monto', function(){
         // var dataTmp = getDataRow(this);
-        var tipo = $('#cmb-tag').val().split(' ')[0]=='+'?"ingreso":"egreso";
-        var tag = $('#cmb-tag').val().split(' ')[1]
+        //var tipo = $('#cmb-tag').val().split(' ')[0]=='+'?"ingreso":"egreso";
+        var tipo =$('[name="cmb-tag2"]').val().split(' ')[0]=='+'?"ingreso":"egreso";
+        //var tag = $('#cmb-tag').val().split(' ')[1]
+        var tag = $('[name="cmb-tag2"]').val().split(' ')[1]
         var dataToPost = {'tipo': tipo, 'tag':tag, 'monto': $('#inptmonto').val(), 'n': $('#n-data-bol').val(), 'accion': 'add'};
         var Decim = dataToPost['monto'].split('.').length > 1? true: false; 
         console.log(dataToPost);
