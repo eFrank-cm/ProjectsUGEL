@@ -141,12 +141,12 @@ $result = $db->query($query);
                             <td><h6></h6></td>
                             <td class='text-center'>
                                 <!-- <select class='form-select form-select-sm cmb-monto' id='cmb-tag'> -->
-                                <input class="form-control cmb-monto" list="cmb-tag2" id="cmb-tag" placeholder="Busque el codigo">
+                                <input class="form-control cmb-monto" list="cmb-tag2" id="input-tag" placeholder="Busque el codigo">
                                 <datalist id="cmb-tag2">
                                     <!-- <option value=""></option> -->
                                     <?php while($row = $codigos->fetch_array()){?>
                                         <?php $tp = $row['tipo']>0?"+":"-"; ?>
-                                        <option data-value='<?= $tp.' '. $row['tag'] ?>'><?= $row['tag']." (".$tp.")"?></option>
+                                        <option value='<?= $tp.' '. $row['tag'] ?>'></option>
                                     <?php };?>
                                 </datalist>
                                 <!-- </select> -->

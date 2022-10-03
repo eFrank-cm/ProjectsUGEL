@@ -256,24 +256,23 @@ $(document).ready(function(){
 
     // BUTTON - ADD MONTO
     $('.modal-body-2').on('click', '.add-monto', function(){
-        // var dataTmp = getDataRow(this);
-        //var tipo = $('#cmb-tag').val().split(' ')[0]=='+'?"ingreso":"egreso";
-        var tipo =$('[name="cmb-tag2"]').val().split(' ')[0]=='+'?"ingreso":"egreso";
-        //var tag = $('#cmb-tag').val().split(' ')[1]
-        var tag = $('[name="cmb-tag2"]').val().split(' ')[1]
+        var tipo = $('#input-tag').val().split(' ')[0]=='+'?"ingreso":"egreso";
+
+        // corregir 1, debe ser de 1 al ultimo
+        var tag = $('#input-tag').val().split(' ')[1];
+
         var dataToPost = {'tipo': tipo, 'tag':tag, 'monto': $('#inptmonto').val(), 'n': $('#n-data-bol').val(), 'accion': 'add'};
         var Decim = dataToPost['monto'].split('.').length > 1? true: false; 
-        console.log(dataToPost);
-        if((dataToPost['monto'] == 0) || (dataToPost['tag']==undefined)){
-            swal("Por favor indique una etiqueta o monto.", {
+        var x = document.getElementById("cmb-tag2"); var cods = [];
+        for (var i = 0; i < x.options.length; i++) {
+            cods.push(x.options[i].value);
+        }
+
+        if((dataToPost['monto'] == 0) || (dataToPost['tag'] == undefined) || (!cods.includes($('#input-tag').val()))){
+            swal("Por favor indique una etiqueta o monto validos.", {
                 position: 'top-end',
                 icon: 'warning',
                 timer: 2500
-            }).then(()=>{
-                $('#tb-montos .td-monto').empty();
-                $('#cmb-cod').val('').change()
-                $('#cmb-tag').val('').change()
-                $('#tb-montos #add-cod-monto').focus();
             });
         }
         else if(Decim && dataToPost['monto'].split('.')[1].length > 2){
@@ -331,8 +330,8 @@ $(document).ready(function(){
                     col5.classList.add('text-center');
     
                     $('#tb-montos #inptmonto').val('');
-                    $('#cmb-tag').val('').change()
-                    $('#cmb-tag').focus();
+                    $('#input-tag').val('')
+                    $('#input-tag').focus();
 
                     // // ACTUALIZAR TABLA DE MONTOS
                     // var dataBol = {'n':$('#n-data-bol').val(), 'fecha': $('#fecha-data-bol').val(), 'codPlanilla':$('#codPlanilla-data-bol').val(), 'anulado':'-'}
