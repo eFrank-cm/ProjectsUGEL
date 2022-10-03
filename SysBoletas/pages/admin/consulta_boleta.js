@@ -257,13 +257,11 @@ $(document).ready(function(){
     // BUTTON - ADD MONTO
     $('.modal-body-2').on('click', '.add-monto', function(){
         var tipo = $('#input-tag').val().split(' ')[0]=='+'?"ingreso":"egreso";
-
-        // corregir 1, debe ser de 1 al ultimo
-        var tag = $('#input-tag').val().split(' ')[1];
-
+        var tag = $('#input-tag').val().split(' ').slice(1).join(' ');
         var dataToPost = {'tipo': tipo, 'tag':tag, 'monto': $('#inptmonto').val(), 'n': $('#n-data-bol').val(), 'accion': 'add'};
         var Decim = dataToPost['monto'].split('.').length > 1? true: false; 
-        var x = document.getElementById("cmb-tag2"); var cods = [];
+        var x = document.getElementById("cmb-tag2"); 
+        var cods = [];
         for (var i = 0; i < x.options.length; i++) {
             cods.push(x.options[i].value);
         }
