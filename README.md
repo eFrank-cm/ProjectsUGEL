@@ -1,2 +1,2 @@
-# firstPrjUGEL
-First project of the UGEL
+# Proyectos UGEL
+Sistemas de informacion desarroladas para la UGEL
